@@ -1,4 +1,4 @@
-package com.warhit.yala_mazzad
+package com.warhit.qapaq_b2b
 
 import io.flutter.embedding.android.FlutterActivity
 
