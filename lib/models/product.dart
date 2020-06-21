@@ -74,8 +74,8 @@ class _ProductState extends State<Product> {
   Widget build(BuildContext context) {
     return GridView.builder(
         itemCount: productList.length,
-        gridDelegate:
-            new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.7),
+        gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3, childAspectRatio: 1),
         itemBuilder: (BuildContext context, int index) {
           return SingleProduct(
             productName: productList[index]['name'],

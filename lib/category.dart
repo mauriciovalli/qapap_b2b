@@ -117,7 +117,10 @@ class _CategoryState extends State<Category> {
     return Swiper(
       outer: false,
       itemBuilder: (context, i) {
-        return Image.asset(imgs[i], fit: BoxFit.cover,);
+        return Image.asset(
+          imgs[i],
+          fit: BoxFit.cover,
+        );
       },
       autoplay: true,
       duration: 300,

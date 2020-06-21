@@ -153,22 +153,22 @@ class _LoginState extends State<Login> {
 
   Future<bool> forgotPassword() {
     return showDialog(
-      context: context,
-      builder: (context) => new AlertDialog(
-        title: new Text('You Really Forgot Your Password?!!!'),
-        content: new Text('Are you really that dumb?'),
-        actions: <Widget>[
-          new FlatButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: new Text('Yes'),
+          context: context,
+          builder: (context) => new AlertDialog(
+            title: new Text('You Really Forgot Your Password?!!!'),
+            content: new Text('Are you really that dumb?'),
+            actions: <Widget>[
+              new FlatButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: new Text('Yes'),
+              ),
+              new FlatButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: new Text('No'),
+              ),
+            ],
           ),
-          new FlatButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: new Text('No'),
-          ),
-        ],
-      ),
-    ) ??
+        ) ??
         false;
   }
 }

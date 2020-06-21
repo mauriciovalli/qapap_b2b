@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qapaq_b2b/models/single_product.dart';
 
 class ProductDetails extends StatefulWidget {
   final productDetailsName;
@@ -18,7 +17,6 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
-
   int quantity = 1;
 
   List<bool> selectedColor = [true, false, false, false];
@@ -157,15 +155,24 @@ class _ProductDetailsState extends State<ProductDetails> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               IconButton(
-                  icon: Icon(Icons.add_circle_outline, color: Colors.grey,),
+                  icon: Icon(
+                    Icons.add_circle_outline,
+                    color: Colors.grey,
+                  ),
                   onPressed: () {
                     setState(() {
                       quantity++;
                     });
                   }),
-              Text(quantity.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+              Text(
+                quantity.toString(),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
               IconButton(
-                  icon: Icon(Icons.remove_circle_outline, color: Colors.grey,),
+                  icon: Icon(
+                    Icons.remove_circle_outline,
+                    color: Colors.grey,
+                  ),
                   onPressed: () {
                     setState(() {
                       quantity = --quantity == 0 ? 1 : quantity;
@@ -182,16 +189,21 @@ class _ProductDetailsState extends State<ProductDetails> {
     return InkWell(
       onTap: () {
         setState(() {
-          for ( int j=0;j<selectedColor.length;j++){
+          for (int j = 0; j < selectedColor.length; j++) {
             selectedColor[j] = false;
-            if ( j == i )
-              selectedColor[j] = true;
+            if (j == i) selectedColor[j] = true;
           }
         });
       },
       child: Container(
         margin: EdgeInsets.only(left: 8),
-        child: selectedColor[i] ? Icon(Icons.check, size: 15, color: Colors.white,) : null,
+        child: selectedColor[i]
+            ? Icon(
+                Icons.check,
+                size: 15,
+                color: Colors.white,
+              )
+            : null,
         decoration: ShapeDecoration(color: color, shape: CircleBorder()),
         height: 20,
         width: 20,
@@ -204,21 +216,34 @@ class _ProductDetailsState extends State<ProductDetails> {
       margin: EdgeInsets.only(left: 10),
       child: Row(
         children: <Widget>[
-          Expanded(child: Container(
-            child: FlatButton(onPressed: null, child: Text("ADD TO CART", style: TextStyle(color: Colors.white),)),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              gradient: LinearGradient(
-                colors: [Colors.pink, Colors.pinkAccent, Colors.purpleAccent],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+          Expanded(
+            child: Container(
+              child: FlatButton(
+                  onPressed: null,
+                  child: Text(
+                    "ADD TO CART",
+                    style: TextStyle(color: Colors.white),
+                  )),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                gradient: LinearGradient(
+                  colors: [Colors.pink, Colors.pinkAccent, Colors.purpleAccent],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
               ),
             ),
-          ), flex: 3,),
-          Expanded(child: Container(
+            flex: 3,
+          ),
+          Expanded(
+              child: Container(
 //            margin: EdgeInsets.only(left: 30, right: 20),
-            decoration: ShapeDecoration(shape: CircleBorder(), color: Color(0xffdddddd)),
-            child: Icon(Icons.favorite_border, color: Colors.black,),
+            decoration: ShapeDecoration(
+                shape: CircleBorder(), color: Color(0xffdddddd)),
+            child: Icon(
+              Icons.favorite_border,
+              color: Colors.black,
+            ),
             padding: EdgeInsets.all(10),
           ))
         ],

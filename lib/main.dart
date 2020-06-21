@@ -6,7 +6,6 @@ import 'package:qapaq_b2b/signUp.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,21 +13,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
         textTheme: TextTheme(
-            bodyText1: TextStyle(
-              color: Colors.white,
-            ),
+          bodyText1: TextStyle(
+            color: Colors.white,
+          ),
         ),
-        iconTheme: IconThemeData (
+        iconTheme: IconThemeData(
           color: Colors.white,
         ),
       ),
-
       home: Home(),
       routes: {
         '/signUp': (context) => SignUp(),
         '/login': (context) => Login(),
-        '/home': (context) => Home(),
-        '/feedback': (context) => Home(),
+        '/home': (context) => Home()
       },
     );
   }
