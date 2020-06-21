@@ -1,39 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:qapaq_b2b/configuration/theme_config.dart';
 
-Widget appBar(TextEditingController searchController, ThemeConfig themeConfig) {
+Widget appBar(TextEditingController searchController, ThemeConfig themeConfig, BuildContext context) {
+
+  var titleWiget = _TitleWiget(textController: searchController, themeConfig: themeConfig);
+
   return AppBar(
     elevation: 0.1,
-    title:
-        _TitleWiget(textController: searchController, themeConfig: themeConfig),
+    title: titleWiget,
     actions: themeConfig.isDesktop && !themeConfig.isSmallDesktop
-        ? _ActionsWiget(
-            textController: searchController,
-            themeConfig: themeConfig,
-            actions: []).actions
+        ? titleWiget.buildActions(context)
         : [],
   );
 }
 
-class _ActionsWiget extends StatelessWidget {
+class _TitleWiget extends StatelessWidget {
   final TextEditingController textController;
   final ThemeConfig themeConfig;
-  final List<Widget> actions;
 
-  const _ActionsWiget(
-      {Key key, this.textController, this.themeConfig, this.actions})
+  const _TitleWiget({Key key, this.textController, this.themeConfig})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    buildActions(context);
-    return null;
+    return Container(
+        padding: EdgeInsets.symmetric(
+          vertical: themeConfig.appPaddingVertical,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            if(themeConfig.isDesktop && !themeConfig.isSmallDesktop)
+              Container(
+              padding: EdgeInsets.fromLTRB(
+                  0, 0, themeConfig.appPaddingHorizontalLarge, 0),
+              child: Image.asset(
+                themeConfig.isDesktop && !themeConfig.isSmallDesktop ? 'img/logo_qapaq.png' : 'img/logo_qapaq_small.png',
+                fit: BoxFit.contain,
+                height: 32,
+              ),
+            ),
+            Expanded(
+              child: _SearchTextField(textController: textController),
+            ),
+          ],
+        ));
   }
 
   List<Widget> buildActions(BuildContext context) {
+
+    final List<Widget> actions = [];
+
     actions.add(Container(
       padding:
-          EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalLarge, 0, 0, 0),
+      EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalLarge, 0, 0, 0),
       alignment: Alignment.centerLeft,
       child: Row(
         children: [
@@ -51,7 +71,7 @@ class _ActionsWiget extends StatelessWidget {
 
     actions.add(Container(
       padding:
-          EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalSmall, 10, 0, 0),
+      EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalSmall, 10, 0, 0),
       alignment: Alignment.centerLeft,
       child: Column(
         children: [
@@ -72,7 +92,7 @@ class _ActionsWiget extends StatelessWidget {
 
     actions.add(Container(
       padding:
-          EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalSmall, 10, 0, 0),
+      EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalSmall, 10, 0, 0),
       alignment: Alignment.centerLeft,
       child: Column(
         children: [
@@ -93,7 +113,7 @@ class _ActionsWiget extends StatelessWidget {
 
     actions.add(Container(
       padding:
-          EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalSmall, 10, 0, 0),
+      EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalSmall, 10, 0, 0),
       alignment: Alignment.centerLeft,
       child: Column(
         children: [
@@ -113,39 +133,6 @@ class _ActionsWiget extends StatelessWidget {
     ));
 
     return actions;
-  }
-}
-
-class _TitleWiget extends StatelessWidget {
-  final TextEditingController textController;
-  final ThemeConfig themeConfig;
-
-  const _TitleWiget({Key key, this.textController, this.themeConfig})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.symmetric(
-          vertical: themeConfig.appPaddingVertical,
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Container(
-              padding: EdgeInsets.fromLTRB(
-                  0, 0, themeConfig.appPaddingHorizontalLarge, 0),
-              child: Image.asset(
-                'img/logo_qapaq.png',
-                fit: BoxFit.contain,
-                height: 32,
-              ),
-            ),
-            Expanded(
-              child: _SearchTextField(textController: textController),
-            ),
-          ],
-        ));
   }
 }
 

@@ -4,10 +4,10 @@ import 'package:qapaq_b2b/layout/adaptive.dart';
 class ThemeConfig {
   final double textFieldHeight = 60.0;
   final double appPaddingLargeW = 120.0;
-  final double appPaddingLargeM = 24.0;
+  final double appPaddingLargeM = 12.0;
 
   final double appPaddingSmallW = 20.0;
-  final double appPaddingSmallM = 10.0;
+  final double appPaddingSmallM = 4.0;
 
   final double appPaddingVerticalW = 20.0;
   final double appPaddingVerticalM = 10.0;

@@ -26,7 +26,7 @@ class _HomeState extends  State<Home> {
 
     return Scaffold(
         appBar:
-        appBar(searchController, themeConfig),
+        appBar(searchController, themeConfig, context),
         drawer: themeConfig.isDesktop && !themeConfig.isSmallDesktop
             ? null
             : buildDrawer(),
@@ -153,13 +153,13 @@ class _HomeState extends  State<Home> {
 
     actions.add(Container(
       padding:
-          EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalLarge, 0, 0, 0),
-      alignment: Alignment.centerLeft,
+          EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalLarge, 10, 0, 0),
+      alignment: Alignment.center,
       child: Row(
         children: [
           CircleAvatar(
             backgroundImage: AssetImage("img/logo.jpeg"),
-            radius: 14,
+            radius: 28,
           ),
           Icon(
             Icons.arrow_drop_down,
@@ -171,9 +171,9 @@ class _HomeState extends  State<Home> {
 
     actions.add(Container(
       padding:
-          EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalSmall, 10, 0, 0),
+          EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalLarge, 10, 0, 0),
       alignment: Alignment.centerLeft,
-      child: Column(
+      child: Row(
         children: [
           Icon(
             Icons.message,
@@ -184,7 +184,7 @@ class _HomeState extends  State<Home> {
             style: Theme.of(context)
                 .textTheme
                 .bodyText2
-                .copyWith(fontSize: 10, color: Colors.white),
+                .copyWith(color: Colors.white),
           )
         ],
       ),
@@ -192,9 +192,9 @@ class _HomeState extends  State<Home> {
 
     actions.add(Container(
       padding:
-          EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalSmall, 10, 0, 0),
+          EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalLarge, 10, 0, 0),
       alignment: Alignment.centerLeft,
-      child: Column(
+      child: Row(
         children: [
           Icon(
             Icons.content_paste,
@@ -205,7 +205,7 @@ class _HomeState extends  State<Home> {
             style: Theme.of(context)
                 .textTheme
                 .bodyText2
-                .copyWith(fontSize: 10, color: Colors.white),
+                .copyWith(color: Colors.white),
           )
         ],
       ),
@@ -213,9 +213,9 @@ class _HomeState extends  State<Home> {
 
     actions.add(Container(
       padding:
-          EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalSmall, 10, 0, 0),
+          EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalLarge, 10, 0, 0),
       alignment: Alignment.centerLeft,
-      child: Column(
+      child: Row(
         children: [
           Icon(
             Icons.shopping_cart,
@@ -226,7 +226,7 @@ class _HomeState extends  State<Home> {
             style: Theme.of(context)
                 .textTheme
                 .bodyText2
-                .copyWith(fontSize: 10, color: Colors.white),
+                .copyWith(color: Colors.white),
           )
         ],
       ),
