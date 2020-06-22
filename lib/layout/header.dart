@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:qapaq_b2b/configuration/theme_config.dart';
 
-Widget appBar(TextEditingController searchController, ThemeConfig themeConfig, BuildContext context) {
+class myAppBar {
+  static Widget appBar(TextEditingController searchController, ThemeConfig themeConfig,
+      BuildContext context) {
+    var titleWiget = _TitleWiget(
+        textController: searchController, themeConfig: themeConfig);
 
-  var titleWiget = _TitleWiget(textController: searchController, themeConfig: themeConfig);
-
-  return AppBar(
-    elevation: 0.1,
-    title: titleWiget,
-    actions: themeConfig.isDesktop && !themeConfig.isSmallDesktop
-        ? titleWiget.buildActions(context)
-        : [],
-  );
+    return AppBar(
+      elevation: 0.1,
+      title: titleWiget,
+      actions: themeConfig.isDesktop && !themeConfig.isSmallDesktop
+          ? titleWiget.buildActions(context)
+          : [],
+    );
+  }
 }
 
 class _TitleWiget extends StatelessWidget {
@@ -161,7 +164,7 @@ class _SearchTextField extends StatelessWidget {
         contentPadding: const EdgeInsets.all(16),
         //fillColor: Colors.red,
         filled: true,
-        hintText: "Search ...",
+        hintText: "Busca productos o empresas ...",
         hintStyle:
             Theme.of(context).textTheme.bodyText1.copyWith(color: Colors.white),
         floatingLabelBehavior: FloatingLabelBehavior.never,

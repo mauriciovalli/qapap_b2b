@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qapaq_b2b/product_details.dart';
+import 'package:qapaq_b2b/pages/product_details.dart';
 
 class SingleProduct extends StatelessWidget {
   final productName;
@@ -35,21 +35,22 @@ class SingleProduct extends StatelessWidget {
       elevation: 10,
       margin: EdgeInsets.all(10),
       child: Container(
-        width: MediaQuery.of(context).size.width / 2.25,
+        //width: MediaQuery.of(context).size.width / 2.25,
         height: MediaQuery.of(context).size.height / 3,
         child: Column(
           children: <Widget>[
             Expanded(
-              child: Row(
-                children: <Widget>[
-                  Image.asset(
+              child:
+                Container(
+                  alignment: Alignment.topCenter,
+                child:Image.asset(
                     productPicture,
-                    fit: BoxFit.fill,
-                    width: MediaQuery.of(context).size.width / 2.25,
+                    fit: BoxFit.scaleDown,
+                    //width: MediaQuery.of(context).size.width / 2.25,
                     height: MediaQuery.of(context).size.height / 2,
                   ),
-                ],
-              ),
+                ),
+
               flex: 5,
             ),
             Expanded(

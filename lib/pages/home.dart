@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:qapaq_b2b/category.dart';
+import 'package:provider/provider.dart';
+import 'package:qapaq_b2b/pages/category.dart';
+import 'package:qapaq_b2b/services/category.dart';
 
-import 'configuration/theme_config.dart';
-import 'layout/header.dart';
-import 'models/category.dart';
+import '../configuration/theme_config.dart';
+import '../layout/header.dart';
+import '../models/category.dart';
 
 class Home extends StatefulWidget {
   Home({Key key, this.title}) : super(key: key);
@@ -13,37 +15,37 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends  State<Home> {
-  // ignore: top_level_instance_getter
-  var _categories = CategoryModel().categoryList;
-
+class _HomeState extends State<Home> {
   final TextEditingController searchController = new TextEditingController();
-  ThemeConfig themeConfig;
+  ThemeConfig themeConfig = null;
 
   @override
   Widget build(BuildContext context) {
     this.themeConfig = ThemeConfig(context);
 
     return Scaffold(
-        appBar:
-        appBar(searchController, themeConfig, context),
-        drawer: themeConfig.isDesktop && !themeConfig.isSmallDesktop
-            ? null
-            : buildDrawer(),
-        body: MediaQuery.of(context).size.width < 1000
-            ? buildBody()
-            : Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  builSubHeader(),
-                  Expanded(
-                    child: buildBody(),
-                  ),
-                ],
-              ));
+      appBar: myAppBar.appBar(searchController, themeConfig, context),
+      drawer: themeConfig.isDesktop && !themeConfig.isSmallDesktop
+          ? null
+          : buildDrawer(),
+      body: MediaQuery.of(context).size.width < 1000
+          ? buildBody()
+          : Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                builSubHeader(),
+                Expanded(
+                  child: buildBody(),
+                ),
+              ],
+            ),
+    );
   }
 
   Widget builSubHeader() {
+    final categoryContainer = Provider.of<Categories>(context);
+    final List<CategoryModel> _categories = categoryContainer.items;
+
     double heightContaner = 30.0;
 
     return Container(
@@ -62,7 +64,7 @@ class _HomeState extends  State<Home> {
                   horizontal: themeConfig.appPaddingHorizontalSmall,
                 ),
                 child: Text(
-                  _categories[i]['title'],
+                  _categories[i].name,
                   style: Theme.of(context)
                       .textTheme
                       .subtitle2
@@ -71,11 +73,14 @@ class _HomeState extends  State<Home> {
               ),
               onTap: () => {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Category(
-                              title: _categories[i]['title'],
-                            )))
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Category(
+                      title: _categories[i].name,
+                      id: _categories[i].id,
+                    ),
+                  ),
+                )
               },
             );
           }),
@@ -83,6 +88,9 @@ class _HomeState extends  State<Home> {
   }
 
   Widget buildBody() {
+    final categoryContainer = Provider.of<Categories>(context);
+    var _categories = categoryContainer.items;
+
     return GridView.builder(
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 300.0,
@@ -99,11 +107,11 @@ class _HomeState extends  State<Home> {
                 child: Container(
                   child: Container(
                     color: Color.fromRGBO(0, 0, 0, 0.4),
-                    child: buildTitle(_categories[i]['title']),
+                    child: buildTitle(_categories[i].name),
                   ),
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage(_categories[i]['img']),
+                        image: AssetImage(_categories[i].image),
                         fit: BoxFit.fill),
                   ),
                 ),
@@ -114,7 +122,8 @@ class _HomeState extends  State<Home> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => Category(
-                            title: _categories[i]['title'],
+                            title: _categories[i].name,
+                            id: _categories[i].id,
                           )))
             },
           );

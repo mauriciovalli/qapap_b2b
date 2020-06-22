@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:qapaq_b2b/models/product.dart';
+import 'package:qapaq_b2b/layout/product.dart';
 
 class Category extends StatefulWidget {
   final String title;
+  final int id;
 
-  const Category({Key key, this.title}) : super(key: key);
+  const Category({Key key, this.title, this.id}) : super(key: key);
 
   @override
   _CategoryState createState() => _CategoryState();
@@ -26,54 +27,11 @@ class _CategoryState extends State<Category> {
             flex: 2,
           ),
           Expanded(
-            child: buildSubcategories(),
-            flex: 1,
-          ),
-          Expanded(
             child: Container(
-              child: Product(),
+              child: Product(categoryId: widget.id,),
             ),
             flex: 4,
           )
-        ],
-      ),
-    );
-  }
-
-  Widget buildSubcategories() {
-    return Container(
-//      height: MediaQuery.of(context).size.height / 8,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: <Widget>[
-          buildSingleSubcategory(
-            imgLocation: "img/cats/tshirt.png",
-            imgCaption: "T shirt",
-          ),
-          buildSingleSubcategory(
-            imgLocation: "img/cats/shoe.png",
-            imgCaption: "Shoes",
-          ),
-          buildSingleSubcategory(
-            imgLocation: "img/cats/jeans.png",
-            imgCaption: "Jeans",
-          ),
-          buildSingleSubcategory(
-            imgLocation: "img/cats/informal.png",
-            imgCaption: "Informal",
-          ),
-          buildSingleSubcategory(
-            imgLocation: "img/cats/formal.png",
-            imgCaption: "Formal",
-          ),
-          buildSingleSubcategory(
-            imgLocation: "img/cats/dress.png",
-            imgCaption: "Dress",
-          ),
-          buildSingleSubcategory(
-            imgLocation: "img/cats/accessories.png",
-            imgCaption: "Accessories",
-          ),
         ],
       ),
     );
