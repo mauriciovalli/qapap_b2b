@@ -94,26 +94,24 @@ class _HomeState extends State<Home> {
     return GridView.builder(
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 300.0,
-          crossAxisSpacing: 10.0,
+          crossAxisSpacing: 5.0,
           mainAxisSpacing: 10.0,
         ),
         itemCount: _categories.length,
         itemBuilder: (context, i) {
           return InkWell(
-            child: Container(
-              margin: EdgeInsets.all(5),
-              child: Card(
-                elevation: 2,
+            child: Card(
+              elevation: 10,
+              margin: EdgeInsets.all(10),
+              child: Container(
                 child: Container(
-                  child: Container(
-                    color: Color.fromRGBO(0, 0, 0, 0.4),
-                    child: buildTitle(_categories[i].name),
-                  ),
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(_categories[i].image),
-                        fit: BoxFit.fill),
-                  ),
+                  color: Color.fromRGBO(0, 0, 0, 0.4),
+                  child: buildTitle(_categories[i].name),
+                ),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(_categories[i].image),
+                      fit: BoxFit.fill),
                 ),
               ),
             ),

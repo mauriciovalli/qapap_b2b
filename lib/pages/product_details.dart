@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetails extends StatefulWidget {
@@ -61,11 +62,17 @@ class _ProductDetailsState extends State<ProductDetails> {
           children: <Widget>[
             Expanded(
               child: Container(
-                child: Image.asset(
-                  widget.productDetailsPicture,
-                  fit: BoxFit.fill,
-                  width: MediaQuery.of(context).size.width - 80,
-                ),
+                child: widget.productDetailsPicture.contains('http')
+                    ? CachedNetworkImage(
+                        placeholder: (context, url) =>
+                            CircularProgressIndicator(),
+                        imageUrl: widget.productDetailsPicture,
+                        fit: BoxFit.scaleDown,
+                      )
+                    : Image.asset(
+                        widget.productDetailsPicture,
+                        fit: BoxFit.scaleDown,
+                      ),
                 padding: EdgeInsets.all(20),
               ),
               flex: 6,

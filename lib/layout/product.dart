@@ -23,7 +23,7 @@ class _ProductState extends State<Product> {
 
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 300.0,
-          crossAxisSpacing: 10.0,
+          crossAxisSpacing: 5.0,
           mainAxisSpacing: 10.0,
         ),
         itemBuilder: (BuildContext context, int index) {
