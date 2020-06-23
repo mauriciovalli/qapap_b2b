@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:qapaq_b2b/layout/product.dart';
+import 'package:qapaq_b2b/presentation/product/widgets/product_list.dart';
 
-class Category extends StatefulWidget {
+class CategoryPage extends StatefulWidget {
   final String title;
   final int id;
 
-  const Category({Key key, this.title, this.id}) : super(key: key);
+  const CategoryPage({Key key, this.title, this.id}) : super(key: key);
 
   @override
-  _CategoryState createState() => _CategoryState();
+  _CategoryPageState createState() => _CategoryPageState();
 }
 
-class _CategoryState extends State<Category> {
+class _CategoryPageState extends State<CategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +28,7 @@ class _CategoryState extends State<Category> {
           ),
           Expanded(
             child: Container(
-              child: Product(categoryId: widget.id,),
+              child: ProductList(widget.id),
             ),
             flex: 4,
           )

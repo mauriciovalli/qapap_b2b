@@ -1,5 +1,44 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:qapaq_b2b/models/product.dart';
+import 'package:qapaq_b2b/models/product_repository.dart';
+
+const products = '''[
+  {
+     "id": 101,
+     "name": "Norton Malbec Doc Caja 6x750ml",
+     "image": "https://http2.mlstatic.com/vino-norton-malbec-doc-caja-6x750ml-D_NQ_NP_837477-MLA32009302454_082019-F.webp",
+     "categoryId": 1,
+     "oldPrice": 300.0,
+     "price": 300.0   
+  }
+]''';
+
+class ProductInMemoryRepository implements ProductRepository {
+  @override
+  Future<List<ProductModel>> get() async {
+    return Future.delayed(
+        const Duration(milliseconds: 100), () => _parse(jsonDecode(products)));
+  }
+
+  List<ProductModel> _parse(List<dynamic> json) {
+    return json.map((jsonItem) => _parseProducts(jsonItem)).toList();
+  }
+
+  ProductModel _parseProducts(Map<String, dynamic> json) {
+    return ProductModel(id: json['id'], name: json['name'], image: json['image'], categoryId: json['categoryId'],  oldPrice: json['oldPrice'], price: json['price']);
+  }
+
+  @override
+  Future<List<ProductModel>> listByCategoryId(int id) async {
+    List<ProductModel> _items = _parse(jsonDecode(products));
+    List<ProductModel> filterList = _items.where((product) => product.categoryId == id).toList();
+    return Future.delayed(
+        const Duration(milliseconds: 100), () => filterList);
+  }
+}
+
 
 class Products with ChangeNotifier {
   List<ProductModel> _items = [

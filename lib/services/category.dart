@@ -1,57 +1,73 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
+
 import 'package:qapaq_b2b/models/category.dart';
+import 'package:qapaq_b2b/models/category_repository.dart';
 
-class Categories with ChangeNotifier {
-  List<CategoryModel> _items = [
-    CategoryModel(
-      id: 1,
-      name: 'Alimentos y Bebidas',
-      image: 'img/cats/food_beverages.jpg',
-    ),
-    CategoryModel(
-      id: 2,
-      name: 'Agricultura y Animales Vivos',
-      image: 'img/cats/agriculture.jpg',
-    ),
-    CategoryModel(
-      id: 3,
-      name: 'Ropa y Calzado',
-      image: 'img/cats/clothing.jpg',
-    ),
-    CategoryModel(
-      id: 4,
-      name: 'Productos para la Casa',
-      image: 'img/cats/house.jpg',
-    ),
-    CategoryModel(
-      id: 5,
-      name: 'Autos',
-      image: 'img/cats/cars.jpg',
-    ),
-    CategoryModel(
-      id: 6,
-      name: 'Electrónica',
-      image: 'img/cats/electronics.jpg',
-    ),
-    CategoryModel(
-      id: 7,
-      name: 'Juguetes y Juegos',
-      image: 'img/cats/toys.jpg',
-    ),
-    CategoryModel(
-      id: 8 ,
-      name: 'Alimentos y Bebidas',
-      image: 'img/cats/food_beverages.jpg',
-    ),
-  ];
+const categoriesJson = '''[
+  {
+    "id": 1,
+    "name": "Alimentos y Bebidasl",
+    "image": "img/cats/food_beverages.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Agricultura y Animales Vivos",
+    "image": "img/cats/agriculture.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Ropa y Calzado",
+    "image": "img/cats/clothing.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Productos para la Casa",
+    "image": "img/cats/house.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Autos",
+    "image": "img/cats/cars.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Electrónica",
+    "image": "img/cats/electronics.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Juguetes y Juegos",
+    "image": "img/cats/toys.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Alimentos y Bebidas",
+    "image": "img/cats/food_beverages.jpg"
+  }
+]''';
 
-  List<CategoryModel> get items {
-    return [..._items];
+class CategoryInMemoryRepository implements CategoryRepository {
+  @override
+  Future<List<CategoryModel>> get() async {
+    return Future.delayed(const Duration(milliseconds: 100),
+        () => _parse(jsonDecode(categoriesJson)));
   }
 
-  CategoryModel findById(int id) {
-    return _items.firstWhere((p) => p.id == id);
+  List<CategoryModel> _parse(List<dynamic> json) {
+    return json.map((jsonItem) => _parseCategory(jsonItem)).toList();
   }
 
-
+  CategoryModel _parseCategory(Map<String, dynamic> json) {
+    return CategoryModel(
+        id: json['id'], name: json['name'], image: json['image']);
+  }
 }
+
+//  List<CategoryModel> get items {
+//    return [..._items];
+//  }
+//
+//  CategoryModel findById(int id) {
+//    return _items.firstWhere((p) => p.id == id);
+//  }
+//}

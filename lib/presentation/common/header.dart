@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:qapaq_b2b/configuration/theme_config.dart';
 
 class myAppBar {
-  static Widget appBar(TextEditingController searchController, ThemeConfig themeConfig,
+  static Widget appBar(TextEditingController searchController,
       BuildContext context) {
-    var titleWiget = _TitleWiget(
-        textController: searchController, themeConfig: themeConfig);
+
+    final ThemeConfig themeConfig = ThemeConfig.instance(context);
+    var titleWiget = _TitleWiget(textController: searchController);
 
     return AppBar(
       elevation: 0.1,
@@ -19,13 +20,13 @@ class myAppBar {
 
 class _TitleWiget extends StatelessWidget {
   final TextEditingController textController;
-  final ThemeConfig themeConfig;
 
-  const _TitleWiget({Key key, this.textController, this.themeConfig})
-      : super(key: key);
+  const _TitleWiget({Key key, this.textController}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final ThemeConfig themeConfig = ThemeConfig.instance(context);
+
     return Container(
         padding: EdgeInsets.symmetric(
           vertical: themeConfig.appPaddingVertical,
@@ -51,7 +52,7 @@ class _TitleWiget extends StatelessWidget {
   }
 
   List<Widget> buildActions(BuildContext context) {
-
+    final ThemeConfig themeConfig = ThemeConfig.instance(context);
     final List<Widget> actions = [];
 
     actions.add(Container(

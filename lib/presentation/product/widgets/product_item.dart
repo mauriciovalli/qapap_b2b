@@ -1,18 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:qapaq_b2b/pages/product_details.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:qapaq_b2b/configuration/theme_config.dart';
+import 'package:qapaq_b2b/pages/category.dart';
+import 'package:qapaq_b2b/pages/product_details.dart';
+import 'package:qapaq_b2b/presentation/product/product_state.dart';
 
-class SingleProduct extends StatelessWidget {
-  final productName;
-  final productPicture;
-  final productOldPrice;
-  final productPrice;
+class ProductItem extends StatelessWidget {
+  final ProductItemState _item;
 
-  SingleProduct(
-      {this.productName,
-      this.productPicture,
-      this.productOldPrice,
-      this.productPrice});
+  const ProductItem(this._item);
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +18,12 @@ class SingleProduct extends StatelessWidget {
           context,
           new MaterialPageRoute(
               builder: (context) => ProductDetails(
-                    //navigate to detailed page with passing data
-                    productDetailsName: productName,
-                    productDetailsPicture: productPicture,
-                    productDetailsOldPrice: productOldPrice,
-                    productDetailsNewPrice: productPrice,
-                  ))),
+                //navigate to detailed page with passing data
+                productDetailsName: _item.name,
+                productDetailsPicture: _item.image,
+                productDetailsOldPrice: _item.oldPrice,
+                productDetailsNewPrice: _item.price,
+              ))),
     );
   }
 
@@ -41,31 +37,31 @@ class SingleProduct extends StatelessWidget {
             Expanded(
               child: Container(
                 alignment: Alignment.topCenter,
-                child: productPicture.contains('http')
+                child: _item.image.contains('http')
                     ? CachedNetworkImage(
-                        placeholder: (context, url) =>
-                            CircularProgressIndicator(),
-                        imageUrl: productPicture,
-                        fit: BoxFit.scaleDown,
-                      )
+                  placeholder: (context, url) =>
+                      CircularProgressIndicator(),
+                  imageUrl: _item.image,
+                  fit: BoxFit.scaleDown,
+                )
                     : Image.asset(
-                        productPicture,
-                        fit: BoxFit.scaleDown,
-                      ),
+                  _item.image,
+                  fit: BoxFit.scaleDown,
+                ),
               ),
               flex: 5,
             ),
             Expanded(
               child: ListTile(
                 title: Text(
-                  productName,
+                  _item.name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 subtitle: Row(
                   children: <Widget>[
                     Expanded(
-                      child: Text("\$$productPrice",
+                      child: Text(_item.price,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: TextStyle(
@@ -73,7 +69,7 @@ class SingleProduct extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        "\$$productOldPrice",
+                        _item.price,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         style: TextStyle(

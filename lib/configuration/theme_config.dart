@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qapaq_b2b/layout/adaptive.dart';
+import 'package:qapaq_b2b/presentation/common/adaptive.dart';
 
 class ThemeConfig {
   final double textFieldHeight = 60.0;
@@ -12,8 +12,8 @@ class ThemeConfig {
   final double appPaddingVerticalW = 20.0;
   final double appPaddingVerticalM = 10.0;
 
-  final double titleFontSizeW = 20.0;
-  final double titleFontSizeM = 10.0;
+  final double titleFontSizeW = 18.0;
+  final double titleFontSizeM = 12.0;
 
   final double subTitleFontSizeW = 14.0;
   final double subTitleFontSizeM = 8.0;
@@ -42,5 +42,9 @@ class ThemeConfig {
 
     titleFontSize =
         isDesktop && !isSmallDesktop ? titleFontSizeW : titleFontSizeM;
+  }
+
+  static ThemeConfig instance(BuildContext context) {
+      return ThemeConfig(context);
   }
 }
