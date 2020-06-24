@@ -50,7 +50,12 @@ class CategoryInMemoryRepository implements CategoryRepository {
   @override
   Future<List<CategoryModel>> get() async {
     return Future.delayed(const Duration(milliseconds: 100),
-        () => _parse(jsonDecode(categoriesJson)));
+            () => _parse(jsonDecode(categoriesJson)));
+  }
+
+  @override
+  List<CategoryModel> list() {
+    return _parse(jsonDecode(categoriesJson));
   }
 
   List<CategoryModel> _parse(List<dynamic> json) {

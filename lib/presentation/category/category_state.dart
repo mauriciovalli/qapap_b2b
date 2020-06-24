@@ -1,42 +1,61 @@
-import 'package:flutter/widgets.dart';
+part of 'category_bloc.dart';
 
-abstract class CategoryState {
-  final String searchTerm;
-
-  CategoryState(this.searchTerm);
-
-  factory CategoryState.loading({String searchTerm}) =>
-      LoadingCategoryState(searchTerm: searchTerm);
-
-  factory CategoryState.loaded(
-          String searchTerm, List<CategoryItemState> items) =>
-      LoadedCategoryState(searchTerm: searchTerm, items: items);
-
-  factory CategoryState.error(String searchTerm, String message) =>
-      ErrorCategoryState(searchTerm: searchTerm, message: message);
+@immutable
+abstract class CategoryState extends Equatable {
+  const CategoryState();
 }
 
-class LoadingCategoryState extends CategoryState {
-  LoadingCategoryState({String searchTerm}) : super(searchTerm);
+@immutable
+abstract class CategoryListState extends CategoryState {
+  const CategoryListState();
+
+  CategoryModel getByPosition(int position);
+
+  int length();
 }
 
-class LoadedCategoryState extends CategoryState {
-  final List<CategoryItemState> items;
+class CategorySHide extends CategoryListState {
+  final List<CategoryModel> items;
 
-  LoadedCategoryState({String searchTerm, @required this.items})
-      : super(searchTerm);
+  const CategorySHide({this.items});
+
+  @override
+  List<Object> get props => [items];
+
+  @override
+  CategoryModel getByPosition(int position) =>
+      position < items.length ? items[position] : null;
+
+  @override
+  int length() {
+    return items.length;
+  }
 }
 
-class ErrorCategoryState extends CategoryState {
-  final String message;
-
-  ErrorCategoryState({@required String searchTerm, @required this.message})
-      : super(searchTerm);
+class CategoryLoading extends CategoryState {
+  @override
+  List<Object> get props => [];
 }
 
-class CategoryItemState {
-  final int id;
-  final String name;
-  final String image;
-  CategoryItemState(this.id, this.name, this.image);
+class CategoryLoaded extends CategoryListState {
+  final List<CategoryModel> items;
+
+  const CategoryLoaded({this.items});
+
+  @override
+  List<Object> get props => [items];
+
+  @override
+  CategoryModel getByPosition(int position) =>
+      position < items.length ? items[position] : null;
+
+  @override
+  int length() {
+    return items.length;
+  }
+}
+
+class CategoryError extends CategoryState {
+  @override
+  List<Object> get props => [];
 }

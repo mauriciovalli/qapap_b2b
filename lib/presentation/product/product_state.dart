@@ -1,46 +1,32 @@
-import 'package:flutter/widgets.dart';
+part of 'product_bloc.dart';
 
-abstract class ProductState {
-  final String searchTerm;
-
-  ProductState(this.searchTerm);
-
-  factory ProductState.loading({String searchTerm}) =>
-      LoadingProductState(searchTerm: searchTerm);
-
-  factory ProductState.loaded(
-          String searchTerm, List<ProductItemState> items) =>
-      LoadedProductState(searchTerm: searchTerm, items: items);
-
-  factory ProductState.error(String searchTerm, String message) =>
-      ErrorProductState(searchTerm: searchTerm, message: message);
+@immutable
+abstract class ProductState extends Equatable {
+  const ProductState();
 }
 
-class LoadingProductState extends ProductState {
-  LoadingProductState({String searchTerm}) : super(searchTerm);
+class ProductSHide extends ProductState {
+  @override
+  List<Object> get props => [];
 }
 
-class LoadedProductState extends ProductState {
-  final List<ProductItemState> items;
-
-  LoadedProductState({String searchTerm, @required this.items})
-      : super(searchTerm);
+class ProductLoading extends ProductState {
+  @override
+  List<Object> get props => [];
 }
 
-class ErrorProductState extends ProductState {
-  final String message;
+class ProductLoaded extends ProductState {
+  final List<ProductModel> items;
 
-  ErrorProductState({@required String searchTerm, @required this.message})
-      : super(searchTerm);
+  const ProductLoaded({this.items});
+
+  @override
+  List<Object> get props => [items];
+
+  ProductModel getByPosition(int position) => items[position];
 }
 
-class ProductItemState {
-  final int id ;
-  final String name ;
-  final String image ;
-  final int categoryId ;
-  final String price ;
-  final String oldPrice ;
-
-  ProductItemState(this.id, this.name, this.image, this.categoryId, this.oldPrice, this.price);
+class ProductError extends ProductState {
+  @override
+  List<Object> get props => [];
 }

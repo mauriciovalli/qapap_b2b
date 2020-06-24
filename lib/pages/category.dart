@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:qapaq_b2b/presentation/product/widgets/product_list.dart';
 
 class CategoryPage extends StatefulWidget {
   final String title;
@@ -28,7 +27,7 @@ class _CategoryPageState extends State<CategoryPage> {
           ),
           Expanded(
             child: Container(
-              child: ProductList(widget.id),
+              child: null, //ProductList(widget.id),
             ),
             flex: 4,
           )

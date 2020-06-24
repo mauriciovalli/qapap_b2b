@@ -31,11 +31,10 @@ class ProductInMemoryRepository implements ProductRepository {
   }
 
   @override
-  Future<List<ProductModel>> listByCategoryId(int id) async {
+  List<ProductModel> listByCategoryId(int id) {
     List<ProductModel> _items = _parse(jsonDecode(products));
     List<ProductModel> filterList = _items.where((product) => product.categoryId == id).toList();
-    return Future.delayed(
-        const Duration(milliseconds: 100), () => filterList);
+    return filterList;
   }
 }
 

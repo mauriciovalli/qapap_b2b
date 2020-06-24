@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qapaq_b2b/configuration/theme_config.dart';
-import 'package:qapaq_b2b/dependencies_provider.dart';
-import 'package:qapaq_b2b/pages/category.dart';
-import 'package:qapaq_b2b/presentation/category/category_state.dart';
+import 'package:qapaq_b2b/models/category.dart';
+import 'package:qapaq_b2b/presentation/product/product_bloc.dart';
+
+import '../category_bloc.dart';
 
 class CategoryItem extends StatelessWidget {
-  final CategoryItemState _item;
+  final CategoryModel _item;
 
   const CategoryItem(this._item);
 
@@ -29,13 +31,16 @@ class CategoryItem extends StatelessWidget {
         ),
       ),
       onTap: () => {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => CategoryPage(
-                      title: _item.name,
-                      id: _item.id,
-                    )))
+        BlocProvider.of<CategoryBloc>(context).add(CategoryHide()),
+        BlocProvider.of<ProductBloc>(context).add(ProductLoad(_item.id)),
+//        Navigator.push(
+//            context,
+//            MaterialPageRoute(
+//                builder: (context) => CategoryPage(
+//                      title: _item.name,
+//                      id: _item.id,
+//                    )),
+//        ),
       },
     );
   }

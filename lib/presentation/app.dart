@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:qapaq_b2b/common/bloc/bloc_provider.dart';
 import 'package:qapaq_b2b/pages/home.dart';
 import 'package:qapaq_b2b/presentation/category/category_bloc.dart';
-import 'package:qapaq_b2b/services/product.dart';
-
-import '../dependencies_provider.dart';
+import 'package:qapaq_b2b/presentation/product/product_bloc.dart';
 
 class App extends StatelessWidget {
   // This widget is the root of your application.
@@ -13,8 +11,11 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider.value(
-          value: Products(),
+        BlocProvider<CategoryBloc>(
+          create: (context) => CategoryBloc()..add(CategoryLoad()),
+        ),
+        BlocProvider<ProductBloc>(
+          create: (context) => ProductBloc()..add(ProductHide()),
         ),
       ],
       child: MaterialApp(
@@ -30,10 +31,7 @@ class App extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        home: BlocProvider(
-          bloc: getIt<CategoryBloc>(),
-          child: Home(),
-        ),
+        home: HomePage(),
       ),
     );
   }

@@ -1,34 +1,44 @@
+import 'package:bloc/bloc.dart';
+import 'package:qapaq_b2b/dependencies_provider.dart';
 import 'package:qapaq_b2b/models/category.dart';
-import 'package:qapaq_b2b/models/category_use_case.dart';
-import 'package:qapaq_b2b/common/bloc/bloc.dart';
+import 'package:qapaq_b2b/models/category_repository.dart';
+import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
 
-import 'category_state.dart';
+part 'category_event.dart';
+part 'category_state.dart';
 
-class CategoryBloc extends Bloc<CategoryState> {
-  final GetCategoryUseCase _getCategoriesUseCase;
+class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
+  final CategoryRepository _repository = getIt<CategoryRepository>();
+  List<CategoryModel> _items = [];
 
-  List<CategoryModel> _categories;
+  @override
+  CategoryState get initialState => CategoryLoading();
 
-  CategoryBloc(
-      this._getCategoriesUseCase) {
-    changeState(CategoryState.loading(searchTerm: ''));
+  @override
+  Stream<CategoryState> mapEventToState(
+    CategoryEvent event,
+  ) async* {
+    if (event is CategoryHide) {
+      yield* _clean(event);
+    }
+    if (event is CategoryLoad) {
+      yield* _load();
+    }
   }
 
-  void search(String searchTerm) {
-    _getCategoriesUseCase.execute().then((categories) {
-      _categories = categories;
-      changeState(CategoryState.loaded(state.searchTerm, _mapCategoriesToState(categories)));
-    }).catchError((error) {
-      changeState(
-          CategoryState.error(state.searchTerm, 'A network error has ocurrd'));
-    });
+  Stream<CategoryState> _clean(CategoryHide event) async* {
+    yield CategorySHide(items: _items);
   }
 
-  List<CategoryItemState> _mapCategoriesToState(List<CategoryModel> categories) {
-    //inal formatCurrency = NumberFormat.simpleCurrency(locale: 'es-ES');
-
-    return categories
-        .map((category) => CategoryItemState(category.id, category.name, category.image))
-        .toList();
+  Stream<CategoryState> _load() async* {
+    yield CategoryLoading();
+    try {
+      await Future.delayed(Duration(seconds: 1));
+      _items = _repository.list();
+      yield CategoryLoaded(items: _items);
+    } catch (_) {
+      yield CategoryError();
+    }
   }
 }

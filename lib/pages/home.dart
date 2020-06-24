@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:qapaq_b2b/presentation/category/widgets/category_list.dart';
 import 'package:qapaq_b2b/presentation/category/widgets/category_simple_list.dart';
+import 'package:qapaq_b2b/presentation/product/widgets/product_list.dart';
 
 import '../configuration/theme_config.dart';
 import '../presentation/common/header.dart';
 
-class Home extends StatefulWidget {
-  Home({Key key, this.title}) : super(key: key);
+class HomePage extends StatefulWidget {
+  HomePage({Key key, this.title}) : super(key: key);
 
   final String title;
 
-  _HomeState createState() => _HomeState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _HomeState extends State<Home> {
-
+class _HomePageState extends State<HomePage> {
   final TextEditingController searchController = new TextEditingController();
 
   @override
@@ -27,15 +27,12 @@ class _HomeState extends State<Home> {
           ? null
           : buildDrawer(),
       body: MediaQuery.of(context).size.width < 1000
-          ? CategoryList()
+          ? Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [CategoryList(), ProductList()])
           : Column(
               mainAxisSize: MainAxisSize.min,
-              children: [
-                CategorySimpleList(),
-                Expanded(
-                  child: CategoryList(),
-                ),
-              ],
+              children: [CategorySimpleList(), CategoryList(), ProductList()],
             ),
     );
   }

@@ -1,47 +1,43 @@
-import 'package:intl/intl.dart';
-import 'package:qapaq_b2b/common/bloc/bloc.dart';
+import 'package:bloc/bloc.dart';
+import 'package:qapaq_b2b/dependencies_provider.dart';
+import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
 import 'package:qapaq_b2b/models/product.dart';
-import 'package:qapaq_b2b/models/product_use_case.dart';
+import 'package:qapaq_b2b/models/product_repository.dart';
 
-import 'product_state.dart';
+part 'product_event.dart';
+part 'product_state.dart';
 
-class ProductBloc extends Bloc<ProductState> {
-  final GetProductsUseCase _getProductsUseCase;
+class ProductBloc extends Bloc<ProductEvent, ProductState> {
+  final ProductRepository _repository = getIt<ProductRepository>();
+  List<ProductModel> _items = [];
 
-  List<ProductModel> _products;
+  @override
+  ProductState get initialState => ProductLoading();
 
-  ProductBloc(this._getProductsUseCase) {
-    changeState(ProductState.loading(searchTerm: ''));
+  @override
+  Stream<ProductState> mapEventToState(
+    ProductEvent event,
+  ) async* {
+    if (event is ProductHide) {
+      yield* _clean(event);
+    } else if (event is ProductLoad) {
+      yield* _load(event);
+    }
   }
 
-  void search(String searchTerm) {
-    _getProductsUseCase.execute().then((products) {
-      _products = products;
-      changeState(ProductState.loaded(
-          state.searchTerm, _mapCategoriesToState(products)));
-    }).catchError((error) {
-      changeState(
-          ProductState.error(state.searchTerm, 'A network error has ocurred'));
-    });
+  Stream<ProductState> _clean(ProductHide event) async* {
+    yield ProductSHide();
   }
-
-  void searchByCategory(String searchTerm, int categoryId) {
-    _getProductsUseCase.listByCategory(categoryId).then((products) {
-      _products = products;
-      changeState(ProductState.loaded(
-          state.searchTerm, _mapCategoriesToState(products)));
-    }).catchError((error) {
-      changeState(
-          ProductState.error(state.searchTerm, 'A network error has ocurrd'));
-    });
-  }
-
-  List<ProductItemState> _mapCategoriesToState(List<ProductModel> products) {
-    final formatCurrency = NumberFormat.simpleCurrency(locale: 'es-ES');
-
-    return products
-        .map((product) => ProductItemState(product.id, product.name,
-            product.image, product.categoryId, formatCurrency.format(product.oldPrice), formatCurrency.format(product.price)))
-        .toList();
+  
+  Stream<ProductState> _load(ProductLoad event) async* {
+    yield ProductLoading();
+    try {
+      await Future.delayed(Duration(seconds: 1));
+      _items = _repository.listByCategoryId(event.categoyId);
+      yield ProductLoaded(items: _items);
+    } catch (_) {
+      yield ProductError();
+    }
   }
 }
