@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:carousel_pro/carousel_pro.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:qapaq_b2b/presentation/common/widgets/swiper.dart';
 
 class CategoryPage extends StatefulWidget {
   final String title;
@@ -22,7 +21,7 @@ class _CategoryPageState extends State<CategoryPage> {
       body: Column(
         children: <Widget>[
           Expanded(
-            child: buildSwiper(),
+            child: MySwiper(),
             flex: 2,
           ),
           Expanded(
@@ -57,53 +56,6 @@ class _CategoryPageState extends State<CategoryPage> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget buildSwiper() {
-    List<String> imgs = [
-      'img/c1.jpg',
-      'img/m1.jpeg',
-      'img/m2.jpg',
-      'img/w1.jpeg',
-      'img/w3.jpeg',
-      'img/w4.jpeg',
-    ];
-
-    return Swiper(
-      outer: false,
-      itemBuilder: (context, i) {
-        return Image.asset(
-          imgs[i],
-          fit: BoxFit.cover,
-        );
-      },
-      autoplay: true,
-      duration: 300,
-      pagination: new SwiperPagination(margin: new EdgeInsets.all(5.0)),
-      itemCount: imgs.length,
-    );
-  }
-
-  Widget buildImgCarousel() {
-    return Container(
-      child: new Carousel(
-        boxFit: BoxFit.cover,
-        images: [
-          AssetImage('img/c1.jpg'),
-          AssetImage('img/m1.jpeg'),
-          AssetImage('img/m2.jpg'),
-          AssetImage('img/w1.jpeg'),
-          AssetImage('img/w3.jpeg'),
-          AssetImage('img/w4.jpeg'),
-        ],
-        autoplay: true,
-        animationCurve: Curves.fastOutSlowIn,
-        animationDuration: Duration(milliseconds: 1000),
-        dotSize: 5.0,
-        indicatorBgPadding: 2.0,
-        // dotColor: Colors.blue,
       ),
     );
   }

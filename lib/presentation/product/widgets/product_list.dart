@@ -11,6 +11,7 @@ class ProductList extends StatelessWidget {
         return SizedBox(height: 0);
       } else {
         return Expanded(
+          flex: 8,
           child: Scaffold(
             body: CustomScrollView(
               slivers: [

@@ -41,8 +41,8 @@ const categoriesJson = '''[
   },
   {
     "id": 8,
-    "name": "Alimentos y Bebidas",
-    "image": "img/cats/food_beverages.jpg"
+    "name": "Artesanías, Textiles y Costuras",
+    "image": "img/cats/crafts.jpg"
   }
 ]''';
 

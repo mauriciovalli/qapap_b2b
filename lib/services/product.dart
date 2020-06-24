@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:qapaq_b2b/models/product.dart';
 import 'package:qapaq_b2b/models/product_repository.dart';
 
@@ -27,24 +26,30 @@ class ProductInMemoryRepository implements ProductRepository {
   }
 
   ProductModel _parseProducts(Map<String, dynamic> json) {
-    return ProductModel(id: json['id'], name: json['name'], image: json['image'], categoryId: json['categoryId'],  oldPrice: json['oldPrice'], price: json['price']);
+    return ProductModel(
+        id: json['id'],
+        name: json['name'],
+        image: json['image'],
+        categoryId: json['categoryId'],
+        oldPrice: json['oldPrice'],
+        price: json['price']);
   }
 
   @override
   List<ProductModel> listByCategoryId(int id) {
-    List<ProductModel> _items = _parse(jsonDecode(products));
-    List<ProductModel> filterList = _items.where((product) => product.categoryId == id).toList();
-    return filterList;
+//    List<ProductModel> _items = _parse(jsonDecode(products));
+//    List<ProductModel> filterList = _items.where((product) => product.categoryId == id).toList();
+    return Products().listByCategoryId(id);
   }
 }
 
-
-class Products with ChangeNotifier {
+class Products {
   List<ProductModel> _items = [
     ProductModel(
       id: 101,
       name: 'Norton Malbec Doc Caja 6x750ml',
-      image: 'https://http2.mlstatic.com/vino-norton-malbec-doc-caja-6x750ml-D_NQ_NP_837477-MLA32009302454_082019-F.webp',
+      image:
+          'https://http2.mlstatic.com/vino-norton-malbec-doc-caja-6x750ml-D_NQ_NP_837477-MLA32009302454_082019-F.webp',
       categoryId: 1,
       oldPrice: 300,
       price: 300,

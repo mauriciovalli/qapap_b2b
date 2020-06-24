@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:qapaq_b2b/configuration/theme_config.dart';
 import 'package:qapaq_b2b/presentation/category/widgets/category_list.dart';
 import 'package:qapaq_b2b/presentation/category/widgets/category_simple_list.dart';
+import 'package:qapaq_b2b/presentation/common/widgets/header.dart';
+import 'package:qapaq_b2b/presentation/common/widgets/swiper.dart';
 import 'package:qapaq_b2b/presentation/product/widgets/product_list.dart';
-
-import '../configuration/theme_config.dart';
-import '../presentation/common/header.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -22,17 +22,22 @@ class _HomePageState extends State<HomePage> {
     final ThemeConfig themeConfig = ThemeConfig.instance(context);
 
     return Scaffold(
-      appBar: myAppBar.appBar(searchController, context),
+      appBar: MyAppBar.appBar(searchController, context),
       drawer: themeConfig.isDesktop && !themeConfig.isSmallDesktop
           ? null
           : buildDrawer(),
       body: MediaQuery.of(context).size.width < 1000
           ? Column(
               mainAxisSize: MainAxisSize.min,
-              children: [CategoryList(), ProductList()])
+              children: [MySwiper(), CategoryList(), ProductList()])
           : Column(
               mainAxisSize: MainAxisSize.min,
-              children: [CategorySimpleList(), CategoryList(), ProductList()],
+              children: [
+                CategorySimpleList(),
+                MySwiper(),
+                CategoryList(),
+                ProductList()
+              ],
             ),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qapaq_b2b/configuration/theme_config.dart';
 
-class myAppBar {
+class MyAppBar {
   static Widget appBar(TextEditingController searchController,
       BuildContext context) {
 
