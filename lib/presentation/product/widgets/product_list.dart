@@ -26,12 +26,7 @@ class ProductList extends StatelessWidget {
                       );
                     }
                     if (state is ProductLoaded) {
-                      return SliverGrid(
-                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 300.0,
-                          crossAxisSpacing: 5.0,
-                          mainAxisSpacing: 10.0,
-                        ),
+                      return SliverList(
                         delegate: SliverChildBuilderDelegate(
                           (context, index) =>
                               ProductItem(state.getByPosition(index)),
