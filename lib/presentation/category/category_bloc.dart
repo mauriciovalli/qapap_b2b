@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:qapaq_b2b/dependencies_provider.dart';
 import 'package:qapaq_b2b/models/category.dart';
-import 'package:qapaq_b2b/models/category_repository.dart';
+import 'package:qapaq_b2b/services/category_repository.dart';
 
 part 'category_event.dart';
 part 'category_state.dart';

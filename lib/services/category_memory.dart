@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:qapaq_b2b/models/category.dart';
-import 'package:qapaq_b2b/models/category_repository.dart';
+import 'package:qapaq_b2b/services/category_repository.dart';
 
 const categoriesJson = '''[
   {
     "id": 1,
-    "name": "Alimentos y Bebidasl",
+    "name": "Alimentos y Bebidas",
     "image": "img/cats/food_beverages.jpg"
   },
   {
@@ -48,14 +48,13 @@ const categoriesJson = '''[
 
 class CategoryInMemoryRepository implements CategoryRepository {
   @override
-  Future<List<CategoryModel>> get() async {
-    return Future.delayed(const Duration(milliseconds: 100),
-            () => _parse(jsonDecode(categoriesJson)));
+  List<CategoryModel> list() {
+    return _parse(jsonDecode(categoriesJson));
   }
 
   @override
-  List<CategoryModel> list() {
-    return _parse(jsonDecode(categoriesJson));
+  CategoryModel findByName(String name) {
+    return _parse(jsonDecode(categoriesJson)).firstWhere((p) => p.name.startsWith(name));
   }
 
   List<CategoryModel> _parse(List<dynamic> json) {
@@ -65,11 +64,6 @@ class CategoryInMemoryRepository implements CategoryRepository {
   CategoryModel _parseCategory(Map<String, dynamic> json) {
     return CategoryModel(
         id: json['id'], name: json['name'], image: json['image']);
-  }
-
-  @override
-  CategoryModel findByName(String name) {
-    return _parse(jsonDecode(categoriesJson)).firstWhere((p) => p.name.startsWith(name));
   }
 }
 

@@ -1,7 +1,5 @@
-import 'dart:convert';
-
 import 'package:qapaq_b2b/models/product.dart';
-import 'package:qapaq_b2b/models/product_repository.dart';
+import 'package:qapaq_b2b/services/product_repository.dart';
 
 const products = '''[
   {
@@ -16,11 +14,13 @@ const products = '''[
 
 class ProductInMemoryRepository implements ProductRepository {
   @override
-  Future<List<ProductModel>> get() async {
-    return Future.delayed(
-        const Duration(milliseconds: 100), () => _parse(jsonDecode(products)));
+  List<ProductModel> listByCategoryId(int id) {
+//    List<ProductModel> _items = _parse(jsonDecode(products));
+//    List<ProductModel> filterList = _items.where((product) => product.categoryId == id).toList();
+    return Products().listByCategoryId(id);
   }
 
+  // ignore: unused_element
   List<ProductModel> _parse(List<dynamic> json) {
     return json.map((jsonItem) => _parseProducts(jsonItem)).toList();
   }
@@ -33,13 +33,6 @@ class ProductInMemoryRepository implements ProductRepository {
         categoryId: json['categoryId'],
         oldPrice: json['oldPrice'],
         price: json['price']);
-  }
-
-  @override
-  List<ProductModel> listByCategoryId(int id) {
-//    List<ProductModel> _items = _parse(jsonDecode(products));
-//    List<ProductModel> filterList = _items.where((product) => product.categoryId == id).toList();
-    return Products().listByCategoryId(id);
   }
 }
 

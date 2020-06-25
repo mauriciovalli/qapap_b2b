@@ -3,7 +3,7 @@ import 'package:qapaq_b2b/dependencies_provider.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:qapaq_b2b/models/product.dart';
-import 'package:qapaq_b2b/models/product_repository.dart';
+import 'package:qapaq_b2b/services/product_repository.dart';
 
 part 'product_event.dart';
 part 'product_state.dart';

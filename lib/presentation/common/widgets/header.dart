@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qapaq_b2b/configuration/theme.dart';
 import 'package:qapaq_b2b/dependencies_provider.dart';
-import 'package:qapaq_b2b/models/category_repository.dart';
-import 'package:qapaq_b2b/models/product_repository.dart';
+import 'package:qapaq_b2b/services/category_repository.dart';
+import 'package:qapaq_b2b/services/product_repository.dart';
 import 'package:qapaq_b2b/presentation/category/category_bloc.dart';
 import 'package:qapaq_b2b/presentation/product/product_bloc.dart';
 

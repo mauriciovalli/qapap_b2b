@@ -1,7 +1,7 @@
-import 'category.dart';
+import 'package:qapaq_b2b/models/category.dart';
 
 abstract class CategoryRepository {
-  Future<List<CategoryModel>> get();
   List<CategoryModel> list();
+
   CategoryModel findByName(String name);
 }
