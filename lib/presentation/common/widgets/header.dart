@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qapaq_b2b/configuration/theme_config.dart';
+import 'package:qapaq_b2b/models/category_repository.dart';
+import 'package:qapaq_b2b/models/product_repository.dart';
+import 'package:qapaq_b2b/presentation/category/category_bloc.dart';
+import 'package:qapaq_b2b/presentation/product/product_bloc.dart';
+
+import '../../../dependencies_provider.dart';
 
 class MyAppBar {
   static Widget appBar(TextEditingController searchController,
@@ -36,16 +43,18 @@ class _TitleWiget extends StatelessWidget {
           children: [
             if(themeConfig.isDesktop && !themeConfig.isSmallDesktop)
               Container(
-              padding: EdgeInsets.fromLTRB(
-                  0, 0, themeConfig.appPaddingHorizontalLarge, 0),
-              child: Image.asset(
-                themeConfig.isDesktop && !themeConfig.isSmallDesktop ? 'img/logo_qapaq.png' : 'img/logo_qapaq_small.png',
-                fit: BoxFit.contain,
-                height: 32,
+                padding: EdgeInsets.fromLTRB(
+                    0, 0, themeConfig.appPaddingHorizontalLarge, 0),
+                child: Image.asset(
+                  themeConfig.isDesktop && !themeConfig.isSmallDesktop ? 'img/logo_qapaq.png' : 'img/logo_qapaq_small.png',
+                  fit: BoxFit.contain,
+                  height: 32,
+                ),
               ),
-            ),
             Expanded(
-              child: _SearchTextField(textController: textController),
+              child: IconButton(icon: Icon(Icons.search), onPressed: () {
+                showSearch(context: context, delegate: DataSearch());
+              }),
             ),
           ],
         ));
@@ -140,41 +149,69 @@ class _TitleWiget extends StatelessWidget {
   }
 }
 
-class _SearchTextField extends StatelessWidget {
-  final TextEditingController textController;
-
-  _SearchTextField({this.textController});
+class DataSearch extends SearchDelegate<String> {
+  final CategoryRepository _repository = getIt<CategoryRepository>();
+  final ProductRepository _repositoryP = getIt<ProductRepository>();
 
   @override
-  Widget build(BuildContext context) {
-    return TextField(
-      controller: textController,
-      cursorColor: Theme.of(context).colorScheme.secondary,
-      style:
-          Theme.of(context).textTheme.bodyText1.copyWith(color: Colors.white),
-      onTap: () {},
-      decoration: InputDecoration(
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
-          borderSide: BorderSide(color: Colors.redAccent, width: 2.0),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
-          borderSide: BorderSide(color: Colors.redAccent, width: 2.0),
-        ),
-        contentPadding: const EdgeInsets.all(16),
-        //fillColor: Colors.red,
-        filled: true,
-        hintText: "Busca productos o empresas ...",
-        hintStyle:
-            Theme.of(context).textTheme.bodyText1.copyWith(color: Colors.white),
-        floatingLabelBehavior: FloatingLabelBehavior.never,
-        prefixIcon: Icon(
-          Icons.search,
-          size: 24,
-          color: Theme.of(context).iconTheme.color,
-        ),
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(icon: Icon(Icons.clear), onPressed: () {
+        query = "";
+      })
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    // leading icon on the left of the app bar
+    return IconButton(icon: AnimatedIcon(
+      icon: AnimatedIcons.menu_arrow,
+      progress: transitionAnimation,
+    ),
+        onPressed: () {
+          close(context, null);
+        });
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return IconButton(icon: AnimatedIcon(
+      icon: AnimatedIcons.menu_arrow,
+      progress: transitionAnimation,
+    ),
+        onPressed: () {
+
+        });
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    final suggestionList = query.isEmpty ? _repository.list() : _repository.list().where((element) => element.name.startsWith(query)).toList();
+
+    return ListView.builder(itemBuilder: (context, index) => ListTile(
+      onTap: () {
+        var categorySelected = _repository.findByName(suggestionList[index].name);
+        BlocProvider.of<CategoryBloc>(context).add(CategoryHide());
+        BlocProvider.of<ProductBloc>(context).add(ProductLoad(categorySelected.id));
+        close(context, null);
+      },
+      leading: Icon(Icons.local_airport),
+      title: RichText(
+          text: TextSpan(
+              text: suggestionList[index].name.substring(0, query.length),
+              style: TextStyle(
+                  color: Colors.black, fontWeight: FontWeight.bold),
+              children: [
+                TextSpan(
+                  text: suggestionList[index].name.substring(query.length),
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ])
       ),
+    ),
+      itemCount: suggestionList.length,
     );
   }
+
 }

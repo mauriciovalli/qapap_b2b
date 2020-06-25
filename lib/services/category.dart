@@ -66,6 +66,11 @@ class CategoryInMemoryRepository implements CategoryRepository {
     return CategoryModel(
         id: json['id'], name: json['name'], image: json['image']);
   }
+
+  @override
+  CategoryModel findByName(String name) {
+    return _parse(jsonDecode(categoriesJson)).firstWhere((p) => p.name.startsWith(name));
+  }
 }
 
 //  List<CategoryModel> get items {
