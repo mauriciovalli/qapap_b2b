@@ -6,43 +6,51 @@ import 'package:qapaq_b2b/services/category_repository.dart';
 const categoriesJson = '''[
   {
     "id": 1,
-    "name": "Alimentos y Bebidas",
-    "image": "img/cats/food_beverages.jpg"
+    "name": "Produción Agricola",
+    "image": "img/cats/agriculture.jpg",
+    "icon": "0xeb4c"
   },
   {
     "id": 2,
-    "name": "Agricultura y Animales Vivos",
-    "image": "img/cats/agriculture.jpg"
+    "name": "Comida y Bebidas",
+    "image": "img/cats/food_beverages.jpg",
+    "icon": "0xe57a"
   },
   {
     "id": 3,
     "name": "Ropa y Calzado",
-    "image": "img/cats/clothing.jpg"
+    "image": "img/cats/clothing.jpg",
+    "icon": "0xe3f4"
   },
   {
     "id": 4,
     "name": "Productos para la Casa",
-    "image": "img/cats/house.jpg"
+    "image": "img/cats/house.jpg",
+    "icon": "0xe88a"
   },
   {
     "id": 5,
     "name": "Autos",
-    "image": "img/cats/cars.jpg"
+    "image": "img/cats/cars.jpg",
+    "icon": "0xe531"
   },
   {
     "id": 6,
     "name": "Electrónica",
-    "image": "img/cats/electronics.jpg"
+    "image": "img/cats/electronics.jpg",
+    "icon": "0xe3f4"
   },
   {
     "id": 7,
     "name": "Juguetes y Juegos",
-    "image": "img/cats/toys.jpg"
+    "image": "img/cats/toys.jpg",
+    "icon": "0xe3f4"
   },
   {
     "id": 8,
     "name": "Artesanías, Textiles y Costuras",
-    "image": "img/cats/crafts.jpg"
+    "image": "img/cats/crafts.jpg",
+    "icon": "0xe3f4"
   }
 ]''';
 
@@ -63,7 +71,7 @@ class CategoryInMemoryRepository implements CategoryRepository {
 
   CategoryModel _parseCategory(Map<String, dynamic> json) {
     return CategoryModel(
-        id: json['id'], name: json['name'], image: json['image']);
+        id: json['id'], name: json['name'], image: json['image'], icon: json['icon']);
   }
 }
 

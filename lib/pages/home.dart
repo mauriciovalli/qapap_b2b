@@ -50,13 +50,13 @@ class _HomePageState extends State<HomePage> {
               flex: 6,
               child: Row(
                 children: [
-                  //if (MediaQuery.of(context).size.width < 1000)
+                  if (themeConfig.isDesktop && !themeConfig.isSmallDesktop)
+                    Container(
+                      width: 270,
+                      child: CategorySimpleList(),
+                    ),
                   Expanded(
-                    flex: 1,
-                    child: CategorySimpleList(),
-                  ),
-                  Expanded(
-                    flex: 6,
+                    flex: 9,
                     child: Column(children: [CategoryList(), ProductList()]),
                   ),
                 ],
@@ -71,18 +71,69 @@ class _HomePageState extends State<HomePage> {
         child: Container(
             color: Colors.redAccent,
             child: Column(
-              children: buildActions(),
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  height: 200,
+                  child: Column(children: buildActions()),
+                ),
+                Expanded(child: CategorySimpleList()),
+              ],
             )));
   }
 
   List<Widget> buildActions() {
     final ThemeConfig themeConfig = ThemeConfig.instance(context);
     final List<Widget> actions = [];
+    actions.add(buildActionAvatar(themeConfig));
+    actions.add(buildActionItem("Mensajes", Icons.message));
+    actions.add(buildActionItem("Ordenes", Icons.content_paste));
+    actions.add(buildActionItem("Carrito", Icons.shopping_cart));
+    return actions;
+  }
 
-    actions.add(Container(
+  Widget buildActionItem(String text, IconData icon) {
+    return InkWell(
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            vertical: 10,
+            horizontal: 5,
+          ),
+          alignment: Alignment.centerLeft,
+          child: Row(
+            children: [
+              Icon(
+                icon,
+                color: Colors.white,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 20,
+                ),
+                child: Text(
+                  text,
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle2
+                      .copyWith(color: Colors.white),
+                  textAlign: TextAlign.left,
+                ),
+              )
+            ],
+          ),
+        ),
+        onTap: () => {
+              //BlocProvider.of<CategoryBloc>(context).add(CategoryHide()),
+              //BlocProvider.of<ProductBloc>(context).add(ProductLoad(_item.id)),
+            });
+  }
+
+  Container buildActionAvatar(ThemeConfig themeConfig) {
+    return Container(
       padding:
           EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalLarge, 10, 0, 0),
       alignment: Alignment.center,
+      width: 100,
       child: Row(
         children: [
           CircleAvatar(
@@ -95,71 +146,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-    ));
-
-    actions.add(Container(
-      padding:
-          EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalLarge, 10, 0, 0),
-      alignment: Alignment.centerLeft,
-      child: Row(
-        children: [
-          Icon(
-            Icons.message,
-            color: Colors.white,
-          ),
-          Text(
-            "Mensajes",
-            style: Theme.of(context)
-                .textTheme
-                .bodyText2
-                .copyWith(color: Colors.white),
-          )
-        ],
-      ),
-    ));
-
-    actions.add(Container(
-      padding:
-          EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalLarge, 10, 0, 0),
-      alignment: Alignment.centerLeft,
-      child: Row(
-        children: [
-          Icon(
-            Icons.content_paste,
-            color: Colors.white,
-          ),
-          Text(
-            "Ordenes",
-            style: Theme.of(context)
-                .textTheme
-                .bodyText2
-                .copyWith(color: Colors.white),
-          )
-        ],
-      ),
-    ));
-
-    actions.add(Container(
-      padding:
-          EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalLarge, 10, 0, 0),
-      alignment: Alignment.centerLeft,
-      child: Row(
-        children: [
-          Icon(
-            Icons.shopping_cart,
-            color: Colors.white,
-          ),
-          Text(
-            "Carrito",
-            style: Theme.of(context)
-                .textTheme
-                .bodyText2
-                .copyWith(color: Colors.white),
-          )
-        ],
-      ),
-    ));
-
-    return actions;
+    );
   }
 }

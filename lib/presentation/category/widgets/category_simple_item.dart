@@ -14,14 +14,28 @@ class CategoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
         child: Container(
-          alignment: Alignment.centerLeft,
           padding: EdgeInsets.symmetric(
             vertical: 10,
             horizontal: 5,
           ),
-          child: Text(
-            _item.name,
-            style: Theme.of(context).textTheme.subtitle2,
+          alignment: Alignment.centerLeft,
+          child: Row(
+            children: [
+              Icon(
+                IconData(int.parse(_item.icon), fontFamily: 'MaterialIcons'),
+                color: Theme.of(context).accentColor,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 20,
+                ),
+                child: Text(
+                  _item.name,
+                  style: Theme.of(context).textTheme.subtitle2,
+                  textAlign: TextAlign.left,
+                ),
+              )
+            ],
           ),
         ),
         onTap: () => {
