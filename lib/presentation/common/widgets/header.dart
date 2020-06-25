@@ -3,30 +3,42 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qapaq_b2b/configuration/theme.dart';
 import 'package:qapaq_b2b/dependencies_provider.dart';
 import 'package:qapaq_b2b/presentation/category/category_bloc.dart';
+import 'package:qapaq_b2b/presentation/common/widgets/header_actions.dart';
 import 'package:qapaq_b2b/presentation/product/product_bloc.dart';
 import 'package:qapaq_b2b/services/category_repository.dart';
 
-class MyAppBar {
-  static Widget appBar(
-      TextEditingController searchController, BuildContext context) {
+class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
+  MyAppBar({Key key})
+      : preferredSize = Size.fromHeight(kToolbarHeight),
+        super(key: key);
+
+  @override
+  final Size preferredSize; // default is 56.0
+
+  @override
+  _MyAppBarState createState() => _MyAppBarState();
+}
+
+class _MyAppBarState extends State<MyAppBar> {
+  @override
+  Widget build(BuildContext context) {
     final ThemeConfig themeConfig = ThemeConfig.instance(context);
-    var titleWiget = _TitleWiget(textController: searchController);
 
     return AppBar(
-      elevation: 0.1,
-      title: titleWiget,
+      //elevation: 0.1,
+      title: _MyTittle(),
       actions: themeConfig.isDesktop && !themeConfig.isSmallDesktop
-          ? titleWiget.buildActions(context)
+          ? MyActions().buildActions(context)
           : [],
       iconTheme: new IconThemeData(color: Colors.white),
     );
   }
 }
 
-class _TitleWiget extends StatelessWidget {
+class _MyTittle extends StatelessWidget {
   final TextEditingController textController;
 
-  const _TitleWiget({Key key, this.textController}) : super(key: key);
+  const _MyTittle({Key key, this.textController}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,92 +50,30 @@ class _TitleWiget extends StatelessWidget {
         ),
         child: Row(
           mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            if (themeConfig.isDesktop && !themeConfig.isSmallDesktop)
-              Container(
-                padding: EdgeInsets.fromLTRB(
-                    0, 0, themeConfig.appPaddingHorizontalLarge, 0),
-                child: Image.asset(
-                  themeConfig.isDesktop && !themeConfig.isSmallDesktop
-                      ? 'img/logo_qapaq.png'
-                      : 'img/logo_qapaq_small.png',
-                  fit: BoxFit.contain,
-                  height: 32,
-                ),
+            Container(
+              child: Image.asset(
+                themeConfig.isDesktop && !themeConfig.isSmallDesktop
+                    ? 'img/logo_qapaq.png'
+                    : 'img/logo_qapaq_small.png',
+                fit: BoxFit.contain,
+                height: 32,
               ),
-            Expanded(
+            ),
+            Container(
               child: IconButton(
                   icon: Icon(Icons.search, color: Colors.white),
                   onPressed: () {
-                    showSearch(context: context, delegate: DataSearch());
+                    showSearch(context: context, delegate: _DataSearch());
                   }),
             ),
           ],
         ));
   }
-
-  List<Widget> buildActions(BuildContext context) {
-    final ThemeConfig themeConfig = ThemeConfig.instance(context);
-    final List<Widget> actions = [];
-    actions.add(buildActionAvatar(themeConfig));
-    actions
-        .add(buildActionItem(context, themeConfig, "Mensajes", Icons.message));
-    actions.add(
-        buildActionItem(context, themeConfig, "Ordenes", Icons.content_paste));
-    actions.add(
-        buildActionItem(context, themeConfig, "Carrito", Icons.shopping_cart));
-    return actions;
-  }
-
-  Widget buildActionItem(BuildContext context, ThemeConfig themeConfig,
-  String text, IconData icon) {
-    return InkWell(
-      child: Container(
-        padding:
-        EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalSmall, 10, 0, 0),
-        alignment: Alignment.centerLeft,
-        child: Column(
-          children: [
-            Icon(
-              icon,
-              color: Colors.white,
-            ),
-            Text(
-              text,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText2
-                  .copyWith(fontSize: 10, color: Colors.white),
-              textAlign: TextAlign.center,
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildActionAvatar(ThemeConfig themeConfig) {
-    return Container(
-      padding:
-      EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalLarge, 0, 0, 0),
-      alignment: Alignment.centerLeft,
-      child: Row(
-        children: [
-          CircleAvatar(
-            backgroundImage: AssetImage("img/logo.jpeg"),
-            radius: 14,
-          ),
-          Icon(
-            Icons.arrow_drop_down,
-            color: Colors.white,
-          ),
-        ],
-      ),
-    );
-  }
 }
 
-class DataSearch extends SearchDelegate<String> {
+class _DataSearch extends SearchDelegate<String> {
   final CategoryRepository _repository = getIt<CategoryRepository>();
 
   @override
