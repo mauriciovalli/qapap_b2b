@@ -3,5 +3,6 @@ class CategoryModel{
   String name ;
   String image ;
   String icon ;
-  CategoryModel({this.id,this.name,this.image,this.icon});
+  bool isSelected;
+  CategoryModel({this.id,this.name,this.image,this.icon, this.isSelected=false});
 }

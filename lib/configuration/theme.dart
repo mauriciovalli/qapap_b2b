@@ -39,21 +39,20 @@ class CompanyColors {
 
 
 class ThemeConfig {
-  final double textFieldHeight = 60.0;
-  final double appPaddingLargeW = 120.0;
-  final double appPaddingLargeM = 12.0;
+  final double _appPaddingLargeW = 120.0;
+  final double _appPaddingLargeM = 12.0;
 
-  final double appPaddingSmallW = 20.0;
-  final double appPaddingSmallM = 4.0;
+  final double _appPaddingSmallW = 20.0;
+  final double _appPaddingSmallM = 4.0;
 
-  final double appPaddingVerticalW = 20.0;
-  final double appPaddingVerticalM = 10.0;
+  final double _appPaddingVerticalW = 20.0;
+  final double _appPaddingVerticalM = 10.0;
 
-  final double titleFontSizeW = 18.0;
-  final double titleFontSizeM = 12.0;
+  final double _titleFontSizeW = 18.0;
+  final double _titleFontSizeM = 12.0;
 
-  final double subTitleFontSizeW = 14.0;
-  final double subTitleFontSizeM = 8.0;
+  final double _subTitleFontSizeW = 14.0;
+  final double _subTitleFontSizeM = 8.0;
 
   bool isDesktop;
   bool isSmallDesktop;
@@ -68,17 +67,17 @@ class ThemeConfig {
     isSmallDesktop = isDisplaySmallDesktop(context);
 
     appPaddingHorizontalLarge =
-        isDesktop && !isSmallDesktop ? appPaddingLargeW : appPaddingLargeM;
+        isDesktop && !isSmallDesktop ? _appPaddingLargeW : _appPaddingLargeM;
     appPaddingHorizontalSmall =
-        isDesktop && !isSmallDesktop ? appPaddingSmallW : appPaddingSmallM;
+        isDesktop && !isSmallDesktop ? _appPaddingSmallW : _appPaddingSmallM;
     appPaddingVertical = isDesktop && !isSmallDesktop
-        ? appPaddingVerticalW
-        : appPaddingVerticalM;
+        ? _appPaddingVerticalW
+        : _appPaddingVerticalM;
     subTitleFontSize =
-        isDesktop && !isSmallDesktop ? subTitleFontSizeW : subTitleFontSizeM;
+        isDesktop && !isSmallDesktop ? _subTitleFontSizeW : _subTitleFontSizeM;
 
     titleFontSize =
-        isDesktop && !isSmallDesktop ? titleFontSizeW : titleFontSizeM;
+        isDesktop && !isSmallDesktop ? _titleFontSizeW : _titleFontSizeM;
   }
 
   static ThemeConfig instance(BuildContext context) {

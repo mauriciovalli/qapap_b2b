@@ -13,7 +13,7 @@ class MyDrawer extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  height: 200,
+                  height: 240,
                   child: Column(children: buildActions(context)),
                 ),
                 Expanded(child: CategorySimpleList()),
@@ -32,12 +32,8 @@ class MyDrawer extends StatelessWidget {
   }
 
   Widget buildActionItem(BuildContext context, String text, IconData icon) {
-    return InkWell(
-        child: Container(
-          padding: EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 5,
-          ),
+    return ListTile(
+        title: Container(
           alignment: Alignment.centerLeft,
           child: Row(
             children: [

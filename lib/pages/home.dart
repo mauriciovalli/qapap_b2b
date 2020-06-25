@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   if (themeConfig.isDesktop && !themeConfig.isSmallDesktop)
                     Container(
-                      width: 270,
+                      width: 280,
                       child: CategorySimpleList(),
                     ),
                   Expanded(
