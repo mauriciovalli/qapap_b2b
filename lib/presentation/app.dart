@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:qapaq_b2b/configuration/theme.dart';
 import 'package:qapaq_b2b/pages/home.dart';
 import 'package:qapaq_b2b/presentation/category/category_bloc.dart';
 import 'package:qapaq_b2b/presentation/product/product_bloc.dart';
@@ -22,17 +23,7 @@ class App extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Qapaq',
-        theme: ThemeData(
-          primarySwatch: Colors.red,
-          textTheme: TextTheme(
-            bodyText1: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          iconTheme: IconThemeData(
-            color: Colors.white,
-          ),
-        ),
+        theme: CompanyThemeData,
         home: HomePage(),
       ),
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qapaq_b2b/configuration/theme_config.dart';
+import 'package:qapaq_b2b/configuration/theme.dart';
 import 'package:qapaq_b2b/models/category.dart';
 import 'package:qapaq_b2b/presentation/product/product_bloc.dart';
 

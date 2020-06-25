@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qapaq_b2b/configuration/theme_config.dart';
+import 'package:qapaq_b2b/configuration/theme.dart';
+import 'package:qapaq_b2b/dependencies_provider.dart';
 import 'package:qapaq_b2b/models/category_repository.dart';
 import 'package:qapaq_b2b/models/product_repository.dart';
 import 'package:qapaq_b2b/presentation/category/category_bloc.dart';
 import 'package:qapaq_b2b/presentation/product/product_bloc.dart';
 
-import '../../../dependencies_provider.dart';
-
 class MyAppBar {
-  static Widget appBar(TextEditingController searchController,
-      BuildContext context) {
-
+  static Widget appBar(
+      TextEditingController searchController, BuildContext context) {
     final ThemeConfig themeConfig = ThemeConfig.instance(context);
     var titleWiget = _TitleWiget(textController: searchController);
 
@@ -41,20 +39,24 @@ class _TitleWiget extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.max,
           children: [
-            if(themeConfig.isDesktop && !themeConfig.isSmallDesktop)
+            if (themeConfig.isDesktop && !themeConfig.isSmallDesktop)
               Container(
                 padding: EdgeInsets.fromLTRB(
                     0, 0, themeConfig.appPaddingHorizontalLarge, 0),
                 child: Image.asset(
-                  themeConfig.isDesktop && !themeConfig.isSmallDesktop ? 'img/logo_qapaq.png' : 'img/logo_qapaq_small.png',
+                  themeConfig.isDesktop && !themeConfig.isSmallDesktop
+                      ? 'img/logo_qapaq.png'
+                      : 'img/logo_qapaq_small.png',
                   fit: BoxFit.contain,
                   height: 32,
                 ),
               ),
             Expanded(
-              child: IconButton(icon: Icon(Icons.search), onPressed: () {
-                showSearch(context: context, delegate: DataSearch());
-              }),
+              child: IconButton(
+                  icon: Icon(Icons.search, color: Colors.white),
+                  onPressed: () {
+                    showSearch(context: context, delegate: DataSearch());
+                  }),
             ),
           ],
         ));
@@ -66,7 +68,7 @@ class _TitleWiget extends StatelessWidget {
 
     actions.add(Container(
       padding:
-      EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalLarge, 0, 0, 0),
+          EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalLarge, 0, 0, 0),
       alignment: Alignment.centerLeft,
       child: Row(
         children: [
@@ -84,7 +86,7 @@ class _TitleWiget extends StatelessWidget {
 
     actions.add(Container(
       padding:
-      EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalSmall, 10, 0, 0),
+          EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalSmall, 10, 0, 0),
       alignment: Alignment.centerLeft,
       child: Column(
         children: [
@@ -105,7 +107,7 @@ class _TitleWiget extends StatelessWidget {
 
     actions.add(Container(
       padding:
-      EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalSmall, 10, 0, 0),
+          EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalSmall, 10, 0, 0),
       alignment: Alignment.centerLeft,
       child: Column(
         children: [
@@ -126,7 +128,7 @@ class _TitleWiget extends StatelessWidget {
 
     actions.add(Container(
       padding:
-      EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalSmall, 10, 0, 0),
+          EdgeInsets.fromLTRB(themeConfig.appPaddingHorizontalSmall, 10, 0, 0),
       alignment: Alignment.centerLeft,
       child: Column(
         children: [
@@ -156,19 +158,22 @@ class DataSearch extends SearchDelegate<String> {
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
-      IconButton(icon: Icon(Icons.clear), onPressed: () {
-        query = "";
-      })
+      IconButton(
+          icon: Icon(Icons.clear),
+          onPressed: () {
+            query = "";
+          })
     ];
   }
 
   @override
   Widget buildLeading(BuildContext context) {
     // leading icon on the left of the app bar
-    return IconButton(icon: AnimatedIcon(
-      icon: AnimatedIcons.menu_arrow,
-      progress: transitionAnimation,
-    ),
+    return IconButton(
+        icon: AnimatedIcon(
+          icon: AnimatedIcons.menu_arrow,
+          progress: transitionAnimation,
+        ),
         onPressed: () {
           close(context, null);
         });
@@ -176,42 +181,47 @@ class DataSearch extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return IconButton(icon: AnimatedIcon(
-      icon: AnimatedIcons.menu_arrow,
-      progress: transitionAnimation,
-    ),
-        onPressed: () {
-
-        });
+    return IconButton(
+        icon: AnimatedIcon(
+          icon: AnimatedIcons.menu_arrow,
+          progress: transitionAnimation,
+        ),
+        onPressed: () {});
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final suggestionList = query.isEmpty ? _repository.list() : _repository.list().where((element) => element.name.startsWith(query)).toList();
+    final suggestionList = query.isEmpty
+        ? _repository.list()
+        : _repository
+            .list()
+            .where((element) => element.name.startsWith(query))
+            .toList();
 
-    return ListView.builder(itemBuilder: (context, index) => ListTile(
-      onTap: () {
-        var categorySelected = _repository.findByName(suggestionList[index].name);
-        BlocProvider.of<CategoryBloc>(context).add(CategoryHide());
-        BlocProvider.of<ProductBloc>(context).add(ProductLoad(categorySelected.id));
-        close(context, null);
-      },
-      leading: Icon(Icons.local_airport),
-      title: RichText(
-          text: TextSpan(
-              text: suggestionList[index].name.substring(0, query.length),
-              style: TextStyle(
-                  color: Colors.black, fontWeight: FontWeight.bold),
-              children: [
-                TextSpan(
-                  text: suggestionList[index].name.substring(query.length),
-                  style: TextStyle(color: Colors.grey),
-                ),
-              ])
+    return ListView.builder(
+      itemBuilder: (context, index) => ListTile(
+        onTap: () {
+          var categorySelected =
+              _repository.findByName(suggestionList[index].name);
+          BlocProvider.of<CategoryBloc>(context).add(CategoryHide());
+          BlocProvider.of<ProductBloc>(context)
+              .add(ProductLoad(categorySelected.id));
+          close(context, null);
+        },
+        leading: Icon(Icons.local_airport),
+        title: RichText(
+            text: TextSpan(
+                text: suggestionList[index].name.substring(0, query.length),
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                children: [
+              TextSpan(
+                text: suggestionList[index].name.substring(query.length),
+                style: TextStyle(color: Colors.grey),
+              ),
+            ])),
       ),
-    ),
       itemCount: suggestionList.length,
     );
   }
-
 }

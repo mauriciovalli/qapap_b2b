@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qapaq_b2b/configuration/theme_config.dart';
+import 'package:qapaq_b2b/configuration/theme.dart';
 import 'package:qapaq_b2b/presentation/category/widgets/category_list.dart';
 import 'package:qapaq_b2b/presentation/category/widgets/category_simple_list.dart';
 import 'package:qapaq_b2b/presentation/common/widgets/header.dart';
@@ -22,24 +22,48 @@ class _HomePageState extends State<HomePage> {
     final ThemeConfig themeConfig = ThemeConfig.instance(context);
 
     return Scaffold(
-      appBar: MyAppBar.appBar(searchController, context),
-      drawer: themeConfig.isDesktop && !themeConfig.isSmallDesktop
-          ? null
-          : buildDrawer(),
-      body: MediaQuery.of(context).size.width < 1000
-          ? Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [MySwiper(), CategoryList(), ProductList()])
-          : Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CategorySimpleList(),
-                MySwiper(),
-                CategoryList(),
-                ProductList()
-              ],
+        appBar: MyAppBar.appBar(searchController, context),
+        drawer: themeConfig.isDesktop && !themeConfig.isSmallDesktop
+            ? null
+            : buildDrawer(),
+        body: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            MySwiper(),
+            Container(
+              height: 30,
+              width: MediaQuery.of(context).size.width,
+              color: Theme.of(context).accentColor,
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.symmetric(
+                horizontal: 5,
+              ),
+              child: Text(
+                "Categorias",
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle2
+                    .copyWith(color: Colors.white),
+              ),
             ),
-    );
+            Expanded(
+              flex: 6,
+              child: Row(
+                children: [
+                  //if (MediaQuery.of(context).size.width < 1000)
+                  Expanded(
+                    flex: 1,
+                    child: CategorySimpleList(),
+                  ),
+                  Expanded(
+                    flex: 6,
+                    child: Column(children: [CategoryList(), ProductList()]),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ));
   }
 
   Widget buildDrawer() {
