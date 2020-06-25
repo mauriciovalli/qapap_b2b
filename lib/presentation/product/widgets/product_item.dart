@@ -13,6 +13,8 @@ class ProductItem extends StatelessWidget {
     oldPrice = _item.oldPrice.toString();
   }
 
+  // esta es la gran mod de JAVI
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -34,12 +36,13 @@ class ProductItem extends StatelessWidget {
     return Card(
       elevation: 10,
       margin: EdgeInsets.all(10),
-      child: Container(
-        child: Column(
+      child: FractionallySizedBox(
+        child: Row(
           children: <Widget>[
             Expanded(
               child: Container(
-                alignment: Alignment.topCenter,
+                height: 150,
+                alignment: Alignment.center,
                 child: _item.image.contains('http')
                     ? CachedNetworkImage(
                   placeholder: (context, url) =>
@@ -52,7 +55,7 @@ class ProductItem extends StatelessWidget {
                   fit: BoxFit.scaleDown,
                 ),
               ),
-              flex: 5,
+              flex: 10,
             ),
             Expanded(
               child: ListTile(
@@ -84,10 +87,11 @@ class ProductItem extends StatelessWidget {
                   ],
                 ),
               ),
-              flex: 3,
+              flex: 7,
             )
           ],
         ),
+ //       heightFactor: 0.1,
       ),
     );
   }
