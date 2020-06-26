@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:qapaq_b2b/pages/chat.dart';
 
 class MyActions {
   List<Widget> buildActions(BuildContext context) {
     final List<Widget> actions = [];
     actions.add(buildActionAvatar());
     actions
-        .add(buildActionItem(context, "Mensajes", Icons.message));
+        .add(buildActionItem(context, "Mensajes", Icons.message, ChatPage()));
     actions.add(
-        buildActionItem(context, "Ordenes", Icons.content_paste));
+        buildActionItem(context, "Ordenes", Icons.content_paste, null));
     actions.add(
-        buildActionItem(context, "Carrito", Icons.shopping_cart));
+        buildActionItem(context, "Carrito", Icons.shopping_cart, null));
     return actions;
   }
 
@@ -34,7 +35,7 @@ class MyActions {
   }
 
   Widget buildActionItem(BuildContext context,
-      String text, IconData icon) {
+      String text, IconData icon, Widget navigate) {
     return InkWell(
       child: Container(
         padding:
@@ -58,6 +59,10 @@ class MyActions {
           ],
         ),
       ),
+      onTap: () => Navigator.push(
+          context,
+          new MaterialPageRoute(
+              builder: (context) => navigate))
     );
   }
 }
