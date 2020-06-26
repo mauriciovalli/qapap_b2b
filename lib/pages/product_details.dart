@@ -1,5 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:qapaq_b2b/configuration/theme.dart';
+import 'package:qapaq_b2b/presentation/common/widgets/drawer.dart';
+import 'package:qapaq_b2b/presentation/common/widgets/header.dart';
+import 'package:qapaq_b2b/presentation/common/widgets/swiper.dart';
 
 class ProductDetails extends StatefulWidget {
   final productDetailsName;
@@ -24,28 +28,39 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeConfig themeConfig = ThemeConfig.instance(context);
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.productDetailsName),
-      ),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: buildCard(),
-            flex: 5,
-          ),
-          Expanded(
-            child: buildChoice(),
-          ),
-          Expanded(
-            child: buildDescription(),
-          ),
-          Expanded(
-            child: buildAddToRow(),
-          ),
-        ],
-      ),
-    );
+        appBar: MyAppBar(),
+        drawer: themeConfig.isDesktop && !themeConfig.isSmallDesktop
+            ? null
+            : MyDrawer(),
+        body: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            MySwiper(),
+            Expanded(
+              flex: 9,
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: buildCard(),
+                    flex: 5,
+                  ),
+                  Expanded(
+                    child: buildChoice(),
+                  ),
+                  Expanded(
+                    child: buildDescription(),
+                  ),
+                  Expanded(
+                    child: buildAddToRow(),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ));
   }
 
   Widget buildCard() {
