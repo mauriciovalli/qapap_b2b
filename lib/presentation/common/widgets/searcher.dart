@@ -22,6 +22,7 @@ class WebSearcher extends StatelessWidget {
       child: Container(
         height: 40,
         //margin: EdgeInsets.all(100),
+        color: Theme.of(context).primaryColor,
         child: TypeAheadFormField(
           textFieldConfiguration: TextFieldConfiguration(
             autofocus: false,
