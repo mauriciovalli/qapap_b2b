@@ -32,12 +32,12 @@ class ProductItem extends StatelessWidget {
                     productDetailsPicture: _item.image,
                     productDetailsOldPrice: _item.oldPrice,
                     productDetailsNewPrice: _item.price,
-                    productDetailsUnits: "100 kilos",
-                    productDetailsCompanyIco: "ICO",
-                    productDetailsCompName: "Qapaq",
-                    productDetailsCountryIco: "CIC",
-                    productDetailsCountryName: "Arg",
-                    productDetailsAge: "2 years",
+                    productDetailsUnits: "_item.minPed",
+                    productDetailsCompanyIco: "_item.coImage",
+                    productDetailsCompName: "_item.coName",
+                    productDetailsCountryIco: "_item.cImage",
+                    productDetailsCountryName: "_item.countr",
+                    productDetailsAge: "_item.cAge",
 
                   ))),
     );
@@ -159,7 +159,7 @@ class ProductItem extends StatelessWidget {
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Text("Contact Vendedor", style: TextStyle(fontSize: 10),),
+                                            child: Text("Contactar Vendedor", style: TextStyle(fontSize: 10),),
                                           ),
                                         ),
                                         // ),
