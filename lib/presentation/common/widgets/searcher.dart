@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:qapaq_b2b/configuration/theme.dart';
 import 'package:qapaq_b2b/presentation/category/category_bloc.dart';
 import 'package:qapaq_b2b/presentation/product/product_bloc.dart';
 import 'package:qapaq_b2b/services/category_repository.dart';
@@ -22,7 +23,6 @@ class WebSearcher extends StatelessWidget {
     return Expanded(
       child: Container(
           margin: EdgeInsets.all(100),
-          color: Color(0xFFA12121),
           child: TypeAheadField(
             textFieldConfiguration: TextFieldConfiguration(
               autofocus: false,
