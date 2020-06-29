@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qapaq_b2b/configuration/theme.dart';
-import 'package:qapaq_b2b/dependencies_provider.dart';
-import 'package:qapaq_b2b/presentation/category/category_bloc.dart';
 import 'package:qapaq_b2b/presentation/common/widgets/header_actions.dart';
-import 'package:qapaq_b2b/presentation/product/product_bloc.dart';
-import 'package:qapaq_b2b/services/category_repository.dart';
+import 'package:qapaq_b2b/presentation/common/widgets/searcher.dart';
 
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   MyAppBar({Key key})
@@ -49,7 +45,7 @@ class _MyTittle extends StatelessWidget {
           vertical: themeConfig.appPaddingVertical,
         ),
         child: Row(
-          mainAxisSize: MainAxisSize.max,
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
@@ -62,87 +58,13 @@ class _MyTittle extends StatelessWidget {
               ),
             ),
             Container(
-              child: IconButton(
+              child: themeConfig.isDesktop ? WebSearcher() : IconButton(
                   icon: Icon(Icons.search, color: Colors.white),
                   onPressed: () {
-                    showSearch(context: context, delegate: _DataSearch());
+                    showSearch(context: context, delegate: MobileDataSearcher());
                   }),
             ),
           ],
         ));
-  }
-}
-
-class _DataSearch extends SearchDelegate<String> {
-  final CategoryRepository _repository = getIt<CategoryRepository>();
-
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(
-          icon: Icon(Icons.clear),
-          onPressed: () {
-            query = "";
-          })
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    // leading icon on the left of the app bar
-    return IconButton(
-        icon: AnimatedIcon(
-          icon: AnimatedIcons.menu_arrow,
-          progress: transitionAnimation,
-        ),
-        onPressed: () {
-          close(context, null);
-        });
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    return IconButton(
-        icon: AnimatedIcon(
-          icon: AnimatedIcons.menu_arrow,
-          progress: transitionAnimation,
-        ),
-        onPressed: () {});
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    final suggestionList = query.isEmpty
-        ? _repository.list()
-        : _repository
-            .list()
-            .where((element) => element.name.startsWith(query))
-            .toList();
-
-    return ListView.builder(
-      itemBuilder: (context, index) => ListTile(
-        onTap: () {
-          var categorySelected =
-              _repository.findByName(suggestionList[index].name);
-          BlocProvider.of<CategoryBloc>(context).add(CategoryHide());
-          BlocProvider.of<ProductBloc>(context)
-              .add(ProductLoad(categorySelected.id));
-          close(context, null);
-        },
-        leading: Icon(Icons.local_airport),
-        title: RichText(
-            text: TextSpan(
-                text: suggestionList[index].name.substring(0, query.length),
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                children: [
-              TextSpan(
-                text: suggestionList[index].name.substring(query.length),
-                style: TextStyle(color: Colors.grey),
-              ),
-            ])),
-      ),
-      itemCount: suggestionList.length,
-    );
   }
 }
