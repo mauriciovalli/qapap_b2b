@@ -62,7 +62,7 @@ class CategoryInMemoryRepository implements CategoryRepository {
 
   @override
   List<CategoryModel> listByName(String pattern) {
-   return _parse(jsonDecode(categoriesJson)).where((element) => element.name.toLowerCase().startsWith(pattern.toLowerCase())).toList();
+   return _parse(jsonDecode(categoriesJson)).where((element) => element.name.toLowerCase().contains(pattern.toLowerCase())).toList();
   }
 
   @override

@@ -4,7 +4,6 @@ import 'package:qapaq_b2b/presentation/category/widgets/category_list.dart';
 import 'package:qapaq_b2b/presentation/category/widgets/category_simple_list.dart';
 import 'package:qapaq_b2b/presentation/common/widgets/drawer.dart';
 import 'package:qapaq_b2b/presentation/common/widgets/header.dart';
-import 'package:qapaq_b2b/presentation/common/widgets/swiper.dart';
 import 'package:qapaq_b2b/presentation/product/widgets/product_list.dart';
 
 class HomePage extends StatefulWidget {
@@ -53,7 +52,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   if (themeConfig.isDesktop && !themeConfig.isSmallDesktop)
                     Container(
-                      width: (MediaQuery.of(context).size.width ~/ 4.0).floorToDouble(),
+                      width: 280,
                       child: CategorySimpleList(),
                     ),
                   Expanded(

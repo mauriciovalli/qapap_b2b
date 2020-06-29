@@ -45,7 +45,7 @@ class _MyTittle extends StatelessWidget {
           vertical: themeConfig.appPaddingVertical,
         ),
         child: Row(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
