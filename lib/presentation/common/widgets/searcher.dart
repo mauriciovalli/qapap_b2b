@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_typeahead_web/flutter_typeahead.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:qapaq_b2b/dependencies_provider.dart';
 import 'package:qapaq_b2b/presentation/category/category_bloc.dart';
 import 'package:qapaq_b2b/presentation/product/product_bloc.dart';
