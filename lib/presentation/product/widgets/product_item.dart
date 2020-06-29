@@ -114,7 +114,7 @@ class ProductItem extends StatelessWidget {
                                       Text("  "),
                                       Text("BPMX Co. Limited", style: TextStyle(fontSize: 12),)],),
                                     Row(children: [ Text("  "),
-                                      Icon(Icons.flag, size: 20,color: Colors.blue),
+                                      Container(height: 10, child: Tab(icon: Image.asset('icons/flags/png/ar.png', package: 'country_icons'))),
                                       Text("  "),
                                       Text("Arg. 10 años", style: TextStyle(fontSize: 12))],),
                                   ],
@@ -150,7 +150,7 @@ class ProductItem extends StatelessWidget {
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Text("Contact Vendedor", style: TextStyle(fontSize: 10),),
+                                            child: Text("Contactar Vendedor", style: TextStyle(fontSize: 10),),
                                           ),
                                         ),
                                         // ),
