@@ -123,7 +123,7 @@ class ProductItem extends StatelessWidget {
                                       Text("BPMX Co. Limited", style: TextStyle(fontSize: 12),
                                         overflow: TextOverflow.ellipsis,)],),
                                     Row(children: [ Text("  "),
-                                      Icon(Icons.flag, size: 20,color: Colors.blue),
+                                      Container(height: 10, child: Tab(icon: Image.asset('icons/flags/png/ar.png', package: 'country_icons'))),
                                       Text("  "),
                                       Text("Arg. 10 años", style: TextStyle(fontSize: 12))],),
                                   ],
