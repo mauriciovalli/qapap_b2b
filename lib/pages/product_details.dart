@@ -10,12 +10,24 @@ class ProductDetails extends StatefulWidget {
   final productDetailsOldPrice;
   final productDetailsNewPrice;
   final productDetailsPicture;
+  final productDetailsUnits;
+  final productDetailsCompanyIco;
+  final productDetailsCompName;
+  final productDetailsCountryIco;
+  final productDetailsCountryName;
+  final productDetailsAge;
 
   ProductDetails(
       {this.productDetailsName,
       this.productDetailsPicture,
       this.productDetailsOldPrice,
-      this.productDetailsNewPrice});
+      this.productDetailsNewPrice,
+      this.productDetailsUnits,
+      this.productDetailsCompanyIco,
+      this.productDetailsCompName,
+      this.productDetailsCountryIco,
+      this.productDetailsCountryName,
+      this.productDetailsAge});
 
   @override
   _ProductDetailsState createState() => _ProductDetailsState();
@@ -76,6 +88,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         child: Column(
           children: <Widget>[
             Expanded(
+              flex: 6,
               child: Container(
                 child: widget.productDetailsPicture.contains('http')
                     ? CachedNetworkImage(
@@ -90,7 +103,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ),
                 padding: EdgeInsets.all(20),
               ),
-              flex: 6,
             ),
             Expanded(
               child: Row(
@@ -149,7 +161,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                 ],
               ),
-              flex: 1,
             )
           ],
         ),
