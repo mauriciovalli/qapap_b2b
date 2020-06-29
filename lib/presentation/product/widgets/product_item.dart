@@ -72,37 +72,45 @@ class ProductItem extends StatelessWidget {
               flex: 7,
               child: Container(
                 height: 200,
-                  child: Column(children: [
-                    Expanded(flex: 3,
-                      child: Container(
+                  child: Column(children:[
+                    Expanded(flex:3,
+                      child: Container (
                         color: Colors.grey,
-                        width: 1000,
-                          child: Column (
-                            children: [
-                            Text("  "),
-                            Text(_item.name,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            Text("  "),
-                            Text("U\$$price",
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: Colors.red,
-                                fontWeight: FontWeight.w800,),
-                            ),
-                            Text("U\$$oldPrice",
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: Colors.blueGrey,
-                                fontWeight: FontWeight.w400,
-                                decoration: TextDecoration.lineThrough),
-                            ),
-                            Text("  "),
-                            Text("  "),
-                            Text("USS 100 x cada mil unidades"),
+                        child: Row(children: [
+                            Text("   ",),
+                          Expanded(flex: 7,
+                            child: Container(
+                              color: Colors.grey,
+                              width: 1000,
+                              child: Column (crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("  "),
+                                  Text(_item.name,
+                                   maxLines: 2,
+                                   overflow: TextOverflow.ellipsis,
+                                    ),
+                                  Text("  "),
+                                  Text("U\$$price",
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.w800,),
+                                    ),
+                                  Text("U\$$oldPrice",
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                    color: Colors.blueGrey,
+                                    fontWeight: FontWeight.w400,
+                                    decoration: TextDecoration.lineThrough),
+                                  ),
+                                  Text("  "),
+                                  Text("  "),
+                                  Text("USS 100 x cada mil unidades"),
                         ],),
                       ),
+                      ),
+                      ],),
+                    ),
                     ),
                     Expanded(child: Container(
                         color: Colors.blueGrey,
@@ -112,7 +120,8 @@ class ProductItem extends StatelessWidget {
                                     Row(children: [ Text("  "),
                                       Icon(Icons.collections, size: 20, color: Colors.yellow),
                                       Text("  "),
-                                      Text("BPMX Co. Limited", style: TextStyle(fontSize: 12),)],),
+                                      Text("BPMX Co. Limited", style: TextStyle(fontSize: 12),
+                                        overflow: TextOverflow.ellipsis,)],),
                                     Row(children: [ Text("  "),
                                       Icon(Icons.flag, size: 20,color: Colors.blue),
                                       Text("  "),
