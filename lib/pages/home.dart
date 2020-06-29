@@ -4,7 +4,6 @@ import 'package:qapaq_b2b/presentation/category/widgets/category_list.dart';
 import 'package:qapaq_b2b/presentation/category/widgets/category_simple_list.dart';
 import 'package:qapaq_b2b/presentation/common/widgets/drawer.dart';
 import 'package:qapaq_b2b/presentation/common/widgets/header.dart';
-import 'package:qapaq_b2b/presentation/common/widgets/swiper.dart';
 import 'package:qapaq_b2b/presentation/product/widgets/product_list.dart';
 
 class HomePage extends StatefulWidget {
@@ -28,14 +27,14 @@ class _HomePageState extends State<HomePage> {
         body: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            MySwiper(),
+            //MySwiper(),
             Container(
-              height: 30,
               width: MediaQuery.of(context).size.width,
               color: Theme.of(context).accentColor,
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.symmetric(
-                horizontal: 5,
+                horizontal: 20,
+                vertical: 10,
               ),
               child: Text(
                 themeConfig.isDesktop && !themeConfig.isSmallDesktop

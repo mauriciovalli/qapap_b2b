@@ -72,3 +72,4 @@
 
 #Qapaq
 .gradle/
+pubspec.lock

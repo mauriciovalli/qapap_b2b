@@ -6,7 +6,7 @@ final ThemeData CompanyThemeData = new ThemeData(
   primarySwatch: CompanyColors.red,
   brightness: Brightness.light,
   primaryColorBrightness: Brightness.light,
-  accentColor: CompanyColors.red[900],
+  accentColor: CompanyColors.red[700],
   accentColorBrightness: Brightness.light,
   textTheme: TextTheme(
     bodyText1: TextStyle(color: Colors.white),
@@ -18,7 +18,7 @@ final ThemeData CompanyThemeData = new ThemeData(
 class CompanyColors {
   CompanyColors._(); // this basically makes it so you can instantiate this class
 
-  static const int _redPrimaryValue = 0xFFA12121;
+  static const int _redPrimaryValue = 0xFFE72929;
 
   static const MaterialColor red = const MaterialColor(
     _redPrimaryValue,
@@ -30,9 +30,9 @@ class CompanyColors {
       400: Color(0xFFEF5350),
       500: Color(_redPrimaryValue),
       600: Color(0xFFE53935),
-      700: Color(0xFFD32F2F),
-      800: Color(0xFFC62828),
-      900: Color(0xFFB71C1C),
+      700: Color(0xFFDF0010),
+      800: Color(0xFFD63226),
+      900: Color(0xFFA3392D),
     },
   );
 }

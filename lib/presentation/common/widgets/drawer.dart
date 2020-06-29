@@ -8,7 +8,7 @@ class MyDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
         child: Container(
-            color: Colors.redAccent,
+            color: Theme.of(context).primaryColor,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -26,8 +26,8 @@ class MyDrawer extends StatelessWidget {
     final List<Widget> actions = [];
     actions.add(buildActionAvatar(themeConfig));
     actions.add(buildActionItem(context, "Mensajes", Icons.message));
-    actions.add(buildActionItem(context, "Ordenes", Icons.content_paste));
-    actions.add(buildActionItem(context, "Carrito", Icons.shopping_cart));
+    //actions.add(buildActionItem(context, "Ordenes", Icons.content_paste));
+    //actions.add(buildActionItem(context, "Carrito", Icons.shopping_cart));
     return actions;
   }
 
