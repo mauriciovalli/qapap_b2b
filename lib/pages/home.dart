@@ -28,14 +28,14 @@ class _HomePageState extends State<HomePage> {
         body: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            MySwiper(),
+            //MySwiper(),
             Container(
-              height: 30,
               width: MediaQuery.of(context).size.width,
               color: Theme.of(context).accentColor,
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.symmetric(
-                horizontal: 5,
+                horizontal: 20,
+                vertical: 10,
               ),
               child: Text(
                 themeConfig.isDesktop && !themeConfig.isSmallDesktop
@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   if (themeConfig.isDesktop && !themeConfig.isSmallDesktop)
                     Container(
-                      width: 280,
+                      width: (MediaQuery.of(context).size.width ~/ 4.0).floorToDouble(),
                       child: CategorySimpleList(),
                     ),
                   Expanded(
