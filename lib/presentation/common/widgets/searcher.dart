@@ -36,14 +36,24 @@ class _WebSearcherState extends State<WebSearcher> {
     return Expanded(
       child: Container(
         height: 40,
-        //margin: EdgeInsets.all(100),
+        //padding: EdgeInsets.fromLTRB(0, 50, 50, 50),
+        alignment: Alignment.centerLeft,
+        margin: EdgeInsets.fromLTRB(0, 30, 0, 30),
         color: Theme.of(context).primaryColor,
         child: TypeAheadFormField(
           textFieldConfiguration: TextFieldConfiguration(
             autofocus: false,
-            style: DefaultTextStyle.of(context)
-                .style
-                .copyWith(fontStyle: FontStyle.italic),
+
+//            style: DefaultTextStyle.of(context)
+//                .style
+//                .copyWith(fontStyle: FontStyle.italic),
+//            decoration: InputDecoration(
+//                border: OutlineInputBorder(),
+//                hintText: 'What are you looking for?'),
+
+            style: Theme.of(context).textTheme.bodyText1.copyWith(color: Colors.black, fontStyle: FontStyle.italic, fontSize: 16),
+              textAlign: TextAlign.start,
+
             decoration: InputDecoration(
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(25),
@@ -55,18 +65,15 @@ class _WebSearcherState extends State<WebSearcher> {
                 borderSide: BorderSide(
                     color: Theme.of(context).accentColor, width: 2.0),
               ),
-              //contentPadding: const EdgeInsets.all(16),
+              contentPadding: const EdgeInsets.all(16),
               fillColor: Colors.white,
               filled: true,
               hintText: "Buscar ...",
-              hintStyle: Theme.of(context)
-                  .textTheme
-                  .bodyText1
-                  .copyWith(color: Colors.black),
+              hintStyle: Theme.of(context).textTheme.bodyText1.copyWith(color: Colors.black),
               floatingLabelBehavior: FloatingLabelBehavior.never,
               prefixIcon: Icon(
                 Icons.search,
-                size: 24,
+                size: 20,
                 color: Theme.of(context).indicatorColor,
               ),
             ),
@@ -74,13 +81,13 @@ class _WebSearcherState extends State<WebSearcher> {
           ),
           suggestionsCallback: (pattern) async {
             final patternList = _repository.listByName(pattern);
-            var listafinal = List.generate(patternList.length, (index) {
+            var tupleList = List.generate(patternList.length, (index) {
               return {
                 'name': patternList[index].name,
                 'icon': patternList[index].icon
               };
             });
-            return listafinal;
+            return tupleList;
           },
           itemBuilder: (context, suggestion) {
             return ListTile(
