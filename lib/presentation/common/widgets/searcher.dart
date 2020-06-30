@@ -6,17 +6,32 @@ import 'package:qapaq_b2b/presentation/category/category_bloc.dart';
 import 'package:qapaq_b2b/presentation/product/product_bloc.dart';
 import 'package:qapaq_b2b/services/category_repository.dart';
 
-class WebSearcher extends StatelessWidget {
+class WebSearcher extends StatefulWidget {
+  WebSearcher({Key key}) : super(key: key);
+
+  @override
+  _WebSearcherState createState() => _WebSearcherState();
+}
+
+class _WebSearcherState extends State<WebSearcher> {
   final TextEditingController _typeAheadController = TextEditingController();
+
+  void initState() {
+    super.initState();
+    _typeAheadController.addListener(() {
+      final text = _typeAheadController.text;
+      _typeAheadController.value = _typeAheadController.value.copyWith(
+        text: text,
+        selection:
+        TextSelection(baseOffset: text.length, extentOffset: text.length),
+        composing: TextRange.empty,
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final CategoryRepository _repository = getIt<CategoryRepository>();
-    var categoryList = _repository.list();
-    List<String> list = [];
-    categoryList.forEach((element) {
-      list.add(element.name);
-    });
 
     return Expanded(
       child: Container(
@@ -55,6 +70,7 @@ class WebSearcher extends StatelessWidget {
                 color: Theme.of(context).indicatorColor,
               ),
             ),
+            controller: _typeAheadController,
           ),
           suggestionsCallback: (pattern) async {
             final patternList = _repository.listByName(pattern);
@@ -68,8 +84,7 @@ class WebSearcher extends StatelessWidget {
           },
           itemBuilder: (context, suggestion) {
             return ListTile(
-              leading: Icon(IconData(int.parse(suggestion['icon']),
-                  fontFamily: 'MaterialIcons')),
+              leading: Icon(IconData(int.parse(suggestion['icon']), fontFamily: 'MaterialIcons')),
               title: Text(suggestion['name']),
             );
           },
@@ -78,7 +93,7 @@ class WebSearcher extends StatelessWidget {
             BlocProvider.of<CategoryBloc>(context).add(CategoryHide());
             BlocProvider.of<ProductBloc>(context)
                 .add(ProductLoad(categorySelected.id));
-            this._typeAheadController.text = suggestion;
+            this._typeAheadController.text = suggestion['name'];
           },
         ),
       ),
