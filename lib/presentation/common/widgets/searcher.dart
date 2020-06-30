@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:qapaq_b2b/configuration/colors.dart';
 import 'package:qapaq_b2b/configuration/theme.dart';
 import 'package:qapaq_b2b/dependencies_provider.dart';
 import 'package:qapaq_b2b/presentation/category/category_bloc.dart';
@@ -76,9 +75,9 @@ class _WebSearcherState extends State<WebSearcher> {
                       .bodyText1
                       .copyWith(color: Colors.grey[800], fontSize: 12),
                   value: selectedUser,
-                  onChanged: (String Value) {
+                  onChanged: (String value) {
                     setState(() {
-                      selectedUser = Value;
+                      selectedUser = value;
                     });
                   },
                   dropdownColor: Colors.grey[300],

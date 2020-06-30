@@ -15,6 +15,7 @@ class CategorySimpleListState extends State<CategorySimpleList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(child: SizedBox(height: 0)),

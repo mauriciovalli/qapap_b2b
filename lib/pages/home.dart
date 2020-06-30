@@ -28,23 +28,73 @@ class _HomePageState extends State<HomePage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             //MySwiper(),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              color: Theme.of(context).accentColor,
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 10,
-              ),
-              child: Text(
-                themeConfig.isDesktop && !themeConfig.isSmallDesktop
-                    ? "Categorias"
-                    : "",
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle2
-                    .copyWith(color: Colors.white),
-              ),
+            Row(
+              children: [
+                Container(
+                  height: themeConfig.isDesktop && !themeConfig.isSmallDesktop
+                      ? 40
+                      : 10,
+                  width: 280,
+                  color: Theme.of(context).accentColor,
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.fromLTRB(160, 0, 0, 0),
+                  child: Container(
+                      child:
+                          themeConfig.isDesktop && !themeConfig.isSmallDesktop
+                              ? Row(
+                                  children: [
+                                    Text(
+                                      "Categorias",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subtitle2
+                                          .copyWith(color: Colors.white, fontSize: 12),
+                                    ),
+                                    RotatedBox(
+                                      quarterTurns: 1,
+                                      child: Icon(
+                                        Icons.chevron_right ,
+                                        color: Colors.white,
+                                        size: 18,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : null),
+                ),
+                Container(
+                  height: themeConfig.isDesktop && !themeConfig.isSmallDesktop
+                      ? 40
+                      : 10,
+                  width: MediaQuery.of(context).size.width - 280,
+                  color: CompanyColors.red[900],
+                  padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width - 280 - 120, 0, 0, 0),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.language,
+                        color: Theme.of(context).primaryColor,
+                        size: 30,
+                      ),
+                      Text(
+                        "ESP / ENG",
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle2
+                            .copyWith(color: Theme.of(context).primaryColor, fontSize: 12),
+                      ),
+                      RotatedBox(
+                        quarterTurns: 1,
+                        child: Icon(
+                          Icons.chevron_right ,
+                          color: Colors.white,
+                          size: 18,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
             Expanded(
               flex: 6,

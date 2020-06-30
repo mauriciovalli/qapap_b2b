@@ -28,7 +28,7 @@ class CategoryList extends StatelessWidget {
                     if (state is CategoryLoaded) {
                       return SliverGrid(
                         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 300.0,
+                          maxCrossAxisExtent: 400.0,
                           crossAxisSpacing: 5.0,
                           mainAxisSpacing: 10.0,
                         ),

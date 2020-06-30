@@ -12,45 +12,57 @@ const categoriesJson = '''[
   },
   {
     "id": 2,
-    "name": "Comida y Bebidas",
-    "image": "img/cats/food_beverages.jpg",
-    "icon": "0xe57a"
+    "name": "Veiculos & Accesorios",
+    "image": "img/cats/cars.jpg",
+    "icon": "0xe268"
   },
   {
     "id": 3,
-    "name": "Ropa y Calzado",
-    "image": "img/cats/clothing.jpg",
-    "icon": "0xe3f4"
+    "name": "Comidas & Bebidas",
+    "image": "img/cats/food_beverages.jpg",
+    "icon": "0xe268"
   },
   {
     "id": 4,
-    "name": "Productos para la Casa",
-    "image": "img/cats/house.jpg",
-    "icon": "0xe88a"
+    "name": "Pescados & carnes",
+    "image": "",
+    "icon": "0xe268"
   },
   {
     "id": 5,
-    "name": "Autos",
-    "image": "img/cats/cars.jpg",
-    "icon": "0xe531"
+    "name": "Maquinaria & Electrónica",
+    "image": "img/cats/electronics.jpg",
+    "icon": "0xe268"
   },
   {
     "id": 6,
-    "name": "Electrónica",
-    "image": "img/cats/electronics.jpg",
-    "icon": "0xe3f4"
+    "name": "Materiales & Minerales",
+    "image": "",
+    "icon": "0xe268"
   },
   {
     "id": 7,
-    "name": "Juguetes y Juegos",
-    "image": "img/cats/toys.jpg",
-    "icon": "0xe3f4"
+    "name": "Envios & Logistica",
+    "image": "",
+    "icon": "0xe268"
   },
   {
     "id": 8,
-    "name": "Artesanías, Textiles y Costuras",
+    "name": "Suministros Médicos",
+    "image": "",
+    "icon": "0xe268"
+  },
+  {
+    "id": 9,
+    "name": "Textiles",
     "image": "img/cats/crafts.jpg",
-    "icon": "0xe3f4"
+    "icon": "0xe268"
+  },
+  {
+    "id": 10,
+    "name": "Consultoría",
+    "image": "",
+    "icon": "0xe268"
   }
 ]''';
 

@@ -16,7 +16,7 @@ class MyActions {
 
   Widget buildActionAvatar(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+      //padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
       alignment: Alignment.centerLeft,
       child: Row(
         children: [
@@ -33,9 +33,13 @@ class MyActions {
                     new MaterialPageRoute(
                         builder: (context) => Login()));
             },
-            icon: Icon(
-              Icons.arrow_drop_down,
-              color: Colors.white,
+            icon: RotatedBox(
+              quarterTurns: 1,
+              child: Icon(
+                Icons.chevron_right ,
+                color: Colors.white,
+                size: 18,
+              ),
             ),
             itemBuilder: (BuildContext context) => <PopupMenuEntry<AvatarMenu>> [
               PopupMenuItem(value: AvatarMenu.Perfil, child: Text("Perfil")),
@@ -52,7 +56,7 @@ class MyActions {
       String text, IconData icon, Widget navigate) {
     return InkWell(
       child: Container(
-        padding: EdgeInsets.fromLTRB(0, 25, 0, 0),
+        padding: EdgeInsets.fromLTRB(0, 25, 40, 0),
         alignment: Alignment.centerLeft,
         child: Column(
           children: [
