@@ -18,7 +18,8 @@ final ThemeData CompanyThemeData = new ThemeData(
 class CompanyColors {
   CompanyColors._(); // this basically makes it so you can instantiate this class
 
-  static const int _redPrimaryValue = 0xFFE72929;
+  //static const int _redPrimaryValue = 0xFFE72929;
+  static const int _redPrimaryValue = 0xFFEE4135;
 
   static const MaterialColor red = const MaterialColor(
     _redPrimaryValue,
@@ -30,9 +31,10 @@ class CompanyColors {
       400: Color(0xFFEF5350),
       500: Color(_redPrimaryValue),
       600: Color(0xFFE53935),
-      700: Color(0xFFDF0010),
-      800: Color(0xFFD63226),
-      900: Color(0xFFA3392D),
+      //700: Color(0xFFDF0010),
+      700: Color(0xFFE81211),
+      800: Color(0xFFD81010),
+      900: Color(0xFFB12E25),
     },
   );
 }

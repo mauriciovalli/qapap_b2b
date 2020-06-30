@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qapaq_b2b/configuration/theme.dart';
 import 'package:qapaq_b2b/models/category.dart';
 import 'package:qapaq_b2b/presentation/category/category_bloc.dart';
 import 'package:qapaq_b2b/presentation/product/product_bloc.dart';
@@ -57,8 +58,9 @@ class CategorySimpleListState extends State<CategorySimpleList> {
   Widget buildItem(BuildContext context, CategoryModel _item) {
     return Container(
       color: _selectedItemId == _item.id
-          ? Theme.of(context).accentColor
+          ? CompanyColors.red[800]
           : Colors.transparent,
+      padding: EdgeInsets.fromLTRB(40, 0, 0, 0),
       child: ListTile(
         title: Container(
           alignment: Alignment.centerLeft,
@@ -79,7 +81,7 @@ class CategorySimpleListState extends State<CategorySimpleList> {
                   style: Theme.of(context).textTheme.subtitle2.copyWith(
                       color: _selectedItemId == _item.id
                           ? Colors.white
-                          : Colors.black),
+                          : Colors.grey[800]),
                   textAlign: TextAlign.left,
                 ),
               )
