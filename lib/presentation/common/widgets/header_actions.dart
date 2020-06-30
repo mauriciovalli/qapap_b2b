@@ -16,14 +16,13 @@ class MyActions {
 
   Widget buildActionAvatar(BuildContext context) {
     return Container(
-      padding:
-      EdgeInsets.fromLTRB(20, 0, 0, 0),
+      padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
       alignment: Alignment.centerLeft,
       child: Row(
         children: [
           CircleAvatar(
             backgroundImage: AssetImage("img/logo.jpeg"),
-            radius: 14,
+            radius: 20,
           ),
 
           PopupMenuButton(
@@ -53,8 +52,7 @@ class MyActions {
       String text, IconData icon, Widget navigate) {
     return InkWell(
       child: Container(
-        padding:
-        EdgeInsets.fromLTRB(20, 10, 0, 0),
+        padding: EdgeInsets.fromLTRB(0, 25, 0, 0),
         alignment: Alignment.centerLeft,
         child: Column(
           children: [

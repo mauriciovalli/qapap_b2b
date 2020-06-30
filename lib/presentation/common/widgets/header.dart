@@ -5,7 +5,7 @@ import 'package:qapaq_b2b/presentation/common/widgets/searcher.dart';
 
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   MyAppBar({Key key})
-      : preferredSize = Size.fromHeight(kToolbarHeight),
+      : preferredSize = Size.fromHeight(80),//kToolbarHeight),
         super(key: key);
 
   @override
@@ -21,7 +21,8 @@ class _MyAppBarState extends State<MyAppBar> {
     final ThemeConfig themeConfig = ThemeConfig.instance(context);
 
     return AppBar(
-      //elevation: 0.1,
+      toolbarHeight: 80,
+      //toolbarHeight: kToolbarHeight,
       title: _MyTittle(),
       actions: themeConfig.isDesktop && !themeConfig.isSmallDesktop
           ? MyActions().buildActions(context)
@@ -29,6 +30,7 @@ class _MyAppBarState extends State<MyAppBar> {
       iconTheme: new IconThemeData(color: Colors.white),
     );
   }
+
 }
 
 class _MyTittle extends StatelessWidget {
@@ -54,7 +56,8 @@ class _MyTittle extends StatelessWidget {
                     ? 'img/logo_qapaq.png'
                     : 'img/logo_qapaq_small.png',
                 fit: BoxFit.contain,
-                height: 32,
+                height: themeConfig.isDesktop && !themeConfig.isSmallDesktop
+                    ? 50 : 32,
               ),
             ),
             Container(
