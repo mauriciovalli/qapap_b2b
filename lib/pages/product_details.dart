@@ -11,23 +11,13 @@ class ProductDetails extends StatefulWidget {
   final productDetailsNewPrice;
   final productDetailsPicture;
   final productDetailsUnits;
-  final productDetailsCompanyIco;
-  final productDetailsCompName;
-  final productDetailsCountryIco;
-  final productDetailsCountryName;
-  final productDetailsAge;
 
   ProductDetails(
       {this.productDetailsName,
       this.productDetailsPicture,
       this.productDetailsOldPrice,
       this.productDetailsNewPrice,
-      this.productDetailsUnits,
-      this.productDetailsCompanyIco,
-      this.productDetailsCompName,
-      this.productDetailsCountryIco,
-      this.productDetailsCountryName,
-      this.productDetailsAge});
+      this.productDetailsUnits,});
 
   @override
   _ProductDetailsState createState() => _ProductDetailsState();

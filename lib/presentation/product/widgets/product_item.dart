@@ -32,13 +32,6 @@ class ProductItem extends StatelessWidget {
                     productDetailsPicture: _item.image,
                     productDetailsOldPrice: _item.oldPrice,
                     productDetailsNewPrice: _item.price,
-                    productDetailsUnits: "_item.minPed",
-                    productDetailsCompanyIco: "_item.coImage",
-                    productDetailsCompName: "_item.coName",
-                    productDetailsCountryIco: "_item.cImage",
-                    productDetailsCountryName: "_item.countr",
-                    productDetailsAge: "_item.cAge",
-
                   ))),
     );
   }
