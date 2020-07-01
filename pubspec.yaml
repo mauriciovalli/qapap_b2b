@@ -29,7 +29,7 @@ dependencies:
   flutter_bloc: ^4.0.0
   get_it: ^4.0.2
   equatable: ^1.0.0
-  cached_network_image: ^2.2.0+1
+  # cached_network_image: ^2.2.0+1
 
   # Widgets dependencies
   flutter_typeahead: ^1.8.3

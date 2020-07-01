@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:qapaq_b2b/configuration/theme.dart';
 import 'package:qapaq_b2b/presentation/common/widgets/drawer.dart';
@@ -12,12 +11,13 @@ class ProductDetails extends StatefulWidget {
   final productDetailsPicture;
   final productDetailsUnits;
 
-  ProductDetails(
-      {this.productDetailsName,
-      this.productDetailsPicture,
-      this.productDetailsOldPrice,
-      this.productDetailsNewPrice,
-      this.productDetailsUnits,});
+  ProductDetails({
+    this.productDetailsName,
+    this.productDetailsPicture,
+    this.productDetailsOldPrice,
+    this.productDetailsNewPrice,
+    this.productDetailsUnits,
+  });
 
   @override
   _ProductDetailsState createState() => _ProductDetailsState();
@@ -80,17 +80,10 @@ class _ProductDetailsState extends State<ProductDetails> {
             Expanded(
               flex: 6,
               child: Container(
-                child: widget.productDetailsPicture.contains('http')
-                    ? CachedNetworkImage(
-                        placeholder: (context, url) =>
-                            CircularProgressIndicator(),
-                        imageUrl: widget.productDetailsPicture,
-                        fit: BoxFit.scaleDown,
-                      )
-                    : Image.asset(
-                        widget.productDetailsPicture,
-                        fit: BoxFit.scaleDown,
-                      ),
+                child: Image.network(
+                  widget.productDetailsPicture,
+                  fit: BoxFit.cover,
+                ),
                 padding: EdgeInsets.all(20),
               ),
             ),
