@@ -7,7 +7,7 @@ const categoriesJson = '''[
   {
     "id": 1,
     "name": "Produción Agricola",
-    "image": "img/cats/agriculture.jpg",
+    "image": "https://cdn.fromozz.com/PROCHILE/images/category/Agriculture%20and%20Live%20Animals.jpg",
     "icon": "0xeb4c"
   },
   {

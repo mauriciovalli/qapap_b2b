@@ -87,11 +87,11 @@ class ProductItem extends StatelessWidget {
                                       "U\$$oldPrice",
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
-                                          color: Colors.blueGrey,
-                                          fontWeight: FontWeight.w400,
+                                        color: Colors.blueGrey,
+                                        fontWeight: FontWeight.w400,
 //                                          decoration:
 //                                              TextDecoration.lineThrough,
-                                              ),
+                                      ),
                                     ),
                                     Text("  "),
                                     Text("  "),
@@ -220,10 +220,9 @@ class ProductItem extends StatelessWidget {
     return Swiper(
       outer: false,
       itemBuilder: (context, i) {
-        return Image.network(
-          images[i].imageURL,
-          fit: BoxFit.scaleDown,
-        );
+        return images[i].imageURL.startsWith("http")
+            ? Image.network(images[i].imageURL, fit: BoxFit.scaleDown)
+            : Image.asset(images[i].imageURL, fit: BoxFit.scaleDown);
       },
       autoplay: false,
       itemCount: images.length,
