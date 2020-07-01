@@ -22,7 +22,7 @@ class App extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'Qapaq',
+        title: 'Qapaq - Interconnection made simple',
         theme: CompanyThemeData,
         home: HomePage(),
       ),

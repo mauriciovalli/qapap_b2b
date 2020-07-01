@@ -1,11 +1,11 @@
 {
-    "name": "qapaq_b2b",
-    "short_name": "qapaq_b2b",
+    "name": "Qapaq - Interconnection made simple",
+    "short_name": "Qapaq",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "A broad network of businesses is arising. We want to bring you along. Interconnection made simple.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

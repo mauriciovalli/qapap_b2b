@@ -16,13 +16,13 @@ class WebSearcher extends StatefulWidget {
 
 class _WebSearcherState extends State<WebSearcher> {
   final TextEditingController _typeAheadController = TextEditingController();
-  List<String> users = <String>['Productos', 'Empresas'];
+  List<String> filterTypes = <String>['Productos', 'Empresas'];
 
-  String selectedUser;
+  String selectedFilterType;
 
   void initState() {
     super.initState();
-    selectedUser = users[0];
+    selectedFilterType = filterTypes[0];
     _typeAheadController.addListener(() {
       final text = _typeAheadController.text;
       _typeAheadController.value = _typeAheadController.value.copyWith(
@@ -74,19 +74,20 @@ class _WebSearcherState extends State<WebSearcher> {
                       .textTheme
                       .bodyText1
                       .copyWith(color: Colors.grey[800], fontSize: 12),
-                  value: selectedUser,
+                  value: selectedFilterType,
                   onChanged: (String value) {
                     setState(() {
-                      selectedUser = value;
+                      selectedFilterType = value;
                     });
                   },
                   dropdownColor: Colors.grey[300],
                   focusColor: Colors.grey[400],
-                  items: users.map((String user) {
+                  underline: Container(),
+                  items: filterTypes.map((String filter) {
                     return DropdownMenuItem<String>(
-                      value: user,
+                      value: filter,
                       child: Text(
-                        user,
+                        filter,
                         style: Theme.of(context)
                             .textTheme
                             .bodyText1
@@ -103,9 +104,9 @@ class _WebSearcherState extends State<WebSearcher> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     shape: BoxShape.rectangle,
-//                    borderRadius: BorderRadius.only(
-//                        topRight: Radius.circular(21),
-//                        bottomRight: Radius.circular(21)),
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(18),
+                        bottomRight: Radius.circular(18)),
                   ),
                   child: TypeAheadFormField(
                     textFieldConfiguration: TextFieldConfiguration(
@@ -115,8 +116,9 @@ class _WebSearcherState extends State<WebSearcher> {
                           fontStyle: FontStyle.italic,
                           fontSize: 12),
                       textAlign: TextAlign.start,
+
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.fromLTRB(20, 0, 0, 5),
+                        contentPadding: EdgeInsets.fromLTRB(20, 11, 0, 5),
                         fillColor: Colors.white,
                         filled: false,
                         hintText: "Buscar ...",
@@ -125,19 +127,20 @@ class _WebSearcherState extends State<WebSearcher> {
                             .bodyText1
                             .copyWith(color: Colors.grey, fontSize: 12),
                         floatingLabelBehavior: FloatingLabelBehavior.auto,
-//                      suffixIcon: Container(
-//                        decoration: BoxDecoration(
-//                            color: Theme.of(context).accentColor,
-//                            shape: BoxShape.rectangle,
-//                            borderRadius: BorderRadius.only(
-//                                topRight: Radius.circular(25),
-//                                bottomRight: Radius.circular(25))),
-//                        child: Icon(
-//                          Icons.search,
-//                          size: 20,
-//                          color: Colors.white,
-//                        ),
-//                      ),
+                      suffixIcon: Container(
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).accentColor,
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(18),
+                                bottomRight: Radius.circular(18))),
+                        child: Icon(
+                          Icons.search,
+                          size: 20,
+                          color: Colors.white,
+                        ),
+                      ),
+                          border: InputBorder.none,
                       ),
                       controller: _typeAheadController,
                     ),
@@ -169,20 +172,6 @@ class _WebSearcherState extends State<WebSearcher> {
                       this._typeAheadController.text = suggestion['name'];
                     },
                   ),
-                ),
-              ),
-              Container(
-                width: 50,
-                decoration: BoxDecoration(
-                    color: Theme.of(context).accentColor,
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(18),
-                        bottomRight: Radius.circular(18))),
-                child: Icon(
-                  Icons.search,
-                  size: 26,
-                  color: Colors.white,
                 ),
               ),
             ],

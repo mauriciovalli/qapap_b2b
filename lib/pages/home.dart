@@ -73,32 +73,7 @@ class _HomePageState extends State<HomePage> {
                   padding: EdgeInsets.fromLTRB(
                       MediaQuery.of(context).size.width - 280 - 120, 0, 0, 0),
                   child: themeConfig.isDesktop && !themeConfig.isSmallDesktop
-                      ? Row(
-                          children: [
-                            Icon(
-                              Icons.language,
-                              color: Theme.of(context).primaryColor,
-                              size: 30,
-                            ),
-                            Text(
-                              "ESP / ENG",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2
-                                  .copyWith(
-                                      color: Theme.of(context).primaryColor,
-                                      fontSize: 12),
-                            ),
-                            RotatedBox(
-                              quarterTurns: 1,
-                              child: Icon(
-                                Icons.chevron_right,
-                                color: Colors.white,
-                                size: 18,
-                              ),
-                            ),
-                          ],
-                        )
+                      ? Language()
                       : null,
                 ),
               ],
@@ -121,5 +96,62 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ));
+  }
+}
+
+class Language extends StatefulWidget {
+  Language({Key key}) : super(key: key);
+
+  @override
+  _LanguageState createState() => _LanguageState();
+}
+
+class _LanguageState extends State<Language> {
+  final List<String> filterTypes = <String>['ESPAÑOL', 'ENGLISH'];
+
+  String selectedFilterType;
+
+  void initState() {
+    super.initState();
+    selectedFilterType = filterTypes[0];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Row(
+        children: [
+          Icon(
+            Icons.language,
+            color: Theme.of(context).primaryColor,
+            size: 30,
+          ),
+          DropdownButton<String>(
+            value: selectedFilterType,
+            onChanged: (String value) {
+              setState(() {
+                selectedFilterType = value;
+              });
+            },
+            dropdownColor: Colors.grey[300],
+            focusColor: Colors.grey[400],
+            underline: Container(),
+            items: filterTypes.map((String filter) {
+              return DropdownMenuItem<String>(
+                value: filter,
+                child: Container(
+                  child:
+                  Text(
+                    filter,
+                    style: Theme.of(context).textTheme.subtitle2.copyWith(
+                        color: Theme.of(context).primaryColor, fontSize: 12),
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        ],
+      ),
+    );
   }
 }
