@@ -8,19 +8,19 @@ const categoriesJson = '''[
     "id": 1,
     "name": "Produción Agricola",
     "image": "https://cdn.fromozz.com/PROCHILE/images/category/Agriculture%20and%20Live%20Animals.jpg",
-    "icon": "0xeb4c"
+    "icon": "0xe801#QapaqIcons"
   },
   {
     "id": 2,
     "name": "Veiculos & Accesorios",
     "image": "https://cdn.fromozz.com/fd0e7788594364c083b92f248c892b3966da1c60/873c20d665abe3d72fd5bf73fa675c24db2026b1/thumbnail.jpg",
-    "icon": "0xe268"
+    "icon": "0xe800#QapaqIcons"
   },
   {
     "id": 3,
     "name": "Comidas & Bebidas",
     "image": "img/cats/food_beverages.jpg",
-    "icon": "0xe268"
+    "icon": "0xe802#QapaqIcons"
   },
   {
     "id": 4,

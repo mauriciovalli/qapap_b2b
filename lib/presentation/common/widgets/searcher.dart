@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:qapaq_b2b/configuration/theme.dart';
 import 'package:qapaq_b2b/dependencies_provider.dart';
+import 'package:qapaq_b2b/models/category.dart';
 import 'package:qapaq_b2b/presentation/category/category_bloc.dart';
 import 'package:qapaq_b2b/presentation/product/product_bloc.dart';
 import 'package:qapaq_b2b/services/category_repository.dart';
@@ -148,17 +149,20 @@ class _WebSearcherState extends State<WebSearcher> {
                       final patternList = _repository.listByName(pattern);
                       var tupleList =
                           List.generate(patternList.length, (index) {
+                            var iconSplit = patternList[index].icon.split("#");
+                            var icon = iconSplit[0];
+                            var iconFamily = iconSplit.length==2 ?iconSplit[1] : 'MaterialIcons';
+
                         return {
                           'name': patternList[index].name,
-                          'icon': patternList[index].icon
+                          'icon': IconData(int.parse(icon), fontFamily: iconFamily),
                         };
                       });
                       return tupleList;
                     },
                     itemBuilder: (context, suggestion) {
                       return ListTile(
-                        leading: Icon(IconData(int.parse(suggestion['icon']),
-                            fontFamily: 'MaterialIcons')),
+                        leading: Icon(suggestion['icon']),
                         title: Text(suggestion['name']),
                       );
                     },
@@ -221,40 +225,43 @@ class MobileDataSearcher extends SearchDelegate<String> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final suggestionList =
-        query.isEmpty ? _repository.list() : _repository.listByName(query);
+    final List<CategoryModel> suggestionList =
+    query.isEmpty ? _repository.list() : _repository.listByName(query);
 
     return ListView.builder(
-      itemBuilder: (context, index) => ListTile(
-        onTap: () {
-          var categorySelected =
-              _repository.findByName(suggestionList[index].name);
-          BlocProvider.of<CategoryBloc>(context).add(CategoryHide());
-          BlocProvider.of<ProductBloc>(context)
-              .add(ProductLoad(categorySelected.id));
-          close(context, null);
-        },
-        leading: Icon(IconData(int.parse(suggestionList[index].icon),
-            fontFamily: 'MaterialIcons')),
-        title: RichText(
-            text: TextSpan(
-                text: suggestionList[index].name.substring(0, query.length),
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                children: [
-              TextSpan(
-                text: suggestionList[index].name.substring(query.length),
-                style: TextStyle(color: Colors.grey),
-              ),
-            ])),
-      ),
+      itemBuilder: (context, index) => buildItem(context, suggestionList, index),
       itemCount: suggestionList.length,
     );
   }
-}
 
-class Item {
-  const Item(this.name, this.icon);
-  final String name;
-  final Icon icon;
+  Widget buildItem(BuildContext context, List<CategoryModel> suggestionList, int index) {
+
+    var iconSplit = suggestionList[index].icon.split("#");
+    var icon = iconSplit[0];
+    var iconFamily = iconSplit.length==2 ?iconSplit[1] : 'MaterialIcons';
+
+    return ListTile(
+      onTap: () {
+        var categorySelected =
+        _repository.findByName(suggestionList[index].name);
+        BlocProvider.of<CategoryBloc>(context).add(CategoryHide());
+        BlocProvider.of<ProductBloc>(context)
+            .add(ProductLoad(categorySelected.id));
+        close(context, null);
+      },
+      leading: Icon(IconData(int.parse(icon),
+          fontFamily: iconFamily)),
+      title: RichText(
+          text: TextSpan(
+              text: suggestionList[index].name.substring(0, query.length),
+              style:
+              TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+              children: [
+                TextSpan(
+                  text: suggestionList[index].name.substring(query.length),
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ])),
+    );
+  }
 }
