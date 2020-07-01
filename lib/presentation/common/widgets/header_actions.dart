@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:qapaq_b2b/pages/chat.dart';
+import 'package:qapaq_b2b/configuration/theme.dart';
+import 'package:qapaq_b2b/pages/chat_lobby.dart';
 import 'package:qapaq_b2b/pages/login.dart';
 
 enum AvatarMenu {Perfil , Empresa , Otros}
 
 class MyActions {
   List<Widget> buildActions(BuildContext context) {
+    final ThemeConfig themeConfig = ThemeConfig.instance(context);
+
     final List<Widget> actions = [];
     actions.add(buildActionAvatar(context));
-    actions.add(buildActionItem(context, "Mensajes", Icons.message, ChatPage()));
-    //actions.add(buildActionItem(context, "Ordenes", Icons.content_paste, null));
-    //actions.add(buildActionItem(context, "Carrito", Icons.shopping_cart, null));
+    actions.add(buildActionItem(context, "Mensajes", Icons.message, ChatHomeScreen(isDesktop: themeConfig.isDesktop && !themeConfig.isSmallDesktop,)));
     return actions;
   }
 
