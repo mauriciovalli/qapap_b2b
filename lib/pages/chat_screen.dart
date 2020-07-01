@@ -25,7 +25,6 @@ class _ChatScreenState extends State<ChatScreen> {
       _isComposing = false;
     });
 
-
     final time = DateFormat('kk:mm').format(DateTime.now());
     Message message = new Message(sender: this.widget.user, time: time, text: text, isLiked: false, unread: true);
     setState(() {
