@@ -13,7 +13,7 @@ const categoriesJson = '''[
   {
     "id": 2,
     "name": "Veiculos & Accesorios",
-    "image": "img/cats/cars.jpg",
+    "image": "https://cdn.fromozz.com/fd0e7788594364c083b92f248c892b3966da1c60/873c20d665abe3d72fd5bf73fa675c24db2026b1/thumbnail.jpg",
     "icon": "0xe268"
   },
   {
@@ -37,7 +37,7 @@ const categoriesJson = '''[
   {
     "id": 6,
     "name": "Materiales & Minerales",
-    "image": "",
+    "image": "https://cdn.fromozz.com/PROCHILE/images/category/Minerals%20and%20Metallurgy.jpg",
     "icon": "0xe268"
   },
   {
@@ -49,7 +49,7 @@ const categoriesJson = '''[
   {
     "id": 8,
     "name": "Suministros Médicos",
-    "image": "",
+    "image": "https://cdn.fromozz.com/PROCHILE/images/category/Health%20And%20Medicine.jpg",
     "icon": "0xe268"
   },
   {

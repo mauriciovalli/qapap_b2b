@@ -36,33 +36,4 @@ class MySwiper extends StatelessWidget {
       itemCount: imgs.length,
     );
   }
-
-//  Widget buildImgCarousel() {
-//    final List<String> imgs = [
-//      'img/cats/food_beverages.jpg',
-//      'img/cats/agriculture.jpg',
-//      'img/cats/clothing.jpg',
-//      'img/cats/house.jpg',
-//      'img/cats/cars.jpg',
-//      'img/cats/electronics.jpg',
-//      'img/cats/toys.jpg',
-//      'img/cats/crafts.jpg',
-//    ];
-//
-//    return Container(
-//      child: new Carousel(
-//        boxFit: BoxFit.cover,
-//        images: [
-//          for(img  imgs)
-//           AssetImage(img),
-//        ],
-//        autoplay: true,
-//        animationCurve: Curves.fastOutSlowIn,
-//        animationDuration: Duration(milliseconds: 1000),
-//        dotSize: 5.0,
-//        indicatorBgPadding: 2.0,
-//        // dotColor: Colors.blue,
-//      ),
-//    );
-//  }
 }

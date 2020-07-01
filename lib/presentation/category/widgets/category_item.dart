@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qapaq_b2b/configuration/theme.dart';
 import 'package:qapaq_b2b/models/category.dart';
+import 'package:qapaq_b2b/presentation/category/category_bloc.dart';
 import 'package:qapaq_b2b/presentation/product/product_bloc.dart';
 
-import '../category_bloc.dart';
 
 class CategoryItem extends StatelessWidget {
   final CategoryModel _item;
@@ -25,22 +25,14 @@ class CategoryItem extends StatelessWidget {
             child: buildTitle(_item.name, themeConfig),
           ),
           decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(_item.image), fit: BoxFit.fill),
-          ),
+                image: DecorationImage(image: NetworkImage(_item.image),
+                    fit: BoxFit.cover)
+            ),
         ),
       ),
       onTap: () => {
         BlocProvider.of<CategoryBloc>(context).add(CategoryHide()),
         BlocProvider.of<ProductBloc>(context).add(ProductLoad(_item.id)),
-//        Navigator.push(
-//            context,
-//            MaterialPageRoute(
-//                builder: (context) => CategoryPage(
-//                      title: _item.name,
-//                      id: _item.id,
-//                    )),
-//        ),
       },
     );
   }

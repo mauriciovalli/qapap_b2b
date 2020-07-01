@@ -48,12 +48,14 @@ class _HomePageState extends State<HomePage> {
                                       style: Theme.of(context)
                                           .textTheme
                                           .subtitle2
-                                          .copyWith(color: Colors.white, fontSize: 12),
+                                          .copyWith(
+                                              color: Colors.white,
+                                              fontSize: 12),
                                     ),
                                     RotatedBox(
                                       quarterTurns: 1,
                                       child: Icon(
-                                        Icons.chevron_right ,
+                                        Icons.chevron_right,
                                         color: Colors.white,
                                         size: 18,
                                       ),
@@ -68,31 +70,36 @@ class _HomePageState extends State<HomePage> {
                       : 10,
                   width: MediaQuery.of(context).size.width - 280,
                   color: CompanyColors.red[900],
-                  padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width - 280 - 120, 0, 0, 0),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.language,
-                        color: Theme.of(context).primaryColor,
-                        size: 30,
-                      ),
-                      Text(
-                        "ESP / ENG",
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle2
-                            .copyWith(color: Theme.of(context).primaryColor, fontSize: 12),
-                      ),
-                      RotatedBox(
-                        quarterTurns: 1,
-                        child: Icon(
-                          Icons.chevron_right ,
-                          color: Colors.white,
-                          size: 18,
-                        ),
-                      ),
-                    ],
-                  ),
+                  padding: EdgeInsets.fromLTRB(
+                      MediaQuery.of(context).size.width - 280 - 120, 0, 0, 0),
+                  child: themeConfig.isDesktop && !themeConfig.isSmallDesktop
+                      ? Row(
+                          children: [
+                            Icon(
+                              Icons.language,
+                              color: Theme.of(context).primaryColor,
+                              size: 30,
+                            ),
+                            Text(
+                              "ESP / ENG",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2
+                                  .copyWith(
+                                      color: Theme.of(context).primaryColor,
+                                      fontSize: 12),
+                            ),
+                            RotatedBox(
+                              quarterTurns: 1,
+                              child: Icon(
+                                Icons.chevron_right,
+                                color: Colors.white,
+                                size: 18,
+                              ),
+                            ),
+                          ],
+                        )
+                      : null,
                 ),
               ],
             ),
