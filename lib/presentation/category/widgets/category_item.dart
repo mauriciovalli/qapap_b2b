@@ -27,7 +27,9 @@ class CategoryItem extends StatelessWidget {
               image: DecorationImage(
                   image: _item.image.startsWith("http")
                       ? NetworkImage(_item.image)
-                      : AssetImage(_item.image),
+                      : _item.image.length > 0
+                          ? AssetImage(_item.image)
+                          : AssetImage('img/no-image.png'),
                   fit: BoxFit.cover)),
         ),
       ),

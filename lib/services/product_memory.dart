@@ -9,8 +9,8 @@ const products = '''[
      "id": 101,
      "name": "Alfalfa",
      "categoryId": 1,
-     "oldPrice": 8.0,
-     "price": 12.0,   
+     "priceMax": 8.0,
+     "priceMin": 12.0,   
      "images": [
        {
           "src": "https://cdn.fromozz.com/16e0726977c3b3589f99487832bac3ca6348771c/e39de292cb382df369f91c33642d201cb3d44a64/thumbnail.jpg"
@@ -27,8 +27,8 @@ const products = '''[
      "id": 102,
      "name": "Harina de Avena",
      "categoryId": 1,
-     "oldPrice": 450.00,
-     "price": 500.00,
+     "priceMax": 450.00,
+     "priceMin": 500.00,
      "images": [
        {
           "src": "https://cdn.fromozz.com/5924464f7f5c2e677e38a6a6b3561cffc9897330/70286176083c87328d5c166580bdaf4ff08eda9e/thumbnail.jpg"
@@ -39,8 +39,8 @@ const products = '''[
      "id": 201,
      "name": "Tractor CAT",
      "categoryId": 2,
-     "oldPrice": 10000.0,
-     "price": 50000.0,
+     "priceMax": 10000.0,
+     "priceMin": 50000.0,
      "images": [
        {
           "src": "https://cdn.fromozz.com/fd0e7788594364c083b92f248c892b3966da1c60/495d00c724052d8dac0df3b75c7a7fb413c32be4/thumbnail.jpg"
@@ -51,11 +51,29 @@ const products = '''[
      "id": 301,
      "name": "Norton Malbec Doc Caja 6x750ml",
      "categoryId": 3,
-     "oldPrice": 300.0,
-     "price": 300.0,
+     "priceMax": 300.0,
+     "priceMin": 300.0,
      "images": [
        {
           "src": "https://http2.mlstatic.com/vino-norton-malbec-doc-caja-6x750ml-D_NQ_NP_837477-MLA32009302454_082019-F.webp"
+       }
+    ] 
+  },
+  {
+     "id": 401,
+     "name": "Salmon fresco del Atlanticol",
+     "categoryId": 4,
+     "priceMax": 10.0,
+     "priceMin": 1000.0,
+     "images": [
+       {
+          "src": "https://cdn.fromozz.com/4c80b948ae8dc57b8a1c7903892c6c72cfa0ec6b/4864ac020ad00ab87ef6ba3f644ef77725f00a7f/thumbnail.jpg"
+       },
+       {
+          "src": "https://cdn.fromozz.com/4c80b948ae8dc57b8a1c7903892c6c72cfa0ec6b/efa18fa534c62b7c17b0ccde12573c0d1c0c8808/thumbnail.jpg"
+       },
+       {
+          "src": "https://cdn.fromozz.com/4c80b948ae8dc57b8a1c7903892c6c72cfa0ec6b/8eabaa604d96e3518cdf4081725b94f470a78b78/thumbnail.jpg"
        }
     ] 
   }
@@ -98,7 +116,7 @@ class ProductInMemoryRepository implements ProductRepository {
       id: json['id'],
       name: json['name'],
       categoryId: json['categoryId'],
-      priceMax: json['oldPrice'],
+      priceMax: json['priceMax'],
       priceMin: json['price'],
       images: imagesOfProductList,
     );
@@ -112,80 +130,80 @@ class ProductInMemoryRepository implements ProductRepository {
 //      image:
 //          'https://http2.mlstatic.com/vino-norton-malbec-doc-caja-6x750ml-D_NQ_NP_837477-MLA32009302454_082019-F.webp',
 //      categoryId: 1,
-//      oldPrice: 300,
-//      price: 300,
+//      priceMax: 300,
+//      priceMin: 300,
 //    ),
 //    ProductModel(
 //      id: 301,
 //      name: 'Women Bag',
 //      image: 'img/products/womenbag.png',
 //      categoryId: 3,
-//      oldPrice: 120,
-//      price: 85.99,
+//      priceMax: 120,
+//      priceMin: 85.99,
 //    ),
 //    ProductModel(
 //      id: 302,
 //      name: 'Blazzer1',
 //      image: 'img/products/blazer1.jpeg',
 //      categoryId: 3,
-//      oldPrice: 120,
-//      price: 85,
+//      priceMax: 120,
+//      priceMin: 85,
 //    ),
 //    ProductModel(
 //      id: 303,
 //      name: 'Blazzer2',
 //      image: 'img/products/blazer1.jpeg',
 //      categoryId: 3,
-//      oldPrice: 120,
-//      price: 85,
+//      priceMax: 120,
+//      priceMin: 85,
 //    ),
 //    ProductModel(
 //      id: 304,
 //      name: 'Red Dress',
 //      image: 'img/products/dress1.jpeg',
 //      categoryId: 3,
-//      oldPrice: 120,
-//      price: 85,
+//      priceMax: 120,
+//      priceMin: 85,
 //    ),
 //    ProductModel(
 //      id: 305,
 //      name: 'Dress',
 //      image: 'img/products/dress2.jpeg',
 //      categoryId: 3,
-//      oldPrice: 120,
-//      price: 85.99,
+//      priceMax: 120,
+//      priceMin: 85.99,
 //    ),
 //    ProductModel(
 //      id: 306,
 //      name: 'Hills',
 //      image: 'img/products/hills1.jpeg',
 //      categoryId: 3,
-//      oldPrice: 100,
-//      price: 95,
+//      priceMax: 100,
+//      priceMin: 95,
 //    ),
 //    ProductModel(
 //      id: 307,
 //      name: 'Hills',
 //      image: 'img/products/hills2.jpeg',
 //      categoryId: 3,
-//      oldPrice: 120,
-//      price: 85,
+//      priceMax: 120,
+//      priceMin: 85,
 //    ),
 //    ProductModel(
 //      id: 308,
 //      name: 'Panet',
 //      image: 'img/products/pants2.jpeg',
 //      categoryId: 3,
-//      oldPrice: 120,
-//      price: 95,
+//      priceMax: 120,
+//      priceMin: 95,
 //    ),
 //    ProductModel(
 //      id: 309,
 //      name: 'SKT',
 //      image: 'img/products/skt1.jpeg',
 //      categoryId: 3,
-//      oldPrice: 120,
-//      price: 95,
+//      priceMax: 120,
+//      priceMin: 95,
 //    ),
 //  ];
 //

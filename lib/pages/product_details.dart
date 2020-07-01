@@ -6,7 +6,7 @@ import 'package:qapaq_b2b/presentation/common/widgets/swiper.dart';
 
 class ProductDetails extends StatefulWidget {
   final productDetailsName;
-  final productDetailsOldPrice;
+  final productDetailspriceMax;
   final productDetailsNewPrice;
   final productDetailsPicture;
   final productDetailsUnits;
@@ -14,7 +14,7 @@ class ProductDetails extends StatefulWidget {
   ProductDetails({
     this.productDetailsName,
     this.productDetailsPicture,
-    this.productDetailsOldPrice,
+    this.productDetailspriceMax,
     this.productDetailsNewPrice,
     this.productDetailsUnits,
   });
@@ -310,7 +310,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               children: <Widget>[
                 Expanded(
                   child: Text(
-                    "\$${widget.productDetailsOldPrice}",
+                    "\$${widget.productDetailspriceMax}",
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     style: TextStyle(

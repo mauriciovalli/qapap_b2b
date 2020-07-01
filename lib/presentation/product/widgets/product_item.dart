@@ -23,7 +23,7 @@ class ProductItem extends StatelessWidget {
                     //navigate to detailed page with passing data
                     productDetailsName: _item.name,
                     productDetailsPicture: _item.images[0].imageURL,
-                    productDetailsOldPrice: _item.priceMax,
+                    productDetailspriceMax: _item.priceMax,
                     productDetailsNewPrice: _item.priceMin,
                   ))),
     );
@@ -31,7 +31,7 @@ class ProductItem extends StatelessWidget {
 
   Widget buildProduct(BuildContext context) {
     String price = _item.priceMin.toString();
-    String oldPrice = _item.priceMax.toString();
+    String priceMax = _item.priceMax.toString();
 
     return Card(
       elevation: 10,
@@ -84,7 +84,7 @@ class ProductItem extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      "U\$$oldPrice",
+                                      "U\$$priceMax",
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                         color: Colors.blueGrey,
@@ -220,9 +220,12 @@ class ProductItem extends StatelessWidget {
     return Swiper(
       outer: false,
       itemBuilder: (context, i) {
-        return images[i].imageURL.startsWith("http")
-            ? Image.network(images[i].imageURL, fit: BoxFit.scaleDown)
-            : Image.asset(images[i].imageURL, fit: BoxFit.scaleDown);
+          if(images[i].imageURL.length>0 && images[i].imageURL.startsWith("http"))
+            return Image.network(images[i].imageURL, fit: BoxFit.scaleDown);
+          else if(images[i].imageURL.length>0)
+           return Image.asset(images[i].imageURL, fit: BoxFit.scaleDown);
+          else
+            return Image.asset("img/no-image.png", fit: BoxFit.scaleDown);
       },
       autoplay: false,
       itemCount: images.length,

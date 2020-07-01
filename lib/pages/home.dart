@@ -30,52 +30,92 @@ class _HomePageState extends State<HomePage> {
             //MySwiper(),
             Row(
               children: [
-                Container(
-                  height: themeConfig.isDesktop && !themeConfig.isSmallDesktop
-                      ? 40
-                      : 10,
-                  width: 280,
-                  color: Theme.of(context).accentColor,
-                  alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.fromLTRB(160, 0, 0, 0),
-                  child: Container(
-                      child:
-                          themeConfig.isDesktop && !themeConfig.isSmallDesktop
-                              ? Row(
-                                  children: [
-                                    Text(
-                                      "Categorias",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .subtitle2
-                                          .copyWith(
-                                              color: Colors.white,
-                                              fontSize: 12),
-                                    ),
-                                    RotatedBox(
-                                      quarterTurns: 1,
-                                      child: Icon(
-                                        Icons.chevron_right,
-                                        color: Colors.white,
-                                        size: 18,
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              : null),
-                ),
-                Container(
-                  height: themeConfig.isDesktop && !themeConfig.isSmallDesktop
-                      ? 40
-                      : 10,
-                  width: MediaQuery.of(context).size.width - 280,
-                  color: CompanyColors.red[900],
-                  padding: EdgeInsets.fromLTRB(
-                      MediaQuery.of(context).size.width - 280 - 120, 0, 0, 0),
-                  child: themeConfig.isDesktop && !themeConfig.isSmallDesktop
-                      ? Language()
-                      : null,
-                ),
+                if (themeConfig.isDesktop && !themeConfig.isSmallDesktop)
+                  Container(
+                    height: 40,
+                    width: 280,
+                    color: Theme.of(context).accentColor,
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.fromLTRB(160, 0, 0, 0),
+                    child: Container(
+                      child: Row(
+                        children: [
+                          Text(
+                            "Categorias",
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle2
+                                .copyWith(color: Colors.white),
+                          ),
+                          RotatedBox(
+                            quarterTurns: 1,
+                            child: Icon(
+                              Icons.chevron_right,
+                              color: Colors.white,
+                              size: 18,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                if (themeConfig.isDesktop && !themeConfig.isSmallDesktop)
+                  Container(
+                    height: 40,
+                    width: 200,
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    decoration: BoxDecoration(
+                      color: CompanyColors.red[900],
+                      border: Border(
+                        right: BorderSide(width: 1, color: Colors.grey[800]),
+                      ),
+                    ),
+                    child: Text(
+                      "Vender en Qapaq",
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle2
+                          .copyWith(color: Colors.white),
+                    ),
+                  ),
+                if (themeConfig.isDesktop && !themeConfig.isSmallDesktop)
+                  Container(
+                    height: 40,
+                    width: 150,
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    decoration: BoxDecoration(
+                      color: CompanyColors.red[900],
+                      border: Border(
+                        right: BorderSide(width: 1, color: Colors.grey[800]),
+                      ),
+                    ),
+                    child: Text(
+                      "Ayuda",
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle2
+                          .copyWith(color: Colors.white),
+                    ),
+                  ),
+                if (themeConfig.isDesktop && !themeConfig.isSmallDesktop)
+                  Container(
+                      height: 40,
+                      width: MediaQuery.of(context).size.width - 630,
+                      color: CompanyColors.red[900],
+                      padding: EdgeInsets.fromLTRB(
+                          MediaQuery.of(context).size.width - 630 - 120,
+                          0,
+                          0,
+                          0),
+                      child: Language()),
+                if (!(themeConfig.isDesktop && !themeConfig.isSmallDesktop))
+                  Container(
+                    height: 10,
+                    width: MediaQuery.of(context).size.width,
+                    color: CompanyColors.red[900],
+                  ),
               ],
             ),
             Expanded(
@@ -140,11 +180,12 @@ class _LanguageState extends State<Language> {
               return DropdownMenuItem<String>(
                 value: filter,
                 child: Container(
-                  child:
-                  Text(
+                  child: Text(
                     filter,
-                    style: Theme.of(context).textTheme.subtitle2.copyWith(
-                        color: Theme.of(context).primaryColor, fontSize: 12),
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle2
+                        .copyWith(color: Theme.of(context).primaryColor),
                   ),
                 ),
               );

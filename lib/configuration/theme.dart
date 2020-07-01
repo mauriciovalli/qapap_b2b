@@ -10,7 +10,7 @@ final ThemeData CompanyThemeData = new ThemeData(
   accentColorBrightness: Brightness.light,
   textTheme: TextTheme(
     bodyText1: TextStyle(color: Colors.white),
-//    subtitle2: TextStyle(color: Colors.white),
+    subtitle2: TextStyle(fontSize: 12),
   ),
   iconTheme: IconThemeData(color: Colors.white),
 );

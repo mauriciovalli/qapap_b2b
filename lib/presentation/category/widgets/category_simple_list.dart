@@ -19,7 +19,7 @@ class CategorySimpleListState extends State<CategorySimpleList> {
       backgroundColor: Colors.grey[200],
       body: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(child: SizedBox(height: 0)),
+          SliverToBoxAdapter(child: SizedBox(height: 10)),
           BlocBuilder<CategoryBloc, CategoryState>(
             builder: (context, state) {
               if (state is CategoryLoading) {
@@ -56,46 +56,47 @@ class CategorySimpleListState extends State<CategorySimpleList> {
   }
 
   Widget buildItem(BuildContext context, CategoryModel _item) {
-    return Container(
-      color: _selectedItemId == _item.id
-          ? CompanyColors.red[800]
-          : Colors.transparent,
-      padding: EdgeInsets.fromLTRB(40, 0, 0, 0),
-      child: ListTile(
-        title: Container(
-          alignment: Alignment.centerLeft,
-          child: Row(
-            children: [
-              Icon(
-                IconData(int.parse(_item.icon), fontFamily: 'MaterialIcons'),
-                color: _selectedItemId == _item.id
-                    ? Colors.white
-                    : Theme.of(context).accentColor,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 10,
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxHeight: 50.0, minHeight: 40.0),
+      child: Container(
+        color: _selectedItemId == _item.id
+            ? CompanyColors.red[800]
+            : Colors.transparent,
+        padding: EdgeInsets.fromLTRB(60, 0, 0, 0),
+        child: ListTile(
+          title: Container(
+            alignment: Alignment.centerLeft,
+            child: Row(
+              children: [
+                Icon(
+                  IconData(int.parse(_item.icon), fontFamily: 'MaterialIcons'),
+                  color: _selectedItemId == _item.id
+                      ? Colors.white
+                      : Theme.of(context).accentColor,
+                  size: 24,
                 ),
-                child: Text(
-                  _item.name,
-                  style: Theme.of(context).textTheme.subtitle2.copyWith(
-                      color: _selectedItemId == _item.id
-                          ? Colors.white
-                          : Colors.grey[800]),
-                  textAlign: TextAlign.left,
-                ),
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Text(
+                    _item.name,
+                    style: Theme.of(context).textTheme.subtitle2.copyWith(
+                        color: _selectedItemId == _item.id
+                            ? Colors.white
+                            : Colors.grey[800]),
+                  ),
+                )
+              ],
+            ),
           ),
+          onTap: () => {
+            BlocProvider.of<CategoryBloc>(context).add(CategoryHide()),
+            BlocProvider.of<ProductBloc>(context).add(ProductLoad(_item.id)),
+            setState(() {
+              _selectedItemId = _item.id;
+            }),
+          },
+          selected: _selectedItemId == _item.id,
         ),
-        onTap: () => {
-          BlocProvider.of<CategoryBloc>(context).add(CategoryHide()),
-          BlocProvider.of<ProductBloc>(context).add(ProductLoad(_item.id)),
-          setState(() {
-            _selectedItemId = _item.id;
-          }),
-        },
-        selected: _selectedItemId == _item.id,
       ),
     );
   }
