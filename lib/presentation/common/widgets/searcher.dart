@@ -40,7 +40,9 @@ class _WebSearcherState extends State<WebSearcher> {
     final CategoryRepository _repository = getIt<CategoryRepository>();
     final ThemeConfig themeConfig = ThemeConfig.instance(context);
     final double margin = themeConfig.isDesktop
-        ? (themeConfig.isSmallDesktop ? 120 : (MediaQuery.of(context).size.width-1000)/2)
+        ? (themeConfig.isSmallDesktop
+            ? 120
+            : (MediaQuery.of(context).size.width - 1000) / 2)
         : 20;
 
     return Expanded(
@@ -117,7 +119,6 @@ class _WebSearcherState extends State<WebSearcher> {
                           fontStyle: FontStyle.italic,
                           fontSize: 12),
                       textAlign: TextAlign.start,
-
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.fromLTRB(20, 11, 0, 5),
                         fillColor: Colors.white,
@@ -128,20 +129,20 @@ class _WebSearcherState extends State<WebSearcher> {
                             .bodyText1
                             .copyWith(color: Colors.grey, fontSize: 12),
                         floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      suffixIcon: Container(
-                        decoration: BoxDecoration(
-                            color: Theme.of(context).accentColor,
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(18),
-                                bottomRight: Radius.circular(18))),
-                        child: Icon(
-                          Icons.search,
-                          size: 20,
-                          color: Colors.white,
+                        suffixIcon: Container(
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).accentColor,
+                              shape: BoxShape.rectangle,
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(18),
+                                  bottomRight: Radius.circular(18))),
+                          child: Icon(
+                            Icons.search,
+                            size: 20,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                          border: InputBorder.none,
+                        border: InputBorder.none,
                       ),
                       controller: _typeAheadController,
                     ),
@@ -149,13 +150,9 @@ class _WebSearcherState extends State<WebSearcher> {
                       final patternList = _repository.listByName(pattern);
                       var tupleList =
                           List.generate(patternList.length, (index) {
-                            var iconSplit = patternList[index].icon.split("#");
-                            var icon = iconSplit[0];
-                            var iconFamily = iconSplit.length==2 ?iconSplit[1] : 'MaterialIcons';
-
                         return {
                           'name': patternList[index].name,
-                          'icon': IconData(int.parse(icon), fontFamily: iconFamily),
+                          'icon': patternList[index].icon,
                         };
                       });
                       return tupleList;
@@ -226,42 +223,38 @@ class MobileDataSearcher extends SearchDelegate<String> {
   @override
   Widget buildSuggestions(BuildContext context) {
     final List<CategoryModel> suggestionList =
-    query.isEmpty ? _repository.list() : _repository.listByName(query);
+        query.isEmpty ? _repository.list() : _repository.listByName(query);
 
     return ListView.builder(
-      itemBuilder: (context, index) => buildItem(context, suggestionList, index),
+      itemBuilder: (context, index) =>
+          buildItem(context, suggestionList, index),
       itemCount: suggestionList.length,
     );
   }
 
-  Widget buildItem(BuildContext context, List<CategoryModel> suggestionList, int index) {
-
-    var iconSplit = suggestionList[index].icon.split("#");
-    var icon = iconSplit[0];
-    var iconFamily = iconSplit.length==2 ?iconSplit[1] : 'MaterialIcons';
-
+  Widget buildItem(
+      BuildContext context, List<CategoryModel> suggestionList, int index) {
     return ListTile(
       onTap: () {
         var categorySelected =
-        _repository.findByName(suggestionList[index].name);
+            _repository.findByName(suggestionList[index].name);
         BlocProvider.of<CategoryBloc>(context).add(CategoryHide());
         BlocProvider.of<ProductBloc>(context)
             .add(ProductLoad(categorySelected.id));
         close(context, null);
       },
-      leading: Icon(IconData(int.parse(icon),
-          fontFamily: iconFamily)),
+      leading: Icon(suggestionList[index].icon),
       title: RichText(
           text: TextSpan(
               text: suggestionList[index].name.substring(0, query.length),
               style:
-              TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               children: [
-                TextSpan(
-                  text: suggestionList[index].name.substring(query.length),
-                  style: TextStyle(color: Colors.grey),
-                ),
-              ])),
+            TextSpan(
+              text: suggestionList[index].name.substring(query.length),
+              style: TextStyle(color: Colors.grey),
+            ),
+          ])),
     );
   }
 }

@@ -57,10 +57,7 @@ class CategorySimpleListState extends State<CategorySimpleList> {
 
   Widget buildItem(BuildContext context, CategoryModel _item) {
     final ThemeConfig themeConfig = ThemeConfig.instance(context);
-    var iconSplit = _item.icon.split("#");
-    var icon = iconSplit[0];
-    var iconFamily = iconSplit.length == 2 ? iconSplit[1] : 'MaterialIcons';
-    //var iconPackage
+
     return ConstrainedBox(
       constraints: BoxConstraints(maxHeight: 50.0, minHeight: 40.0),
       child: Container(
@@ -78,7 +75,7 @@ class CategorySimpleListState extends State<CategorySimpleList> {
             child: Row(
               children: [
                 Icon(
-                  IconData(int.parse(icon), fontFamily: iconFamily),
+                  _item.icon,
                   color: _selectedItemId == _item.id
                       ? Colors.white
                       : Theme.of(context).accentColor,

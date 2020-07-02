@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qapaq_b2b/configuration/qapaq_icons.dart';
 import 'package:qapaq_b2b/presentation/common/adaptive.dart';
 
 // ignore: non_constant_identifier_names
@@ -39,7 +40,6 @@ class CompanyColors {
   );
 }
 
-
 class ThemeConfig {
   final double _appPaddingLargeW = 120.0;
   final double _appPaddingLargeM = 12.0;
@@ -69,20 +69,27 @@ class ThemeConfig {
     isSmallDesktop = isDisplaySmallDesktop(context);
 
     appPaddingHorizontalLarge =
-        isDesktop && !isSmallDesktop ? _appPaddingLargeW : _appPaddingLargeM;
+    isDesktop && !isSmallDesktop ? _appPaddingLargeW : _appPaddingLargeM;
     appPaddingHorizontalSmall =
-        isDesktop && !isSmallDesktop ? _appPaddingSmallW : _appPaddingSmallM;
+    isDesktop && !isSmallDesktop ? _appPaddingSmallW : _appPaddingSmallM;
     appPaddingVertical = isDesktop && !isSmallDesktop
         ? _appPaddingVerticalW
         : _appPaddingVerticalM;
     subTitleFontSize =
-        isDesktop && !isSmallDesktop ? _subTitleFontSizeW : _subTitleFontSizeM;
+    isDesktop && !isSmallDesktop ? _subTitleFontSizeW : _subTitleFontSizeM;
 
     titleFontSize =
-        isDesktop && !isSmallDesktop ? _titleFontSizeW : _titleFontSizeM;
+    isDesktop && !isSmallDesktop ? _titleFontSizeW : _titleFontSizeM;
   }
 
   static ThemeConfig instance(BuildContext context) {
-      return ThemeConfig(context);
+    return ThemeConfig(context);
   }
 }
+
+const CompanyIcons = {
+  "wheat": QapaqIcons.wheat,
+  "truck": QapaqIcons.truck,
+  "wine": QapaqIcons.wine,
+  "scatter_plot": Icons.scatter_plot
+};

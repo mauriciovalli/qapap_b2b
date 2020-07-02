@@ -26,6 +26,6 @@ class QapaqIcons {
   static const _kFontPkg = null;
 
   static const IconData truck = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData trigo = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData vino = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData wheat = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData wine = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

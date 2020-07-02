@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:qapaq_b2b/configuration/theme.dart';
 import 'package:qapaq_b2b/models/category.dart';
 import 'package:qapaq_b2b/services/category_repository.dart';
 
@@ -8,61 +9,51 @@ const categoriesJson = '''[
     "id": 1,
     "name": "Produción Agricola",
     "image": "https://cdn.fromozz.com/PROCHILE/images/category/Agriculture%20and%20Live%20Animals.jpg",
-    "icon": "0xe801#QapaqIcons"
+    "icon": "wheat"
   },
   {
     "id": 2,
     "name": "Veiculos & Accesorios",
     "image": "https://cdn.fromozz.com/fd0e7788594364c083b92f248c892b3966da1c60/873c20d665abe3d72fd5bf73fa675c24db2026b1/thumbnail.jpg",
-    "icon": "0xe800#QapaqIcons"
+    "icon": "truck"
   },
   {
     "id": 3,
     "name": "Comidas & Bebidas",
     "image": "img/cats/food_beverages.jpg",
-    "icon": "0xe802#QapaqIcons"
+    "icon": "wine"
   },
   {
     "id": 4,
-    "name": "Pescados & carnes",
-    "image": "",
-    "icon": "0xe268"
+    "name": "Pescados & carnes"
   },
   {
     "id": 5,
     "name": "Maquinaria & Electrónica",
-    "image": "img/cats/electronics.jpg",
-    "icon": "0xe268"
+    "image": "img/cats/electronics.jpg"
   },
   {
     "id": 6,
     "name": "Materiales & Minerales",
-    "image": "https://cdn.fromozz.com/PROCHILE/images/category/Minerals%20and%20Metallurgy.jpg",
-    "icon": "0xe268"
+    "image": "https://cdn.fromozz.com/PROCHILE/images/category/Minerals%20and%20Metallurgy.jpg"
   },
   {
     "id": 7,
-    "name": "Envios & Logistica",
-    "image": "",
-    "icon": "0xe268"
+    "name": "Envios & Logistica"
   },
   {
     "id": 8,
     "name": "Suministros Médicos",
-    "image": "https://cdn.fromozz.com/PROCHILE/images/category/Health%20And%20Medicine.jpg",
-    "icon": "0xe268"
+    "image": "https://cdn.fromozz.com/PROCHILE/images/category/Health%20And%20Medicine.jpg"
   },
   {
     "id": 9,
     "name": "Textiles",
-    "image": "img/cats/crafts.jpg",
-    "icon": "0xe268"
+    "image": "img/cats/crafts.jpg"
   },
   {
     "id": 10,
-    "name": "Consultoría",
-    "image": "",
-    "icon": "0xe268"
+    "name": "Consultoría"
   }
 ]''';
 
@@ -74,12 +65,16 @@ class CategoryInMemoryRepository implements CategoryRepository {
 
   @override
   List<CategoryModel> listByName(String pattern) {
-   return _parse(jsonDecode(categoriesJson)).where((element) => element.name.toLowerCase().contains(pattern.toLowerCase())).toList();
+    return _parse(jsonDecode(categoriesJson))
+        .where((element) =>
+            element.name.toLowerCase().contains(pattern.toLowerCase()))
+        .toList();
   }
 
   @override
   CategoryModel findByName(String name) {
-    return _parse(jsonDecode(categoriesJson)).firstWhere((p) => p.name.startsWith(name));
+    return _parse(jsonDecode(categoriesJson))
+        .firstWhere((p) => p.name.startsWith(name));
   }
 
   List<CategoryModel> _parse(List<dynamic> json) {
@@ -88,7 +83,11 @@ class CategoryInMemoryRepository implements CategoryRepository {
 
   CategoryModel _parseCategory(Map<String, dynamic> json) {
     return CategoryModel(
-        id: json['id'], name: json['name'], image: json['image'], icon: json['icon']);
+        id: json['id'],
+        name: json['name'],
+        image: json['image'] != null ? json['image'] : 'img/no-image.png',
+        icon:
+            CompanyIcons[json['icon'] != null ? json['icon'] : "scatter_plot"]);
   }
 }
 
