@@ -117,7 +117,7 @@ class ProductInMemoryRepository implements ProductRepository {
       name: json['name'],
       categoryId: json['categoryId'],
       priceMax: json['priceMax'],
-      priceMin: json['price'],
+      priceMin: json['priceMin'],
       images: imagesOfProductList,
     );
   }

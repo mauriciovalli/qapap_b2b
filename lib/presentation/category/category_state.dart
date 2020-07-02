@@ -14,10 +14,10 @@ abstract class CategoryListState extends CategoryState {
   int length();
 }
 
-class CategorySHide extends CategoryListState {
+class CategoryHided extends CategoryListState {
   final List<CategoryModel> items;
 
-  const CategorySHide({this.items});
+  const CategoryHided({this.items});
 
   @override
   List<Object> get props => [items];

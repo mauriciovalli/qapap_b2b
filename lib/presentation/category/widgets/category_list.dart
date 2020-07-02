@@ -7,7 +7,7 @@ class CategoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CategoryBloc, CategoryState>(builder: (context, state) {
-      if (state is CategorySHide) {
+      if (state is CategoryHided) {
         return SizedBox(height: 0);
       } else {
         return Expanded(

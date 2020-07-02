@@ -29,7 +29,7 @@ class CategorySimpleListState extends State<CategorySimpleList> {
                   ),
                 );
               }
-              if (state is CategorySHide) {
+              if (state is CategoryHided) {
                 return SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (context, index) =>
@@ -56,9 +56,10 @@ class CategorySimpleListState extends State<CategorySimpleList> {
   }
 
   Widget buildItem(BuildContext context, CategoryModel _item) {
+    final ThemeConfig themeConfig = ThemeConfig.instance(context);
     var iconSplit = _item.icon.split("#");
     var icon = iconSplit[0];
-    var iconFamily = iconSplit.length==2 ?iconSplit[1] : 'MaterialIcons';
+    var iconFamily = iconSplit.length == 2 ? iconSplit[1] : 'MaterialIcons';
     //var iconPackage
     return ConstrainedBox(
       constraints: BoxConstraints(maxHeight: 50.0, minHeight: 40.0),
@@ -66,14 +67,17 @@ class CategorySimpleListState extends State<CategorySimpleList> {
         color: _selectedItemId == _item.id
             ? CompanyColors.red[800]
             : Colors.transparent,
-        padding: EdgeInsets.fromLTRB(60, 0, 0, 0),
         child: ListTile(
           title: Container(
             alignment: Alignment.centerLeft,
+            padding: EdgeInsets.fromLTRB(
+                themeConfig.isDesktop && !themeConfig.isSmallDesktop ? 60 : 0,
+                0,
+                0,
+                0),
             child: Row(
               children: [
                 Icon(
-
                   IconData(int.parse(icon), fontFamily: iconFamily),
                   color: _selectedItemId == _item.id
                       ? Colors.white

@@ -28,13 +28,13 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   }
 
   Stream<CategoryState> _clean(CategoryHide event) async* {
-    yield CategorySHide(items: _items);
+    yield CategoryHided(items: _items);
   }
 
   Stream<CategoryState> _load() async* {
     yield CategoryLoading();
     try {
-      await Future.delayed(Duration(seconds: 1));
+      //await Future.delayed(Duration(seconds: 1));
       _items = _repository.list();
       yield CategoryLoaded(items: _items);
     } catch (_) {
