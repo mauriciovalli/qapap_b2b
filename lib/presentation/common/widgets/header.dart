@@ -21,7 +21,7 @@ class _MyAppBarState extends State<MyAppBar> {
     final ThemeConfig themeConfig = ThemeConfig.instance(context);
 
     return AppBar(
- //     toolbarHeight: 80,
+      toolbarHeight: 80,
       //toolbarHeight: kToolbarHeight,
       title: _MyTittle(),
       actions: themeConfig.isDesktop && !themeConfig.isSmallDesktop
