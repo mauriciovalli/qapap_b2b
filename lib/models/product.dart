@@ -7,7 +7,6 @@ class ProductModel {
   String name;
   String description;
   CompanyModel company;
-  int categoryId;
   CategoryModel category;
   double priceMin;
   double priceMax;
@@ -20,12 +19,12 @@ class ProductModel {
       {this.id,
       this.name,
       this.company,
-      this.categoryId,
+      this.category,
       this.priceMin,
       this.priceMax,
-      this.orderUnit='Kg',
-      this.orderMin=10,
-      this.incoTerms='FOP',
+      this.orderUnit = 'Kg',
+      this.orderMin = 10,
+      this.incoTerms = 'FOP',
       this.images});
 
   @override

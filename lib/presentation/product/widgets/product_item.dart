@@ -22,7 +22,7 @@ class ProductItem extends StatelessWidget {
               builder: (context) => ProductDetails(
                     //navigate to detailed page with passing data
                     productDetailsName: _item.name,
-                    productDetailsPicture: _item.images[0].imageURL,
+                    productDetailsPicture: _item.images[0].src,
                     productDetailspriceMax: _item.priceMax,
                     productDetailsNewPrice: _item.priceMin,
                   ))),
@@ -220,10 +220,10 @@ class ProductItem extends StatelessWidget {
     return Swiper(
       outer: false,
       itemBuilder: (context, i) {
-          if(images[i].imageURL.length>0 && images[i].imageURL.startsWith("http"))
-            return Image.network(images[i].imageURL, fit: BoxFit.scaleDown);
-          else if(images[i].imageURL.length>0)
-           return Image.asset(images[i].imageURL, fit: BoxFit.scaleDown);
+          if(images[i].src.length>0 && images[i].src.startsWith("http"))
+            return Image.network(images[i].src, fit: BoxFit.scaleDown);
+          else if(images[i].src.length>0)
+           return Image.asset(images[i].src, fit: BoxFit.scaleDown);
           else
             return Image.asset("img/no-image.png", fit: BoxFit.scaleDown);
       },

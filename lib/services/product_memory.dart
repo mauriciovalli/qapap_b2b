@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:qapaq_b2b/models/any_image.dart';
+import 'package:qapaq_b2b/models/category.dart';
 import 'package:qapaq_b2b/models/product.dart';
 import 'package:qapaq_b2b/services/product_repository.dart';
 
@@ -8,7 +9,13 @@ const products = '''[
   {
      "id": 101,
      "name": "Alfalfa",
-     "categoryId": 1,
+     "category": 
+       {
+          "id": 1,
+          "name": "Produción Agricola",
+          "image": "https://cdn.fromozz.com/PROCHILE/images/category/Agriculture%20and%20Live%20Animals.jpg",
+          "icon": "0xe801#QapaqIcons"
+       },
      "priceMax": 8.0,
      "priceMin": 12.0,   
      "images": [
@@ -26,7 +33,13 @@ const products = '''[
   {
      "id": 102,
      "name": "Harina de Avena",
-     "categoryId": 1,
+     "category": 
+       {
+          "id": 1,
+          "name": "Produción Agricola",
+          "image": "https://cdn.fromozz.com/PROCHILE/images/category/Agriculture%20and%20Live%20Animals.jpg",
+          "icon": "0xe801#QapaqIcons"
+       },
      "priceMax": 450.00,
      "priceMin": 500.00,
      "images": [
@@ -38,7 +51,13 @@ const products = '''[
   {
      "id": 201,
      "name": "Tractor CAT",
-     "categoryId": 2,
+     "category": 
+       {
+          "id": 2,
+          "name": "Veiculos & Accesorios",
+          "image": "https://cdn.fromozz.com/fd0e7788594364c083b92f248c892b3966da1c60/873c20d665abe3d72fd5bf73fa675c24db2026b1/thumbnail.jpg",
+          "icon": "0xe800#QapaqIcons"
+       },
      "priceMax": 10000.0,
      "priceMin": 50000.0,
      "images": [
@@ -50,7 +69,13 @@ const products = '''[
   {
      "id": 301,
      "name": "Norton Malbec Doc Caja 6x750ml",
-     "categoryId": 3,
+     "category": 
+       {
+          "id": 3,
+          "name": "Comidas & Bebidas",
+          "image": "img/cats/food_beverages.jpg",
+          "icon": "0xe802#QapaqIcons"
+       },
      "priceMax": 300.0,
      "priceMin": 300.0,
      "images": [
@@ -62,7 +87,13 @@ const products = '''[
   {
      "id": 401,
      "name": "Salmon fresco del Atlanticol",
-     "categoryId": 4,
+     "category": 
+       {
+          "id": 4,
+          "name": "Pescados & carnes",
+          "image": "",
+          "icon": "0xe268"
+       },
      "priceMax": 10.0,
      "priceMin": 1000.0,
      "images": [
@@ -79,14 +110,12 @@ const products = '''[
   }
 ]''';
 
-
-
 class ProductInMemoryRepository implements ProductRepository {
   @override
   List<ProductModel> listByCategoryId(int id) {
     List<ProductModel> _items = _parse(jsonDecode(products));
     List<ProductModel> filterList =
-        _items.where((product) => product.categoryId == id).toList();
+        _items.where((product) => product.category.id == id).toList();
     return filterList;
   }
 
@@ -97,29 +126,40 @@ class ProductInMemoryRepository implements ProductRepository {
 
   ProductModel _parseProducts(Map<String, dynamic> json) {
     //parse the product's images
-    List<AnyImage> imagesOfProductList = [];
+    List<AnyImage> images = [];
 
     json["images"].forEach(
-      (newImage) {
-        imagesOfProductList.add(
-          new AnyImage(
-            imageURL: newImage["src"],
-            id: newImage["id"],
-            title: newImage["name"],
-            alt: "",//newImage["alt"],
-          ),
-        );
+      (imagenJson) {
+        images.add(_parseImage(imagenJson));
       },
     );
+
+    var category = _parseCategory(json["category"]);
 
     return ProductModel(
       id: json['id'],
       name: json['name'],
-      categoryId: json['categoryId'],
+      category: category,
       priceMax: json['priceMax'],
       priceMin: json['priceMin'],
-      images: imagesOfProductList,
+      images: images,
     );
+  }
+
+  AnyImage _parseImage(Map<String, dynamic> json) {
+    return AnyImage(
+        id: json['id'],
+        title: json['title'],
+        src: json['src'],
+        alt: json['alt']);
+  }
+
+  CategoryModel _parseCategory(Map<String, dynamic> json) {
+    return CategoryModel(
+        id: json['id'],
+        name: json['name'],
+        image: json['image'],
+        icon: json['icon']);
   }
 
 //class Products {
