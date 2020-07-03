@@ -31,20 +31,20 @@ class ProductModel {
       : id = json['id'],
         name = json['name'],
         images = _parseImage(json['images']),
-        this.company = CompanyModel(),
+        company = CompanyModel(),
         category = CategoryModel.fromJson(json["category"]),
         priceMax = json['priceMax'],
         priceMin = json['priceMin'],
-        this.orderUnit = 'Kg',
-        this.orderMin = 10,
-        this.incoTerms = 'FOP';
+        orderUnit = 'Kg',
+        orderMin = 10,
+        incoTerms = 'FOP';
 
-  static List<AnyImage> _parseImage(Map<String, dynamic> json) {
+  static List<AnyImage> _parseImage(List<dynamic> list) {
     //parse the product's images
     List<AnyImage> images = [];
-    json["images"].forEach(
-      (imagenJson) {
-        images.add(AnyImage.fromJson(imagenJson));
+    list.forEach(
+      (json) {
+        images.add(AnyImage.fromJson(json));
       },
     );
     return images;
