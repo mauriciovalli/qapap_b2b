@@ -22,10 +22,39 @@ class ProductModel {
       this.category,
       this.priceMin,
       this.priceMax,
-      this.orderUnit = 'Kg',
-      this.orderMin = 10,
-      this.incoTerms = 'FOP',
+      this.orderUnit,
+      this.orderMin,
+      this.incoTerms,
       this.images});
+
+  ProductModel.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        name = json['name'],
+        images = _parseImage(json['images']),
+        this.company = CompanyModel(),
+        category = CategoryModel.fromJson(json["category"]),
+        priceMax = json['priceMax'],
+        priceMin = json['priceMin'],
+        this.orderUnit = 'Kg',
+        this.orderMin = 10,
+        this.incoTerms = 'FOP';
+
+  static List<AnyImage> _parseImage(Map<String, dynamic> json) {
+    //parse the product's images
+    List<AnyImage> images = [];
+    json["images"].forEach(
+      (imagenJson) {
+        images.add(AnyImage.fromJson(imagenJson));
+      },
+    );
+    return images;
+  }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        //? 'image': image..toJson(),
+      };
 
   @override
   toString() => "productId: $id , productName: $name";

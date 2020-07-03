@@ -78,7 +78,7 @@ class CategoryInMemoryRepository implements CategoryRepository {
 
   List<CategoryModel> _parse(List<dynamic> json) {
     return json
-        .map((jsonItem) => CategoryRepository.parseCategory(jsonItem))
+        .map((jsonItem) => CategoryModel.fromJson(jsonItem))
         .toList();
   }
 }

@@ -10,4 +10,17 @@ class AnyImage {
     this.src,
     this.alt,
   });
+
+  AnyImage.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        title = json['title'],
+        src = json['src'],
+        alt = json['alt'];
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'title': title,
+        'src': src,
+        'alt': alt,
+      };
 }

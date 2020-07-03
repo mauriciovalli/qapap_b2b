@@ -118,7 +118,7 @@ class ProductInMemoryRepository implements ProductRepository {
   // ignore: unused_element
   List<ProductModel> _parse(List<dynamic> json) {
     return json
-        .map((jsonItem) => ProductRepository.parseProducts(jsonItem))
+        .map((jsonItem) => ProductModel.fromJson(jsonItem))
         .toList();
   }
 
