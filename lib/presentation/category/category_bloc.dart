@@ -13,32 +13,32 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   List<CategoryModel> _items = [];
 
   @override
-  CategoryState get initialState => CategoryLoading();
+  CategoryState get initialState => CategoryLoadingState();
 
   @override
   Stream<CategoryState> mapEventToState(
     CategoryEvent event,
   ) async* {
-    if (event is CategoryHide) {
+    if (event is CategoryHideEvent) {
       yield* _clean(event);
     }
-    if (event is CategoryLoad) {
+    if (event is CategoryLoadEvent) {
       yield* _load();
     }
   }
 
-  Stream<CategoryState> _clean(CategoryHide event) async* {
-    yield CategoryHided(items: _items);
+  Stream<CategoryState> _clean(CategoryHideEvent event) async* {
+    yield CategoryHideState(items: _items);
   }
 
   Stream<CategoryState> _load() async* {
-    yield CategoryLoading();
+    yield CategoryLoadingState();
     try {
       //await Future.delayed(Duration(seconds: 1));
       _items = _repository.list();
-      yield CategoryLoaded(items: _items);
+      yield CategoryLoadedState(items: _items);
     } catch (_) {
-      yield CategoryError();
+      yield CategoryErrorState();
     }
   }
 }

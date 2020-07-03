@@ -7,7 +7,7 @@ class CategoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CategoryBloc, CategoryState>(builder: (context, state) {
-      if (state is CategoryHided) {
+      if (state is CategoryHideState) {
         return SizedBox(height: 0);
       } else {
         return Expanded(
@@ -18,14 +18,14 @@ class CategoryList extends StatelessWidget {
                 SliverToBoxAdapter(child: SizedBox(height: 0)),
                 BlocBuilder<CategoryBloc, CategoryState>(
                   builder: (context, state) {
-                    if (state is CategoryLoading) {
+                    if (state is CategoryLoadingState) {
                       return SliverFillRemaining(
                         child: Center(
                           child: CircularProgressIndicator(),
                         ),
                       );
                     }
-                    if (state is CategoryLoaded) {
+                    if (state is CategoryLoadedState) {
                       return SliverGrid(
                         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent: 400.0,

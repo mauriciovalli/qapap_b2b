@@ -7,7 +7,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="qapaq_b2b"
+        android:label="Qapaq"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

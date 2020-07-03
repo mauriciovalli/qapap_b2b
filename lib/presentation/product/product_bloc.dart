@@ -19,25 +19,25 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   Stream<ProductState> mapEventToState(
     ProductEvent event,
   ) async* {
-    if (event is ProductHide) {
+    if (event is ProductHideEvent) {
       yield* _clean(event);
-    } else if (event is ProductLoad) {
+    } else if (event is ProductLoadEvent) {
       yield* _load(event);
     }
   }
 
-  Stream<ProductState> _clean(ProductHide event) async* {
+  Stream<ProductState> _clean(ProductHideEvent event) async* {
     yield ProductSHide();
   }
   
-  Stream<ProductState> _load(ProductLoad event) async* {
+  Stream<ProductState> _load(ProductLoadEvent event) async* {
     yield ProductLoading();
     try {
       await Future.delayed(Duration(seconds: 1));
       _items = _repository.listByCategoryId(event.categoyId);
       yield ProductLoaded(items: _items);
-    } catch (_) {
-      yield ProductError();
+    } catch (error) {
+      yield ProductErrorState(message: error.toString());
     }
   }
 }

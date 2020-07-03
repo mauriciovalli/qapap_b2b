@@ -34,7 +34,10 @@ class ProductList extends StatelessWidget {
                         ),
                       );
                     }
-                    return Text('Something went wrong!');
+                    if (state is ProductErrorState) {
+                      return Text(state.message);
+                    } else
+                      return Text('Something went wrong!');
                   },
                 ),
               ],

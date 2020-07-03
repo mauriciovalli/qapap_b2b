@@ -66,9 +66,9 @@ class _MyTittle extends StatelessWidget {
                   ),
                   onTap: () => {
                         BlocProvider.of<CategoryBloc>(context)
-                            .add(CategoryLoad()),
+                            .add(CategoryLoadEvent()),
                         BlocProvider.of<ProductBloc>(context)
-                            .add(ProductHide()),
+                            .add(ProductHideEvent()),
                         Navigator.pushReplacement(context,
                             MaterialPageRoute(builder: (context) => HomePage()))
                       }),

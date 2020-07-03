@@ -5,16 +5,16 @@ abstract class ProductEvent extends Equatable {
   const ProductEvent();
 }
 
-class ProductLoad extends ProductEvent {
+class ProductLoadEvent extends ProductEvent {
   final int categoyId;
 
-  const ProductLoad(this.categoyId);
+  const ProductLoadEvent(this.categoyId);
 
   @override
   List<Object> get props => [];
 }
 
-class ProductHide extends ProductEvent {
+class ProductHideEvent extends ProductEvent {
   @override
   List<Object> get props => [];
 }

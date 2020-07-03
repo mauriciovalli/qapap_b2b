@@ -22,14 +22,14 @@ class CategorySimpleListState extends State<CategorySimpleList> {
           SliverToBoxAdapter(child: SizedBox(height: 10)),
           BlocBuilder<CategoryBloc, CategoryState>(
             builder: (context, state) {
-              if (state is CategoryLoading) {
+              if (state is CategoryLoadingState) {
                 return SliverFillRemaining(
                   child: Center(
                     child: CircularProgressIndicator(),
                   ),
                 );
               }
-              if (state is CategoryHided) {
+              if (state is CategoryHideState) {
                 return SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (context, index) =>
@@ -38,7 +38,7 @@ class CategorySimpleListState extends State<CategorySimpleList> {
                   ),
                 );
               }
-              if (state is CategoryLoaded) {
+              if (state is CategoryLoadedState) {
                 return SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (context, index) =>
@@ -95,8 +95,8 @@ class CategorySimpleListState extends State<CategorySimpleList> {
             ),
           ),
           onTap: () => {
-            BlocProvider.of<CategoryBloc>(context).add(CategoryHide()),
-            BlocProvider.of<ProductBloc>(context).add(ProductLoad(_item.id)),
+            BlocProvider.of<CategoryBloc>(context).add(CategoryHideEvent()),
+            BlocProvider.of<ProductBloc>(context).add(ProductLoadEvent(_item.id)),
             setState(() {
               _selectedItemId = _item.id;
             }),

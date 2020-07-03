@@ -167,9 +167,9 @@ class _WebSearcherState extends State<WebSearcher> {
                       final categorySelected =
                           _repository.findByName(suggestion['name']);
                       BlocProvider.of<CategoryBloc>(context)
-                          .add(CategoryHide());
+                          .add(CategoryHideEvent());
                       BlocProvider.of<ProductBloc>(context)
-                          .add(ProductLoad(categorySelected.id));
+                          .add(ProductLoadEvent(categorySelected.id));
                       this._typeAheadController.text = suggestion['name'];
                     },
                   ),
@@ -238,9 +238,9 @@ class MobileDataSearcher extends SearchDelegate<String> {
       onTap: () {
         var categorySelected =
             _repository.findByName(suggestionList[index].name);
-        BlocProvider.of<CategoryBloc>(context).add(CategoryHide());
+        BlocProvider.of<CategoryBloc>(context).add(CategoryHideEvent());
         BlocProvider.of<ProductBloc>(context)
-            .add(ProductLoad(categorySelected.id));
+            .add(ProductLoadEvent(categorySelected.id));
         close(context, null);
       },
       leading: Icon(suggestionList[index].icon),

@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:qapaq_b2b/models/any_image.dart';
-import 'package:qapaq_b2b/models/category.dart';
 import 'package:qapaq_b2b/models/product.dart';
 import 'package:qapaq_b2b/services/product_repository.dart';
 
@@ -10,12 +8,12 @@ const products = '''[
      "id": 101,
      "name": "Alfalfa",
      "category": 
-       {
+        {
           "id": 1,
           "name": "Produción Agricola",
-          "image": "https://cdn.fromozz.com/PROCHILE/images/category/Agriculture%20and%20Live%20Animals.jpg",
-          "icon": "0xe801#QapaqIcons"
-       },
+          "image": { "src": "https://cdn.fromozz.com/PROCHILE/images/category/Agriculture%20and%20Live%20Animals.jpg" },
+          "icon": "wheat"
+        },
      "priceMax": 8.0,
      "priceMin": 12.0,   
      "images": [
@@ -34,12 +32,12 @@ const products = '''[
      "id": 102,
      "name": "Harina de Avena",
      "category": 
-       {
+        {
           "id": 1,
           "name": "Produción Agricola",
-          "image": "https://cdn.fromozz.com/PROCHILE/images/category/Agriculture%20and%20Live%20Animals.jpg",
-          "icon": "0xe801#QapaqIcons"
-       },
+          "image": { "src": "https://cdn.fromozz.com/PROCHILE/images/category/Agriculture%20and%20Live%20Animals.jpg" },
+          "icon": "wheat"
+        },
      "priceMax": 450.00,
      "priceMin": 500.00,
      "images": [
@@ -52,12 +50,12 @@ const products = '''[
      "id": 201,
      "name": "Tractor CAT",
      "category": 
-       {
+        {
           "id": 2,
           "name": "Veiculos & Accesorios",
-          "image": "https://cdn.fromozz.com/fd0e7788594364c083b92f248c892b3966da1c60/873c20d665abe3d72fd5bf73fa675c24db2026b1/thumbnail.jpg",
-          "icon": "0xe800#QapaqIcons"
-       },
+          "image": { "src": "https://cdn.fromozz.com/fd0e7788594364c083b92f248c892b3966da1c60/873c20d665abe3d72fd5bf73fa675c24db2026b1/thumbnail.jpg" },
+          "icon": "truck"
+        },
      "priceMax": 10000.0,
      "priceMin": 50000.0,
      "images": [
@@ -70,12 +68,12 @@ const products = '''[
      "id": 301,
      "name": "Norton Malbec Doc Caja 6x750ml",
      "category": 
-       {
+        {
           "id": 3,
           "name": "Comidas & Bebidas",
-          "image": "img/cats/food_beverages.jpg",
-          "icon": "0xe802#QapaqIcons"
-       },
+          "image": { "src": "img/cats/food_beverages.jpg" },
+          "icon": "wine"
+        },
      "priceMax": 300.0,
      "priceMin": 300.0,
      "images": [
@@ -90,9 +88,7 @@ const products = '''[
      "category": 
        {
           "id": 4,
-          "name": "Pescados & carnes",
-          "image": "",
-          "icon": "0xe268"
+          "name": "Pescados & carnes"
        },
      "priceMax": 10.0,
      "priceMin": 1000.0,
@@ -121,45 +117,9 @@ class ProductInMemoryRepository implements ProductRepository {
 
   // ignore: unused_element
   List<ProductModel> _parse(List<dynamic> json) {
-    return json.map((jsonItem) => _parseProducts(jsonItem)).toList();
-  }
-
-  ProductModel _parseProducts(Map<String, dynamic> json) {
-    //parse the product's images
-    List<AnyImage> images = [];
-
-    json["images"].forEach(
-      (imagenJson) {
-        images.add(_parseImage(imagenJson));
-      },
-    );
-
-    var category = _parseCategory(json["category"]);
-
-    return ProductModel(
-      id: json['id'],
-      name: json['name'],
-      category: category,
-      priceMax: json['priceMax'],
-      priceMin: json['priceMin'],
-      images: images,
-    );
-  }
-
-  AnyImage _parseImage(Map<String, dynamic> json) {
-    return AnyImage(
-        id: json['id'],
-        title: json['title'],
-        src: json['src'],
-        alt: json['alt']);
-  }
-
-  CategoryModel _parseCategory(Map<String, dynamic> json) {
-    return CategoryModel(
-        id: json['id'],
-        name: json['name'],
-        image: json['image'],
-        icon: json['icon']);
+    return json
+        .map((jsonItem) => ProductRepository.parseProducts(jsonItem))
+        .toList();
   }
 
 //class Products {

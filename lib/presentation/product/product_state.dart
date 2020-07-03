@@ -26,7 +26,12 @@ class ProductLoaded extends ProductState {
   ProductModel getByPosition(int position) => items[position];
 }
 
-class ProductError extends ProductState {
+
+class ProductErrorState extends ProductState {
+  final String message;
+
+  ProductErrorState({@required this.message});
+
   @override
   List<Object> get props => [];
 }

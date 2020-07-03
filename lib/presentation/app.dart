@@ -15,10 +15,10 @@ class App extends StatelessWidget {
 //        Provider<CategoryRepository>(
 //            create: (context) => CategoryInMemoryRepository()),
         BlocProvider<CategoryBloc>(
-          create: (context) => CategoryBloc()..add(CategoryLoad()),
+          create: (context) => CategoryBloc()..add(CategoryLoadEvent()),
         ),
         BlocProvider<ProductBloc>(
-          create: (context) => ProductBloc()..add(ProductHide()),
+          create: (context) => ProductBloc()..add(ProductHideEvent()),
         ),
       ],
       child: MaterialApp(

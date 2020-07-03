@@ -14,10 +14,10 @@ abstract class CategoryListState extends CategoryState {
   int length();
 }
 
-class CategoryHided extends CategoryListState {
+class CategoryHideState extends CategoryListState {
   final List<CategoryModel> items;
 
-  const CategoryHided({this.items});
+  const CategoryHideState({this.items});
 
   @override
   List<Object> get props => [items];
@@ -32,15 +32,15 @@ class CategoryHided extends CategoryListState {
   }
 }
 
-class CategoryLoading extends CategoryState {
+class CategoryLoadingState extends CategoryState {
   @override
   List<Object> get props => [];
 }
 
-class CategoryLoaded extends CategoryListState {
+class CategoryLoadedState extends CategoryListState {
   final List<CategoryModel> items;
 
-  const CategoryLoaded({this.items});
+  const CategoryLoadedState({this.items});
 
   @override
   List<Object> get props => [items];
@@ -55,7 +55,7 @@ class CategoryLoaded extends CategoryListState {
   }
 }
 
-class CategoryError extends CategoryState {
+class CategoryErrorState extends CategoryState {
   @override
   List<Object> get props => [];
 }

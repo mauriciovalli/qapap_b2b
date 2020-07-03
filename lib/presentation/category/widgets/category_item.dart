@@ -25,17 +25,17 @@ class CategoryItem extends StatelessWidget {
           ),
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: _item.image.startsWith("http")
-                      ? NetworkImage(_item.image)
-                      : _item.image.length > 0
-                          ? AssetImage(_item.image)
+                  image: _item.image.src.startsWith("http")
+                      ? NetworkImage(_item.image.src)
+                      : _item.image.src.length > 0
+                          ? AssetImage(_item.image.src)
                           : AssetImage('img/no-image.png'),
                   fit: BoxFit.cover)),
         ),
       ),
       onTap: () => {
-        BlocProvider.of<CategoryBloc>(context).add(CategoryHide()),
-        BlocProvider.of<ProductBloc>(context).add(ProductLoad(_item.id)),
+        BlocProvider.of<CategoryBloc>(context).add(CategoryHideEvent()),
+        BlocProvider.of<ProductBloc>(context).add(ProductLoadEvent(_item.id)),
       },
     );
   }
