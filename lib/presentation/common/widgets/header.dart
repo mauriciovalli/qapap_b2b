@@ -74,7 +74,7 @@ class _MyTittle extends StatelessWidget {
                       }),
             ),
             Container(
-              child: themeConfig.isDesktop
+              child: themeConfig.isDesktop && !themeConfig.isSmallDesktop
                   ? WebSearcher()
                   : IconButton(
                       icon: Icon(Icons.search, color: Colors.white),
