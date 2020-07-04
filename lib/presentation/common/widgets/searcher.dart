@@ -147,7 +147,7 @@ class _WebSearcherState extends State<WebSearcher> {
                       controller: _typeAheadController,
                     ),
                     suggestionsCallback: (pattern) async {
-                      final patternList = _repository.listByName(pattern);
+                      final patternList = await _repository.listByName(pattern);
                       var tupleList =
                           List.generate(patternList.length, (index) {
                         return {
@@ -163,9 +163,9 @@ class _WebSearcherState extends State<WebSearcher> {
                         title: Text(suggestion['name']),
                       );
                     },
-                    onSuggestionSelected: (suggestion) {
+                    onSuggestionSelected: (suggestion) async {
                       final categorySelected =
-                          _repository.findByName(suggestion['name']);
+                          await _repository.findByName(suggestion['name']);
                       BlocProvider.of<CategoryBloc>(context)
                           .add(CategoryHideEvent());
                       BlocProvider.of<ProductBloc>(context)
@@ -222,8 +222,11 @@ class MobileDataSearcher extends SearchDelegate<String> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final List<CategoryModel> suggestionList =
-        query.isEmpty ? _repository.list() : _repository.listByName(query);
+    List<CategoryModel> suggestionList;
+    if (query.isEmpty)
+      _repository.list().then((list) => suggestionList = list);
+    else
+      _repository.listByName(query).then((list) => suggestionList = list);
 
     return ListView.builder(
       itemBuilder: (context, index) =>
@@ -236,8 +239,10 @@ class MobileDataSearcher extends SearchDelegate<String> {
       BuildContext context, List<CategoryModel> suggestionList, int index) {
     return ListTile(
       onTap: () {
-        var categorySelected =
-            _repository.findByName(suggestionList[index].name);
+        CategoryModel categorySelected;
+        _repository
+            .findByName(suggestionList[index].name)
+            .then((value) => categorySelected = value);
         BlocProvider.of<CategoryBloc>(context).add(CategoryHideEvent());
         BlocProvider.of<ProductBloc>(context)
             .add(ProductLoadEvent(categorySelected.id));

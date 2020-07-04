@@ -34,8 +34,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   Stream<CategoryState> _load() async* {
     yield CategoryLoadingState();
     try {
-      //await Future.delayed(Duration(seconds: 1));
-      _items = _repository.list();
+      _items = await _repository.list();
       yield CategoryLoadedState(items: _items);
     } catch (_) {
       yield CategoryErrorState();

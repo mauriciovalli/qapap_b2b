@@ -108,7 +108,8 @@ const products = '''[
 
 class ProductInMemoryRepository implements ProductRepository {
   @override
-  List<ProductModel> listByCategoryId(int id) {
+  Future<List<ProductModel>> listByCategoryId(int id) async {
+    await Future.delayed(Duration(milliseconds: 500));
     List<ProductModel> _items = _parse(jsonDecode(products));
     List<ProductModel> filterList =
         _items.where((product) => product.category.id == id).toList();

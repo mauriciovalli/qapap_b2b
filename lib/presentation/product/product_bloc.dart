@@ -33,8 +33,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   Stream<ProductState> _load(ProductLoadEvent event) async* {
     yield ProductLoading();
     try {
-      await Future.delayed(Duration(seconds: 1));
-      _items = _repository.listByCategoryId(event.categoyId);
+      _items = await _repository.listByCategoryId(event.categoyId);
       yield ProductLoaded(items: _items);
     } catch (error) {
       yield ProductErrorState(message: error.toString());

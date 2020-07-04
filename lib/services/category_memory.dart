@@ -58,12 +58,14 @@ const categoriesJson = '''[
 
 class CategoryInMemoryRepository implements CategoryRepository {
   @override
-  List<CategoryModel> list() {
+  Future<List<CategoryModel>> list() async {
+    await Future.delayed(Duration(milliseconds: 500));
     return _parse(jsonDecode(categoriesJson));
   }
 
   @override
-  List<CategoryModel> listByName(String pattern) {
+  Future<List<CategoryModel>> listByName(String pattern) async {
+    await Future.delayed(Duration(milliseconds: 500));
     return _parse(jsonDecode(categoriesJson))
         .where((element) =>
             element.name.toLowerCase().contains(pattern.toLowerCase()))
@@ -71,15 +73,14 @@ class CategoryInMemoryRepository implements CategoryRepository {
   }
 
   @override
-  CategoryModel findByName(String name) {
+  Future<CategoryModel> findByName(String name) async {
+    await Future.delayed(Duration(milliseconds: 500));
     return _parse(jsonDecode(categoriesJson))
         .firstWhere((p) => p.name.startsWith(name));
   }
 
   List<CategoryModel> _parse(List<dynamic> json) {
-    return json
-        .map((jsonItem) => CategoryModel.fromJson(jsonItem))
-        .toList();
+    return json.map((jsonItem) => CategoryModel.fromJson(jsonItem)).toList();
   }
 }
 
