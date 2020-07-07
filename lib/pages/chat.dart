@@ -23,7 +23,9 @@ class _ChatPageState extends State<ChatPage> {
 
     return Scaffold(
         appBar: MyAppBar(
-          height: themeConfig.isDesktop ? 80 : kToolbarHeight,
+          height: themeConfig.isDesktop || themeConfig.isSmallDesktop
+              ? 80
+              : kToolbarHeight,
         ),
         drawer: themeConfig.isDesktop && !themeConfig.isSmallDesktop
             ? null

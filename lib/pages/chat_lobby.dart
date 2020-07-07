@@ -15,9 +15,14 @@ class ChatHomeScreen extends StatefulWidget {
 class _ChatHomeScreenState extends State<ChatHomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final ThemeConfig themeConfig = ThemeConfig.instance(context);
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      appBar: MyAppBar(),
+      appBar: MyAppBar(
+        height: themeConfig.isDesktop || themeConfig.isSmallDesktop
+            ? 80
+            : kToolbarHeight,
+      ),
       body: ThemeConfig.instance(context).isDesktop
           ? Row(
               children: [
@@ -31,17 +36,13 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                       Container(
                         margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
                         child: TextField(
-                          style: new TextStyle(
-                              color: Colors.grey),
+                          style: new TextStyle(color: Colors.grey),
                           decoration: new InputDecoration(
                             border: InputBorder.none,
-                            prefixIcon: new Icon(Icons.search,
-                                color:
-                                    Colors.grey),
+                            prefixIcon:
+                                new Icon(Icons.search, color: Colors.grey),
                             hintText: "Buscar un contacto...",
-                            hintStyle: new TextStyle(
-                                color:
-                                    Colors.grey),
+                            hintStyle: new TextStyle(color: Colors.grey),
                           ),
                         ),
                       ),
