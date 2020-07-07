@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:qapaq_b2b/configuration/theme.dart';
 import 'package:qapaq_b2b/models/any_image.dart';
 import 'package:qapaq_b2b/models/product.dart';
 import 'package:qapaq_b2b/pages/product_details.dart';
@@ -14,18 +15,17 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeConfig themeConfig = ThemeConfig.instance(context);
     return InkWell(
       child: buildProduct(context),
-      onTap: () => Navigator.push(
-          context,
-          new MaterialPageRoute(
-              builder: (context) => ProductDetails(
-                    //navigate to detailed page with passing data
-                    productDetailsName: _item.name,
-                    productDetailsPicture: _item.images[0].src,
-                    productDetailspriceMax: _item.priceMax,
-                    productDetailsNewPrice: _item.priceMin,
-                  ))),
+      onTap: () => themeConfig.isDesktop || themeConfig.isSmallDesktop
+          ? Navigator.pushNamed(context, 'productDetails', arguments: _item)
+          : Navigator.push(
+              context,
+              new MaterialPageRoute(
+                  builder: (context) => ProductDetails(
+                        product: _item,
+                      ))),
     );
   }
 
@@ -220,12 +220,12 @@ class ProductItem extends StatelessWidget {
     return Swiper(
       outer: false,
       itemBuilder: (context, i) {
-          if(images[i].src.length>0 && images[i].src.startsWith("http"))
-            return Image.network(images[i].src, fit: BoxFit.scaleDown);
-          else if(images[i].src.length>0)
-           return Image.asset(images[i].src, fit: BoxFit.scaleDown);
-          else
-            return Image.asset("img/no-image.png", fit: BoxFit.scaleDown);
+        if (images[i].src.length > 0 && images[i].src.startsWith("http"))
+          return Image.network(images[i].src, fit: BoxFit.scaleDown);
+        else if (images[i].src.length > 0)
+          return Image.asset(images[i].src, fit: BoxFit.scaleDown);
+        else
+          return Image.asset("img/no-image.png", fit: BoxFit.scaleDown);
       },
       autoplay: false,
       itemCount: images.length,

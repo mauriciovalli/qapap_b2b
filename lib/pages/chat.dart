@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:qapaq_b2b/configuration/theme.dart';
 import 'package:qapaq_b2b/presentation/common/widgets/drawer.dart';
 import 'package:qapaq_b2b/presentation/common/widgets/header.dart';
@@ -22,7 +22,9 @@ class _ChatPageState extends State<ChatPage> {
     final ThemeConfig themeConfig = ThemeConfig.instance(context);
 
     return Scaffold(
-        appBar: MyAppBar(),
+        appBar: MyAppBar(
+          height: themeConfig.isDesktop ? 80 : kToolbarHeight,
+        ),
         drawer: themeConfig.isDesktop && !themeConfig.isSmallDesktop
             ? null
             : MyDrawer(),
@@ -154,25 +156,25 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   }
 
   Widget build(BuildContext context) {
-    return  new Container(
-          child: new Column(children: <Widget>[
-            new Flexible(
-                child: new ListView.builder(
-              padding: new EdgeInsets.all(8.0),
-              reverse: true,
-              itemBuilder: (_, int index) => _messages[index],
-              itemCount: _messages.length,
-            )),
-            new Divider(height: 1.0),
-            new Container(
-              decoration: new BoxDecoration(color: Theme.of(context).cardColor),
-              child: _buildTextComposer(),
-            ),
-          ]),
-          decoration: Theme.of(context).platform == TargetPlatform.iOS
-              ? new BoxDecoration(
-                  border:
-                      new Border(top: new BorderSide(color: Colors.grey[200])))
-              : null);
+    return new Container(
+        child: new Column(children: <Widget>[
+          new Flexible(
+              child: new ListView.builder(
+            padding: new EdgeInsets.all(8.0),
+            reverse: true,
+            itemBuilder: (_, int index) => _messages[index],
+            itemCount: _messages.length,
+          )),
+          new Divider(height: 1.0),
+          new Container(
+            decoration: new BoxDecoration(color: Theme.of(context).cardColor),
+            child: _buildTextComposer(),
+          ),
+        ]),
+        decoration: Theme.of(context).platform == TargetPlatform.iOS
+            ? new BoxDecoration(
+                border:
+                    new Border(top: new BorderSide(color: Colors.grey[200])))
+            : null);
   }
 }

@@ -47,135 +47,115 @@ class _WebSearcherState extends State<WebSearcher> {
 
     return Expanded(
       child: Container(
-        height: 45,
         margin: EdgeInsets.fromLTRB(margin, 10, margin, 10),
-        decoration: BoxDecoration(
+        child: ClipRRect(
           borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: Colors.black, width: 0.5),
-          //color: Theme.of(context).accentColor,
-        ),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(18),
-            border: Border.all(color: Theme.of(context).accentColor, width: 1),
-            color: Theme.of(context).accentColor,
-          ),
-          child: Row(
-            children: [
-              Container(
-                //height: 50,
-                padding: EdgeInsets.fromLTRB(20, 0, 5, 0),
-                decoration: BoxDecoration(
+          child: Container(
+            height: 45,
+            padding: EdgeInsets.all(1),
+            color: Colors.black,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(18),
+              child: Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.fromLTRB(20, 0, 5, 0),
                     color: Colors.grey[300],
-                    shape: BoxShape.rectangle,
-                    // border: Border.all(color: Theme.of(context).accentColor, width: 2.0),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(18),
-                        bottomLeft: Radius.circular(18))),
-                child: DropdownButton<String>(
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1
-                      .copyWith(color: Colors.grey[800], fontSize: 12),
-                  value: selectedFilterType,
-                  onChanged: (String value) {
-                    setState(() {
-                      selectedFilterType = value;
-                    });
-                  },
-                  dropdownColor: Colors.grey[300],
-                  focusColor: Colors.grey[400],
-                  underline: Container(),
-                  items: filterTypes.map((String filter) {
-                    return DropdownMenuItem<String>(
-                      value: filter,
-                      child: Text(
-                        filter,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText1
-                            .copyWith(color: Colors.grey[800], fontSize: 12),
-                        textAlign: TextAlign.start,
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(18),
-                        bottomRight: Radius.circular(18)),
-                  ),
-                  child: TypeAheadFormField(
-                    textFieldConfiguration: TextFieldConfiguration(
-                      autofocus: false,
-                      style: Theme.of(context).textTheme.bodyText1.copyWith(
-                          color: Colors.grey,
-                          fontStyle: FontStyle.italic,
-                          fontSize: 12),
-                      textAlign: TextAlign.start,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.fromLTRB(20, 11, 0, 5),
-                        fillColor: Colors.white,
-                        filled: false,
-                        hintText: "Buscar ...",
-                        hintStyle: Theme.of(context)
-                            .textTheme
-                            .bodyText1
-                            .copyWith(color: Colors.grey, fontSize: 12),
-                        floatingLabelBehavior: FloatingLabelBehavior.auto,
-                        suffixIcon: Container(
-                          decoration: BoxDecoration(
-                              color: Theme.of(context).accentColor,
-                              shape: BoxShape.rectangle,
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(18),
-                                  bottomRight: Radius.circular(18))),
-                          child: Icon(
-                            Icons.search,
-                            size: 20,
-                            color: Colors.white,
+                    child: DropdownButton<String>(
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1
+                          .copyWith(color: Colors.grey[800], fontSize: 12),
+                      value: selectedFilterType,
+                      onChanged: (String value) {
+                        setState(() {
+                          selectedFilterType = value;
+                        });
+                      },
+                      dropdownColor: Colors.grey[300],
+                      focusColor: Colors.grey[400],
+                      underline: Container(),
+                      items: filterTypes.map((String filter) {
+                        return DropdownMenuItem<String>(
+                          value: filter,
+                          child: Text(
+                            filter,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                .copyWith(color: Colors.grey[800], fontSize: 12),
+                            textAlign: TextAlign.start,
                           ),
-                        ),
-                        border: InputBorder.none,
-                      ),
-                      controller: _typeAheadController,
+                        );
+                      }).toList(),
                     ),
-                    suggestionsCallback: (pattern) async {
-                      final patternList = await _repository.listByName(pattern);
-                      var tupleList =
-                          List.generate(patternList.length, (index) {
-                        return {
-                          'name': patternList[index].name,
-                          'icon': patternList[index].icon,
-                        };
-                      });
-                      return tupleList;
-                    },
-                    itemBuilder: (context, suggestion) {
-                      return ListTile(
-                        leading: Icon(suggestion['icon']),
-                        title: Text(suggestion['name']),
-                      );
-                    },
-                    onSuggestionSelected: (suggestion) async {
-                      final categorySelected =
-                          await _repository.findByName(suggestion['name']);
-                      BlocProvider.of<CategoryBloc>(context)
-                          .add(CategoryHideEvent());
-                      BlocProvider.of<ProductBloc>(context)
-                          .add(ProductLoadEvent(categorySelected.id));
-                      this._typeAheadController.text = suggestion['name'];
-                    },
                   ),
-                ),
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                      color: Colors.white,
+                      child: TypeAheadFormField(
+                        textFieldConfiguration: TextFieldConfiguration(
+                          autofocus: false,
+                          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                              color: Colors.grey,
+                              fontStyle: FontStyle.italic,
+                              fontSize: 12),
+                          textAlign: TextAlign.start,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.fromLTRB(0, 11, 0, 0),
+                            fillColor: Colors.white,
+                            filled: true,
+                            hintText: "Buscar ...",
+                            hintStyle: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                .copyWith(color: Colors.grey, fontSize: 12),
+                            floatingLabelBehavior: FloatingLabelBehavior.auto,
+                            suffixIcon: Container(
+                              color: Theme.of(context).accentColor,
+                              child: Icon(
+                                Icons.search,
+                                size: 20,
+                                color: Colors.white,
+                              ),
+                            ),
+                            border: InputBorder.none,
+                          ),
+                          controller: _typeAheadController,
+                        ),
+                        suggestionsCallback: (pattern) async {
+                          final patternList = await _repository.listByName(pattern);
+                          var tupleList =
+                              List.generate(patternList.length, (index) {
+                            return {
+                              'name': patternList[index].name,
+                              'icon': patternList[index].icon,
+                            };
+                          });
+                          return tupleList;
+                        },
+                        itemBuilder: (context, suggestion) {
+                          return ListTile(
+                            leading: Icon(suggestion['icon']),
+                            title: Text(suggestion['name']),
+                          );
+                        },
+                        onSuggestionSelected: (suggestion) async {
+                          final categorySelected =
+                              await _repository.findByName(suggestion['name']);
+                          BlocProvider.of<CategoryBloc>(context)
+                              .add(CategoryHideEvent());
+                          BlocProvider.of<ProductBloc>(context)
+                              .add(ProductLoadEvent(categorySelected.id));
+                          this._typeAheadController.text = suggestion['name'];
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),

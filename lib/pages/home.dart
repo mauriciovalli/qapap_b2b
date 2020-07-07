@@ -20,7 +20,11 @@ class _HomePageState extends State<HomePage> {
     final ThemeConfig themeConfig = ThemeConfig.instance(context);
 
     return Scaffold(
-        appBar: MyAppBar(),
+        appBar: MyAppBar(
+          height: themeConfig.isDesktop || themeConfig.isSmallDesktop
+              ? 80
+              : kToolbarHeight,
+        ),
         drawer: themeConfig.isDesktop && !themeConfig.isSmallDesktop
             ? null
             : MyDrawer(),

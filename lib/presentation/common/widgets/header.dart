@@ -8,9 +8,11 @@ import 'package:qapaq_b2b/presentation/common/widgets/searcher.dart';
 import 'package:qapaq_b2b/presentation/product/product_bloc.dart';
 
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
-  MyAppBar({Key key})
-      : preferredSize = Size.fromHeight(80), //kToolbarHeight),
+  MyAppBar({Key key, this.height})
+      : preferredSize = Size.fromHeight(height),
         super(key: key);
+
+  final double height;
 
   @override
   final Size preferredSize; // default is 56.0
@@ -23,15 +25,15 @@ class _MyAppBarState extends State<MyAppBar> {
   @override
   Widget build(BuildContext context) {
     final ThemeConfig themeConfig = ThemeConfig.instance(context);
-
     return AppBar(
-      toolbarHeight: 80,
-      //toolbarHeight: kToolbarHeight,
+      toolbarHeight: widget.height,
       title: _MyTittle(),
       actions: themeConfig.isDesktop && !themeConfig.isSmallDesktop
           ? MyActions().buildActions(context)
           : [],
       iconTheme: new IconThemeData(color: Colors.white),
+      automaticallyImplyLeading:
+          themeConfig.isDesktop || themeConfig.isSmallDesktop ? false : true,
     );
   }
 }

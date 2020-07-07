@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:qapaq_b2b/configuration/theme.dart';
+import 'package:qapaq_b2b/models/product.dart';
 import 'package:qapaq_b2b/presentation/common/widgets/drawer.dart';
 import 'package:qapaq_b2b/presentation/common/widgets/header.dart';
 import 'package:qapaq_b2b/presentation/common/widgets/swiper.dart';
 
 class ProductDetails extends StatefulWidget {
-  final productDetailsName;
-  final productDetailspriceMax;
-  final productDetailsNewPrice;
-  final productDetailsPicture;
-  final productDetailsUnits;
+  final ProductModel product;
 
-  ProductDetails({
-    this.productDetailsName,
-    this.productDetailsPicture,
-    this.productDetailspriceMax,
-    this.productDetailsNewPrice,
-    this.productDetailsUnits,
-  });
+  const ProductDetails({
+    Key key,
+    @required this.product,
+  }) : super(key: key);
 
   @override
   _ProductDetailsState createState() => _ProductDetailsState();
@@ -31,9 +25,16 @@ class _ProductDetailsState extends State<ProductDetails> {
   @override
   Widget build(BuildContext context) {
     final ThemeConfig themeConfig = ThemeConfig.instance(context);
+    final ProductModel product = widget.product == null
+        ? ModalRoute.of(context).settings.arguments
+        : widget.product;
 
     return Scaffold(
-        appBar: MyAppBar(),
+        appBar: MyAppBar(
+          height: themeConfig.isDesktop || themeConfig.isSmallDesktop
+              ? 80
+              : kToolbarHeight,
+        ),
         drawer: themeConfig.isDesktop && !themeConfig.isSmallDesktop
             ? null
             : MyDrawer(),
@@ -46,14 +47,14 @@ class _ProductDetailsState extends State<ProductDetails> {
               child: Column(
                 children: <Widget>[
                   Expanded(
-                    child: buildCard(),
+                    child: buildCard(product),
                     flex: 5,
                   ),
                   Expanded(
                     child: buildChoice(),
                   ),
                   Expanded(
-                    child: buildDescription(),
+                    child: buildDescription(product),
                   ),
                   Expanded(
                     child: buildAddToRow(),
@@ -65,7 +66,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         ));
   }
 
-  Widget buildCard() {
+  Widget buildCard(ProductModel product) {
     return Card(
       elevation: 10,
       margin: EdgeInsets.fromLTRB(40, 20, 40, 20),
@@ -81,7 +82,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               flex: 6,
               child: Container(
                 child: Image.network(
-                  widget.productDetailsPicture,
+                  product.images[0].src,
                   fit: BoxFit.cover,
                 ),
                 padding: EdgeInsets.all(20),
@@ -94,7 +95,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     child: Column(
                       children: <Widget>[
                         Container(
-                          child: Text("\$${widget.productDetailsNewPrice}",
+                          child: Text("\$${product.priceMax}",
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                               style: TextStyle(
@@ -288,21 +289,21 @@ class _ProductDetailsState extends State<ProductDetails> {
 //  }
 
   // TODO: Change text UI
-  Widget buildProduct() {
+  Widget buildProduct(ProductModel product) {
     return Container(
       height: 200.0,
       child: GridTile(
         child: Container(
           color: Colors.white,
           child: Image.asset(
-            widget.productDetailsPicture,
+            product.images[0].src,
             fit: BoxFit.fitHeight,
           ),
         ),
         footer: Container(
           color: Colors.white,
           child: ListTile(
-            leading: Text(widget.productDetailsName,
+            leading: Text(product.name,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0)),
@@ -310,7 +311,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               children: <Widget>[
                 Expanded(
                   child: Text(
-                    "\$${widget.productDetailspriceMax}",
+                    "\$${product.priceMax}",
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     style: TextStyle(
@@ -320,7 +321,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                 ),
                 Expanded(
-                  child: Text("\$${widget.productDetailsNewPrice}",
+                  child: Text("\$${product.priceMin}",
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: TextStyle(
@@ -428,9 +429,9 @@ class _ProductDetailsState extends State<ProductDetails> {
     );
   }
 
-  Widget buildDescription() {
+  Widget buildDescription(ProductModel product) {
     return ListTile(
-      title: Text("${widget.productDetailsName} Details"),
+      title: Text("${product.name} Details"),
       subtitle: Text(
           "A very valuable item that will surly stun anyone who look at it, Give it a try. The sure thing is that you won't regret it."),
     );
