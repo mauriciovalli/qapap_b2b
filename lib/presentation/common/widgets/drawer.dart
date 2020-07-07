@@ -45,8 +45,7 @@ class MyDrawer extends StatelessWidget {
     actions.add(new MyAction(
         "Mensajes",
         Icons.message,
-        ChatHomeScreen(
-            isDesktop: themeConfig.isDesktop && !themeConfig.isSmallDesktop)));
+        ChatHomeScreen()));
     //actions.add(buildActionItem(context, "Ordenes", Icons.content_paste));
     //actions.add(buildActionItem(context, "Carrito", Icons.shopping_cart));
     return actions;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qapaq_b2b/configuration/theme.dart';
 import 'package:qapaq_b2b/models/message.dart';
 import 'package:qapaq_b2b/pages/chat_screen.dart';
 
@@ -49,7 +50,7 @@ class RecentChats extends StatelessWidget {
                       Row(
                         children: <Widget>[
                           CircleAvatar(
-                            radius: 35.0,
+                            radius: ThemeConfig(context).isDesktop ? 23.0 : 35,
                             backgroundImage: AssetImage(chat.sender.imageUrl),
                           ),
                           SizedBox(width: 10.0),
@@ -60,18 +61,18 @@ class RecentChats extends StatelessWidget {
                                 chat.sender.name,
                                 style: TextStyle(
                                   color: Colors.grey,
-                                  fontSize: 15.0,
+                                  fontSize: ThemeConfig(context).isDesktop ? 12.0 : 15,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               SizedBox(height: 5.0),
                               Container(
-                                width: MediaQuery.of(context).size.width * 0.45,
+                                width: ThemeConfig(context).isDesktop ? MediaQuery.of(context).size.width * 0.20 : MediaQuery.of(context).size.width * 0.45,
                                 child: Text(
                                   chat.text,
                                   style: TextStyle(
                                     color: Colors.blueGrey,
-                                    fontSize: 15.0,
+                                    fontSize: ThemeConfig(context).isDesktop ? 12.0 : 15,
                                     fontWeight: FontWeight.w600,
                                   ),
                                   overflow: TextOverflow.ellipsis,
@@ -87,7 +88,7 @@ class RecentChats extends StatelessWidget {
                             chat.time,
                             style: TextStyle(
                               color: Colors.grey,
-                              fontSize: 15.0,
+                              fontSize: ThemeConfig(context).isDesktop ? 10.0 : 15,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -105,7 +106,7 @@ class RecentChats extends StatelessWidget {
                               'NEW',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 12.0,
+                                fontSize: ThemeConfig(context).isDesktop ? 8.0 : 12,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

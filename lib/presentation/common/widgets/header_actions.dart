@@ -11,7 +11,7 @@ class MyActions {
 
     final List<Widget> actions = [];
     actions.add(buildActionAvatar(context));
-    actions.add(buildActionItem(context, "Mensajes", Icons.message, ChatHomeScreen(isDesktop: themeConfig.isDesktop && !themeConfig.isSmallDesktop,)));
+    actions.add(buildActionItem(context, "Mensajes", Icons.message, ChatHomeScreen()));
     return actions;
   }
 
