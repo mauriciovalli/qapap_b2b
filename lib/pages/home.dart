@@ -12,6 +12,8 @@ class HomePage extends StatefulWidget {
   final String title;
 
   _HomePageState createState() => _HomePageState();
+
+  static const String route = '/';
 }
 
 class _HomePageState extends State<HomePage> {

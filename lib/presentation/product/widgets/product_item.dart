@@ -19,13 +19,13 @@ class ProductItem extends StatelessWidget {
     return InkWell(
       child: buildProduct(context),
       onTap: () => themeConfig.isDesktop || themeConfig.isSmallDesktop
-          ? Navigator.pushNamed(context, 'productDetails', arguments: _item)
+          ? Navigator.pushNamed(
+              context, ProductDetails.routeFromId(_item.id.toString()))
           : Navigator.push(
               context,
               new MaterialPageRoute(
-                  builder: (context) => ProductDetails(
-                        product: _item,
-                      ))),
+                  builder: (context) =>
+                      ProductDetails(id: _item.id.toString()))),
     );
   }
 

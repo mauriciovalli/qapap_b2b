@@ -118,9 +118,14 @@ class ProductInMemoryRepository implements ProductRepository {
 
   // ignore: unused_element
   List<ProductModel> _parse(List<dynamic> json) {
-    return json
-        .map((jsonItem) => ProductModel.fromJson(jsonItem))
-        .toList();
+    return json.map((jsonItem) => ProductModel.fromJson(jsonItem)).toList();
+  }
+
+  @override
+  Future<ProductModel> findById(int id) async {
+    await Future.delayed(Duration(milliseconds: 500));
+    List<ProductModel> _items = _parse(jsonDecode(products));
+    return _items.firstWhere((p) => p.id == id);
   }
 
 //class Products {

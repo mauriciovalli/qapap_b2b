@@ -37,15 +37,11 @@ class MyDrawer extends StatelessWidget {
   }
 
   List<MyAction> getActions(BuildContext context) {
-    final ThemeConfig themeConfig = ThemeConfig.instance(context);
     final List<MyAction> actions = [];
     //actions.add(buildActionAvatar(themeConfig));
     actions.add(new MyAction("Perfil", Icons.assignment_ind, null));
     actions.add(new MyAction("Empresa", Icons.assignment, null));
-    actions.add(new MyAction(
-        "Mensajes",
-        Icons.message,
-        ChatHomeScreen()));
+    actions.add(new MyAction("Mensajes", Icons.message, ChatHomeScreen()));
     //actions.add(buildActionItem(context, "Ordenes", Icons.content_paste));
     //actions.add(buildActionItem(context, "Carrito", Icons.shopping_cart));
     return actions;

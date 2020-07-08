@@ -1,33 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:qapaq_b2b/configuration/theme.dart';
+import 'package:qapaq_b2b/models/any_image.dart';
 import 'package:qapaq_b2b/models/product.dart';
 import 'package:qapaq_b2b/presentation/common/widgets/drawer.dart';
 import 'package:qapaq_b2b/presentation/common/widgets/header.dart';
 import 'package:qapaq_b2b/presentation/common/widgets/swiper.dart';
+import 'package:qapaq_b2b/services/product_repository.dart';
+
+import '../dependencies_provider.dart';
 
 class ProductDetails extends StatefulWidget {
-  final ProductModel product;
+  final String id;
 
   const ProductDetails({
     Key key,
-    @required this.product,
+    this.id,
   }) : super(key: key);
 
   @override
   _ProductDetailsState createState() => _ProductDetailsState();
+
+  static const String baseRoute = '/productDetails';
+
+  static String Function(String id) routeFromId =
+      (String id) => baseRoute + '/$id';
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
-  int quantity = 1;
-
-  List<bool> selectedColor = [true, false, false, false];
-
   @override
   Widget build(BuildContext context) {
     final ThemeConfig themeConfig = ThemeConfig.instance(context);
-    final ProductModel product = widget.product == null
-        ? ModalRoute.of(context).settings.arguments
-        : widget.product;
+    final ProductRepository _repository = getIt<ProductRepository>();
+    Future<ProductModel> _findById = _repository.findById(int.parse(widget.id));
 
     return Scaffold(
         appBar: MyAppBar(
@@ -44,23 +49,28 @@ class _ProductDetailsState extends State<ProductDetails> {
             MySwiper(),
             Expanded(
               flex: 9,
-              child: Column(
-                children: <Widget>[
-                  Expanded(
-                    child: buildCard(product),
-                    flex: 5,
-                  ),
-                  Expanded(
-                    child: buildChoice(),
-                  ),
-                  Expanded(
-                    child: buildDescription(product),
-                  ),
-                  Expanded(
-                    child: buildAddToRow(),
-                  ),
-                ],
-              ),
+              child: FutureBuilder<ProductModel>(
+                  future:
+                      _findById, // a previously-obtained Future<String> or null
+                  builder: (BuildContext context,
+                      AsyncSnapshot<ProductModel> snapshot) {
+                    if (snapshot.hasData) {
+                      return Column(
+                        children: <Widget>[
+                          Expanded(
+                            child: buildCard(snapshot.data),
+                            flex: 5,
+                          ),
+                          Expanded(
+                            child: buildDescription(snapshot.data),
+                          ),
+                        ],
+                      );
+                    } else
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                  }),
             ),
           ],
         ));
@@ -81,11 +91,8 @@ class _ProductDetailsState extends State<ProductDetails> {
             Expanded(
               flex: 6,
               child: Container(
-                child: Image.network(
-                  product.images[0].src,
-                  fit: BoxFit.cover,
-                ),
-                padding: EdgeInsets.all(20),
+                child: buildImgCarousel(product.images),
+                //padding: EdgeInsets.all(20),
               ),
             ),
             Expanded(
@@ -107,6 +114,19 @@ class _ProductDetailsState extends State<ProductDetails> {
                               color: Color(0xff36004f),
                               borderRadius: BorderRadius.circular(15)),
                         ),
+                        Container(
+                          child: Text("\$${product.priceMin}",
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.red)),
+                          padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                          margin: EdgeInsets.only(top: 5),
+                          decoration: BoxDecoration(
+                              color: Color(0xff36004f),
+                              borderRadius: BorderRadius.circular(15)),
+                        ),
                       ],
                     ),
                   ),
@@ -114,30 +134,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                     child: Column(
                       children: <Widget>[
                         Container(
-                          margin: EdgeInsets.only(top: 5),
-                          child: Row(
-                            children: <Widget>[
-                              Icon(
-                                Icons.star,
-                                color: Colors.pink,
-                              ),
-                              Icon(
-                                Icons.star,
-                                color: Colors.pink,
-                              ),
-                              Icon(
-                                Icons.star,
-                                color: Colors.pink,
-                              ),
-                              Icon(
-                                Icons.star_half,
-                                color: Colors.pink,
-                              ),
-                              Icon(
-                                Icons.star_border,
-                                color: Colors.pink,
-                              )
-                            ],
+                          child: Text(
+                            "\$${product.priceMin}",
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w800, color: Colors.red),
                           ),
                         ),
                       ],
@@ -152,288 +154,28 @@ class _ProductDetailsState extends State<ProductDetails> {
     );
   }
 
-  Widget buildChoice() {
-    // TODO: change color to a drop down menu
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              buildColor(Colors.brown, 0),
-              buildColor(Color(0xffba5d5d), 1),
-              buildColor(Color(0xffb78484), 2),
-              buildColor(Color(0xff912121), 3),
-            ],
-          ),
-        ),
-        Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              IconButton(
-                  icon: Icon(
-                    Icons.add_circle_outline,
-                    color: Colors.grey,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      quantity++;
-                    });
-                  }),
-              Text(
-                quantity.toString(),
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-              ),
-              IconButton(
-                  icon: Icon(
-                    Icons.remove_circle_outline,
-                    color: Colors.grey,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      quantity = --quantity == 0 ? 1 : quantity;
-                    });
-                  }),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildColor(Color color, int i) {
-    return InkWell(
-      onTap: () {
-        setState(() {
-          for (int j = 0; j < selectedColor.length; j++) {
-            selectedColor[j] = false;
-            if (j == i) selectedColor[j] = true;
-          }
-        });
+  Widget buildImgCarousel(List<AnyImage> images) {
+    return Swiper(
+      outer: false,
+      itemBuilder: (context, i) {
+        if (images[i].src.length > 0 && images[i].src.startsWith("http"))
+          return Image.network(images[i].src, fit: BoxFit.scaleDown);
+        else if (images[i].src.length > 0)
+          return Image.asset(images[i].src, fit: BoxFit.scaleDown);
+        else
+          return Image.asset("img/no-image.png", fit: BoxFit.scaleDown);
       },
-      child: Container(
-        margin: EdgeInsets.only(left: 8),
-        child: selectedColor[i]
-            ? Icon(
-                Icons.check,
-                size: 15,
-                color: Colors.white,
-              )
-            : null,
-        decoration: ShapeDecoration(color: color, shape: CircleBorder()),
-        height: 20,
-        width: 20,
-      ),
-    );
-  }
-
-  Widget buildAddToRow() {
-    return Container(
-      margin: EdgeInsets.only(left: 10),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              child: FlatButton(
-                  onPressed: null,
-                  child: Text(
-                    "ADD TO CART",
-                    style: TextStyle(color: Colors.white),
-                  )),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                gradient: LinearGradient(
-                  colors: [Colors.pink, Colors.pinkAccent, Colors.purpleAccent],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-              ),
-            ),
-            flex: 3,
-          ),
-          Expanded(
-              child: Container(
-//            margin: EdgeInsets.only(left: 30, right: 20),
-            decoration: ShapeDecoration(
-                shape: CircleBorder(), color: Color(0xffdddddd)),
-            child: Icon(
-              Icons.favorite_border,
-              color: Colors.black,
-            ),
-            padding: EdgeInsets.all(10),
-          ))
-        ],
-      ),
-    );
-  }
-
-//  @override
-//  Widget build(BuildContext context) {
-//    return Scaffold(
-//      appBar: AppBar(
-//        elevation: 0.0,
-//        title: Text("Back to Shopping"),
-//      ),
-//      body: ListView(
-//        children: <Widget>[
-//          buildProduct(),
-//          buildChoicesRow(),
-//          buildBuyRow(),
-//          Divider(),
-//          buildDescription(),
-//          Divider(),
-//        ],
-//      ),
-//    );
-//  }
-
-  // TODO: Change text UI
-  Widget buildProduct(ProductModel product) {
-    return Container(
-      height: 200.0,
-      child: GridTile(
-        child: Container(
-          color: Colors.white,
-          child: Image.asset(
-            product.images[0].src,
-            fit: BoxFit.fitHeight,
-          ),
-        ),
-        footer: Container(
-          color: Colors.white,
-          child: ListTile(
-            leading: Text(product.name,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0)),
-            title: Row(
-              children: <Widget>[
-                Expanded(
-                  child: Text(
-                    "\$${product.priceMax}",
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w400,
-                        decoration: TextDecoration.lineThrough),
-                  ),
-                ),
-                Expanded(
-                  child: Text("\$${product.priceMin}",
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w800, color: Colors.red)),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildChoicesRow() {
-    return Container(
-      color: Color(0xffe5e3e3),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              child: buildChoiceButton("Size"),
-              margin: EdgeInsets.all(5),
-            ),
-            flex: 3,
-          ),
-          Expanded(
-              child: Container(
-                child: buildChoiceButton("Color"),
-                margin: EdgeInsets.all(5),
-              ),
-              flex: 3),
-          Expanded(
-            child: Container(
-              child: buildChoiceButton("Quantity"),
-              margin: EdgeInsets.all(5),
-            ),
-            flex: 4,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget buildChoiceButton(String text) {
-    return MaterialButton(
-      color: Colors.white,
-      textColor: Colors.grey,
-      elevation: 0.2,
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Text(
-              text,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-            ),
-            flex: 2,
-          ),
-          Expanded(child: Icon(Icons.arrow_drop_down))
-        ],
-      ),
-      onPressed: () {
-        showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: Text(text),
-                content: Text("Choose the $text"),
-                actions: <Widget>[
-                  MaterialButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(context);
-                    },
-                    child: Text("close"),
-                  )
-                ],
-              );
-            });
-      },
-    );
-  }
-
-  Widget buildBuyRow() {
-    return Container(
-      margin: EdgeInsets.only(left: 10),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-              child: MaterialButton(
-                  onPressed: () {},
-                  color: Colors.pink,
-                  textColor: Colors.white,
-                  elevation: 0.2,
-                  child: Text("Buy now"))),
-          IconButton(
-              icon: Icon(Icons.add_shopping_cart),
-              color: Colors.pink,
-              onPressed: () {}),
-          IconButton(
-              icon: Icon(Icons.favorite_border),
-              color: Colors.pink,
-              onPressed: () {})
-        ],
-      ),
+      autoplay: false,
+      itemCount: images.length,
+      pagination: new SwiperPagination(margin: new EdgeInsets.all(5.0)),
+      control: new SwiperControl(),
     );
   }
 
   Widget buildDescription(ProductModel product) {
     return ListTile(
-      title: Text("${product.name} Details"),
-      subtitle: Text(
-          "A very valuable item that will surly stun anyone who look at it, Give it a try. The sure thing is that you won't regret it."),
+      title: SelectableText("${product.name} Details"),
+      subtitle: SelectableText("subtitle...."),
     );
   }
 }
