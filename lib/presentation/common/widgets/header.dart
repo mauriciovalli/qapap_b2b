@@ -71,8 +71,13 @@ class _MyTittle extends StatelessWidget {
                             .add(CategoryLoadEvent()),
                         BlocProvider.of<ProductBloc>(context)
                             .add(ProductHideEvent()),
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (context) => HomePage()))
+                        if (themeConfig.isDesktop || themeConfig.isSmallDesktop)
+                          Navigator.pushNamed(context, HomePage.route)
+                        else
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomePage()))
                       }),
             ),
             Container(

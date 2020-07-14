@@ -10,6 +10,8 @@ import 'chat_screen.dart';
 class ChatHomeScreen extends StatefulWidget {
   @override
   _ChatHomeScreenState createState() => _ChatHomeScreenState();
+
+  static const String route = '/chat';
 }
 
 class _ChatHomeScreenState extends State<ChatHomeScreen> {

@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:qapaq_b2b/dependencies_provider.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+import 'package:qapaq_b2b/dependencies_provider.dart';
 import 'package:qapaq_b2b/models/product.dart';
 import 'package:qapaq_b2b/services/product_repository.dart';
 
@@ -12,8 +12,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final ProductRepository _repository = getIt<ProductRepository>();
   List<ProductModel> _items = [];
 
-  @override
-  ProductState get initialState => ProductLoading();
+  ProductBloc() : super(ProductLoading());
 
   @override
   Stream<ProductState> mapEventToState(
@@ -29,7 +28,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   Stream<ProductState> _clean(ProductHideEvent event) async* {
     yield ProductSHide();
   }
-  
+
   Stream<ProductState> _load(ProductLoadEvent event) async* {
     yield ProductLoading();
     try {

@@ -12,8 +12,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   final CategoryRepository _repository = getIt<CategoryRepository>();
   List<CategoryModel> _items = [];
 
-  @override
-  CategoryState get initialState => CategoryLoadingState();
+  CategoryBloc() : super(CategoryLoadingState());
 
   @override
   Stream<CategoryState> mapEventToState(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qapaq_b2b/configuration/theme.dart';
 import 'package:qapaq_b2b/pages/chat_lobby.dart';
 import 'package:qapaq_b2b/pages/login.dart';
 
@@ -6,10 +7,20 @@ enum AvatarMenu { Perfil, Empresa, Otros }
 
 class MyActions {
   List<Widget> buildActions(BuildContext context) {
+    final ThemeConfig themeConfig = ThemeConfig.instance(context);
     final List<Widget> actions = [];
     actions.add(buildActionAvatar(context));
-    actions.add(
-        buildActionItem(context, "Mensajes", Icons.message, ChatHomeScreen()));
+    actions.add(buildActionItem(
+      context,
+      new MyAction(
+        "Mensajes",
+        Icons.message,
+        () => themeConfig.isDesktop || themeConfig.isSmallDesktop
+            ? Navigator.pushNamed(context, ChatHomeScreen.route)
+            : Navigator.push(context,
+                new MaterialPageRoute(builder: (context) => ChatHomeScreen())),
+      ),
+    ));
     return actions;
   }
 
@@ -51,8 +62,7 @@ class MyActions {
     );
   }
 
-  Widget buildActionItem(
-      BuildContext context, String text, IconData icon, Widget navigate) {
+  Widget buildActionItem(BuildContext context, MyAction action) {
     return InkWell(
         child: Container(
           padding: EdgeInsets.fromLTRB(0, 25, 40, 0),
@@ -60,11 +70,11 @@ class MyActions {
           child: Column(
             children: [
               Icon(
-                icon,
+                action.icon,
                 color: Colors.white,
               ),
               Text(
-                text,
+                action.text,
                 style: Theme.of(context)
                     .textTheme
                     .bodyText2
@@ -74,7 +84,14 @@ class MyActions {
             ],
           ),
         ),
-        onTap: () => Navigator.push(
-            context, new MaterialPageRoute(builder: (context) => navigate)));
+        onTap: action.function);
   }
+}
+
+class MyAction<T extends Object> {
+  String text;
+  IconData icon;
+  Function function;
+
+  MyAction(this.text, this.icon, this.function);
 }

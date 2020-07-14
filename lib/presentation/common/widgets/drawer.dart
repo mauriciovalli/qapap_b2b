@@ -37,11 +37,19 @@ class MyDrawer extends StatelessWidget {
   }
 
   List<MyAction> getActions(BuildContext context) {
+    final ThemeConfig themeConfig = ThemeConfig.instance(context);
     final List<MyAction> actions = [];
     //actions.add(buildActionAvatar(themeConfig));
     actions.add(new MyAction("Perfil", Icons.assignment_ind, null));
     actions.add(new MyAction("Empresa", Icons.assignment, null));
-    actions.add(new MyAction("Mensajes", Icons.message, ChatHomeScreen()));
+    actions.add(new MyAction(
+      "Mensajes",
+      Icons.message,
+      () => themeConfig.isDesktop || themeConfig.isSmallDesktop
+          ? Navigator.pushNamed(context, ChatHomeScreen.route)
+          : Navigator.push(context,
+              new MaterialPageRoute(builder: (context) => ChatHomeScreen())),
+    ));
     //actions.add(buildActionItem(context, "Ordenes", Icons.content_paste));
     //actions.add(buildActionItem(context, "Carrito", Icons.shopping_cart));
     return actions;
@@ -75,8 +83,7 @@ class MyDrawer extends StatelessWidget {
               ],
             ),
           ),
-          onTap: () => Navigator.push(context,
-              new MaterialPageRoute(builder: (context) => action.navigate)),
+          onTap: action.function,
         ),
       ),
     );
@@ -97,10 +104,10 @@ class MyDrawer extends StatelessWidget {
   }
 }
 
-class MyAction {
+class MyAction<T extends Object> {
   String text;
   IconData icon;
-  Widget navigate;
+  Function function;
 
-  MyAction(this.text, this.icon, this.navigate);
+  MyAction(this.text, this.icon, this.function);
 }

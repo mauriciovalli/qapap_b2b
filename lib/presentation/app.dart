@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:qapaq_b2b/configuration/theme.dart';
+import 'package:qapaq_b2b/pages/chat_lobby.dart';
 import 'package:qapaq_b2b/pages/home.dart';
 import 'package:qapaq_b2b/pages/product_details.dart';
 import 'package:qapaq_b2b/presentation/category/category_bloc.dart';
@@ -26,26 +27,7 @@ class App extends StatelessWidget {
         title: 'Qapaq - Interconnection made simple',
         theme: CompanyThemeData,
         home: HomePage(),
-//        routes: <String, WidgetBuilder>{
-//          '': (context) => HomePage(),
-//          'productDetails': (context) => ProductDetails(),
-//        },
         onGenerateRoute: RouteConfiguration.onGenerateRoute,
-//        onGenerateRoute: (settings) {
-//          List<String> pathComponents = settings.name.split('/');
-//          if (pathComponents[0] == 'productDetails') {
-//            return MaterialPageRoute(
-//              builder: (context) {
-//                return ProductDetails(id: pathComponents.last);
-//              },
-//            );
-//          } else
-//            return MaterialPageRoute(
-//              builder: (context) {
-//                return HomePage();
-//              },
-//            );
-//        },
       ),
     );
   }
@@ -73,6 +55,10 @@ class RouteConfiguration {
     Path(
       r'^' + ProductDetails.baseRoute + r'/([\w-]+)$',
       (context, match) => ProductDetails(id: match),
+    ),
+    Path(
+      r'^' + ChatHomeScreen.route,
+      (context, match) => ChatHomeScreen(),
     ),
     Path(
       r'^' + HomePage.route,
