@@ -9,43 +9,33 @@ class CategoryList extends StatelessWidget {
     return BlocBuilder<CategoryBloc, CategoryState>(builder: (context, state) {
       if (state is CategoryHideState) {
         return SizedBox(height: 0);
-      } else {
+      } else if (state is CategoryLoadingState) {
         return Expanded(
           flex: 8,
-          child: Scaffold(
-            body: CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(child: SizedBox(height: 0)),
-                BlocBuilder<CategoryBloc, CategoryState>(
-                  builder: (context, state) {
-                    if (state is CategoryLoadingState) {
-                      return SliverFillRemaining(
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      );
-                    }
-                    if (state is CategoryLoadedState) {
-                      return SliverGrid(
-                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 400.0,
-                          crossAxisSpacing: 5.0,
-                          mainAxisSpacing: 10.0,
-                        ),
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) =>
-                              CategoryItem(state.getByPosition(index)),
-                          childCount: state.items.length,
-                        ),
-                      );
-                    }
-                    return Text('Something went wrong!');
-                  },
-                ),
-              ],
-            ),
+          child: Center(
+            child: CircularProgressIndicator(),
           ),
         );
+      } else if (state is CategoryLoadedState) {
+        return Expanded(
+          flex: 8,
+          child: CustomScrollView(slivers: [
+            //SliverToBoxAdapter(child: SizedBox(height: 0)),
+            SliverGrid(
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 400.0,
+                crossAxisSpacing: 5.0,
+                mainAxisSpacing: 10.0,
+              ),
+              delegate: SliverChildBuilderDelegate(
+                (context, index) => CategoryItem(state.getByPosition(index)),
+                childCount: state.items.length,
+              ),
+            ),
+          ]),
+        );
+      } else {
+        return Text('Something went wrong!');
       }
     });
   }

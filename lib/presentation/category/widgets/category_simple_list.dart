@@ -15,94 +15,69 @@ class CategorySimpleListState extends State<CategorySimpleList> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[200],
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(child: SizedBox(height: 10)),
-          BlocBuilder<CategoryBloc, CategoryState>(
-            builder: (context, state) {
-              if (state is CategoryLoadingState) {
-                return SliverFillRemaining(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                );
-              }
-              if (state is CategoryHideState) {
-                return SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) =>
-                        buildItem(context, state.getByPosition(index)),
-                    childCount: state.items.length,
-                  ),
-                );
-              }
-              if (state is CategoryLoadedState) {
-                return SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) =>
-                        buildItem(context, state.getByPosition(index)),
-                    childCount: state.items.length,
-                  ),
-                );
-              }
-              return Text('Something went wrong!');
-            },
+    return BlocBuilder<CategoryBloc, CategoryState>(builder: (context, state) {
+      if (state is CategoryLoadingState) {
+        return SliverFillRemaining(
+          child: Center(
+            child: CircularProgressIndicator(),
           ),
-        ],
-      ),
-    );
+        );
+      }
+      if (state is CategoryHideState) {
+        return SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) => buildItem(context, state.getByPosition(index)),
+            childCount: state.items.length,
+          ),
+        );
+      }
+      if (state is CategoryLoadedState) {
+        return SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) => buildItem(context, state.getByPosition(index)),
+            childCount: state.items.length,
+          ),
+        );
+      }
+      return Text('Something went wrong!');
+    });
   }
 
   Widget buildItem(BuildContext context, CategoryModel _item) {
-    final ThemeConfig themeConfig = ThemeConfig.instance(context);
-
-    return ConstrainedBox(
-      constraints: BoxConstraints(maxHeight: 50.0, minHeight: 40.0),
-      child: Container(
-        color: _selectedItemId == _item.id
-            ? CompanyColors.red[800]
-            : Colors.transparent,
-        child: ListTile(
-          title: Container(
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.fromLTRB(
-                themeConfig.isDesktop && !themeConfig.isSmallDesktop ? 60 : 0,
-                0,
-                0,
-                0),
-            child: Row(
-              children: [
-                Icon(
-                  _item.icon,
-                  color: _selectedItemId == _item.id
-                      ? Colors.white
-                      : Theme.of(context).accentColor,
-                  size: 24,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: Text(
-                    _item.name,
-                    style: Theme.of(context).textTheme.subtitle2.copyWith(
-                        color: _selectedItemId == _item.id
-                            ? Colors.white
-                            : Colors.grey[800]),
-                  ),
-                )
-              ],
+    return Material(
+      color: Colors.grey[200],
+      child: ListTile(
+        title: Row(
+          children: [
+            Icon(
+              _item.icon,
+              color: _selectedItemId == _item.id
+                  ? Colors.white
+                  : Theme.of(context).accentColor,
+              size: 24,
             ),
-          ),
-          onTap: () => {
-            BlocProvider.of<CategoryBloc>(context).add(CategoryHideEvent()),
-            BlocProvider.of<ProductBloc>(context).add(ProductLoadEvent(_item.id)),
-            setState(() {
-              _selectedItemId = _item.id;
-            }),
-          },
-          selected: _selectedItemId == _item.id,
+            Padding(
+              padding: const EdgeInsets.only(left: 15),
+              child: Text(
+                _item.name,
+                style: Theme.of(context).textTheme.subtitle2.copyWith(
+                    color: _selectedItemId == _item.id
+                        ? Colors.white
+                        : Colors.grey[800]),
+              ),
+            )
+          ],
         ),
+        onTap: () => {
+          BlocProvider.of<CategoryBloc>(context).add(CategoryHideEvent()),
+          BlocProvider.of<ProductBloc>(context).add(ProductLoadEvent(_item.id)),
+          setState(() {
+            _selectedItemId = _item.id;
+          }),
+        },
+        selected: _selectedItemId == _item.id,
+        selectedTileColor: CompanyColors.red[800],
+        hoverColor: Colors.grey[400],
       ),
     );
   }

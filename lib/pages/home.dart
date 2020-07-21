@@ -23,13 +23,14 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
         appBar: MyAppBar(
-          height: themeConfig.isDesktop || themeConfig.isSmallDesktop
+          height: themeConfig.isDesktop && !themeConfig.isSmallDesktop
               ? 80
               : kToolbarHeight,
         ),
         drawer: themeConfig.isDesktop && !themeConfig.isSmallDesktop
             ? null
             : MyDrawer(),
+        backgroundColor: Colors.grey[200],
         body: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -131,7 +132,12 @@ class _HomePageState extends State<HomePage> {
                   if (themeConfig.isDesktop && !themeConfig.isSmallDesktop)
                     Container(
                       width: 280,
-                      child: CategorySimpleList(),
+                      child: CustomScrollView(
+                        slivers: [
+                          SliverToBoxAdapter(child: SizedBox(height: 10)),
+                          CategorySimpleList(),
+                        ],
+                      ),
                     ),
                   Expanded(
                     flex: 9,

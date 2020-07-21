@@ -12,7 +12,7 @@ const categoriesJson = '''[
   },
   {
     "id": 2,
-    "name": "Veiculos & Accesorios",
+    "name": "Vehiculos & Accesorios",
     "image": { "src": "https://cdn.fromozz.com/fd0e7788594364c083b92f248c892b3966da1c60/873c20d665abe3d72fd5bf73fa675c24db2026b1/thumbnail.jpg" },
     "icon": "truck"
   },
@@ -24,7 +24,7 @@ const categoriesJson = '''[
   },
   {
     "id": 4,
-    "name": "Pescados & carnes"
+    "name": "Pescados & Carnes"
   },
   {
     "id": 5,

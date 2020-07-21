@@ -32,8 +32,6 @@ class _MyAppBarState extends State<MyAppBar> {
           ? MyActions().buildActions(context)
           : [],
       iconTheme: new IconThemeData(color: Colors.white),
-      automaticallyImplyLeading:
-          themeConfig.isDesktop || themeConfig.isSmallDesktop ? false : true,
     );
   }
 }
