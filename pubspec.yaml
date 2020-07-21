@@ -33,7 +33,7 @@ dependencies:
   # cached_network_image: ^2.2.0+1
 
   # Widgets dependencies
-  flutter_typeahead: ^1.8.5
+  flutter_typeahead: ^1.8.6
   flutter_swiper: ^1.1.6
   country_icons: ^1.1.1
 

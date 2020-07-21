@@ -83,7 +83,8 @@ class _WebSearcherState extends State<WebSearcher> {
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText1
-                                .copyWith(color: Colors.grey[800], fontSize: 12),
+                                .copyWith(
+                                    color: Colors.grey[800], fontSize: 12),
                             textAlign: TextAlign.start,
                           ),
                         );
@@ -125,7 +126,8 @@ class _WebSearcherState extends State<WebSearcher> {
                           controller: _typeAheadController,
                         ),
                         suggestionsCallback: (pattern) async {
-                          final patternList = await _repository.listByName(pattern);
+                          final patternList =
+                              await _repository.listByName(pattern);
                           var tupleList =
                               List.generate(patternList.length, (index) {
                             return {
@@ -202,27 +204,32 @@ class MobileDataSearcher extends SearchDelegate<String> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    List<CategoryModel> suggestionList;
-    if (query.isEmpty)
-      _repository.list().then((list) => suggestionList = list);
-    else
-      _repository.listByName(query).then((list) => suggestionList = list);
-
-    return ListView.builder(
-      itemBuilder: (context, index) =>
-          buildItem(context, suggestionList, index),
-      itemCount: suggestionList.length,
+    return FutureBuilder<List<CategoryModel>>(
+      future:
+          query.isEmpty ? _repository.list() : _repository.listByName(query),
+      builder:
+          (BuildContext context, AsyncSnapshot<List<CategoryModel>> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.hasData) {
+          final entities = snapshot.data;
+          return ListView.builder(
+            itemBuilder: (context, index) =>
+                buildItem(context, entities, index),
+            itemCount: entities.length,
+          );
+        } else {
+          return Column();
+        }
+      },
     );
   }
 
   Widget buildItem(
       BuildContext context, List<CategoryModel> suggestionList, int index) {
     return ListTile(
-      onTap: () {
-        CategoryModel categorySelected;
-        _repository
-            .findByName(suggestionList[index].name)
-            .then((value) => categorySelected = value);
+      onTap: () async {
+        final categorySelected =
+            await _repository.findByName(suggestionList[index].name);
         BlocProvider.of<CategoryBloc>(context).add(CategoryHideEvent());
         BlocProvider.of<ProductBloc>(context)
             .add(ProductLoadEvent(categorySelected.id));
