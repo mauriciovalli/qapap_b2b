@@ -19,9 +19,37 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
+
 <!-- This script installs service_worker.js to provide PWA functionality to
      application. For more information, see:
      https://developers.google.com/web/fundamentals/primers/service-workers -->
+
+<!-- STEP 1: ADD core Firebase JS SDK -->
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyBCSw40_bYgDCOvM6o1u6l-sAMFtvHte6Q",
+    authDomain: "qapaq-2020.firebaseapp.com",
+    databaseURL: "https://qapaq-2020.firebaseio.com",
+    projectId: "qapaq-2020",
+    storageBucket: "qapaq-2020.appspot.com",
+    messagingSenderId: "178376070822",
+    appId: "1:178376070822:web:9879d0e4c2803222764667",
+    measurementId: "G-CR2NE3E9R4"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+
 <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function () {
@@ -30,5 +58,6 @@
     }
   </script>
 <script src="main.dart.js?version=1.16" type="application/javascript"></script>
+
 </body>
 </html>

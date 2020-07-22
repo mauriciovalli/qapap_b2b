@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +11,10 @@ import 'package:qapaq_b2b/presentation/category/category_bloc.dart';
 import 'package:qapaq_b2b/presentation/product/product_bloc.dart';
 
 class App extends StatelessWidget {
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
+  static FirebaseAnalyticsObserver observer =
+      FirebaseAnalyticsObserver(analytics: analytics);
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -26,6 +32,7 @@ class App extends StatelessWidget {
       child: MaterialApp(
         title: 'Qapaq - Interconnection made simple',
         theme: CompanyThemeData,
+        navigatorObservers: <NavigatorObserver>[observer],
         home: HomePage(),
         onGenerateRoute: RouteConfiguration.onGenerateRoute,
       ),
