@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:qapaq_b2b/configuration/theme.dart';
 import 'package:qapaq_b2b/pages/chat_lobby.dart';
+import 'package:qapaq_b2b/pages/googleLogin.dart';
 import 'package:qapaq_b2b/presentation/category/widgets/category_simple_list.dart';
+import 'package:qapaq_b2b/pages/sign_in.dart';
 
 class MyDrawer extends StatelessWidget {
   @override
@@ -32,6 +34,14 @@ class MyDrawer extends StatelessWidget {
     final ThemeConfig themeConfig = ThemeConfig.instance(context);
     final List<MyAction> actions = [];
     //actions.add(buildActionAvatar(themeConfig));
+    actions.add(new MyAction(
+      "Ingresar",
+      Icons.message,
+          () => themeConfig.isDesktop || themeConfig.isSmallDesktop
+          ? Navigator.pushNamed(context, GoogleLoginPage.route)
+          : Navigator.push(context,
+          new MaterialPageRoute(builder: (context) => GoogleLoginPage())),
+    ));
     actions.add(new MyAction("Perfil", Icons.assignment_ind, () => null));
     actions.add(new MyAction("Empresa", Icons.assignment, () => null));
     actions.add(new MyAction(
@@ -86,7 +96,7 @@ class MyDrawer extends StatelessWidget {
       alignment: Alignment.center,
       width: 100,
       child: CircleAvatar(
-        backgroundImage: AssetImage("img/logo.jpeg"),
+        backgroundImage: !loged?AssetImage("img/login/login.png"):NetworkImage(imageUrl),
         radius: 28,
       ),
     );
