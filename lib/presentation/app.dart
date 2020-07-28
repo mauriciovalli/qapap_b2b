@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:qapaq_b2b/configuration/theme.dart';
 import 'package:qapaq_b2b/pages/chat_lobby.dart';
 import 'package:qapaq_b2b/pages/home.dart';
+import 'package:qapaq_b2b/pages/googleLogin.dart';
 import 'package:qapaq_b2b/pages/product_details.dart';
 import 'package:qapaq_b2b/presentation/category/category_bloc.dart';
 import 'package:qapaq_b2b/presentation/product/product_bloc.dart';
@@ -66,6 +67,10 @@ class RouteConfiguration {
     Path(
       r'^' + ChatHomeScreen.route,
       (context, match) => ChatHomeScreen(),
+    ),
+    Path(
+      r'^' + GoogleLoginPage.route,
+          (context, match) => GoogleLoginPage(),
     ),
     Path(
       r'^' + HomePage.route,

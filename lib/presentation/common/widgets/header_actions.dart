@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:qapaq_b2b/configuration/theme.dart';
 import 'package:qapaq_b2b/pages/chat_lobby.dart';
 import 'package:qapaq_b2b/pages/login.dart';
+import 'package:qapaq_b2b/pages/googleLogin.dart';
+import 'package:qapaq_b2b/pages/sign_in.dart';
 
-enum AvatarMenu { Perfil, Empresa, Otros }
+enum AvatarMenu { Ingresar, Perfil, Empresa, Otros }
 
 class MyActions {
   List<Widget> buildActions(BuildContext context) {
@@ -31,14 +33,14 @@ class MyActions {
       child: Row(
         children: [
           CircleAvatar(
-            backgroundImage: AssetImage("img/logo.jpeg"),
+            backgroundImage: !loged?AssetImage("img/login/login.png"):NetworkImage(imageUrl),
             radius: 20,
           ),
           PopupMenuButton(
               onSelected: (AvatarMenu result) {
-                if (result == AvatarMenu.Perfil)
+                if (result == AvatarMenu.Ingresar)
                   Navigator.push(context,
-                      new MaterialPageRoute(builder: (context) => Login()));
+                      new MaterialPageRoute(builder: (context) => GoogleLoginPage()));
               },
               icon: RotatedBox(
                 quarterTurns: 1,
@@ -50,6 +52,8 @@ class MyActions {
               ),
               itemBuilder: (BuildContext context) =>
                   <PopupMenuEntry<AvatarMenu>>[
+                    PopupMenuItem(
+                        value: AvatarMenu.Ingresar, child: Text("Ingresar")),
                     PopupMenuItem(
                         value: AvatarMenu.Perfil, child: Text("Perfil")),
                     PopupMenuItem(
